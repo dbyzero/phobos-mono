@@ -10,6 +10,7 @@ using Phobos.Configurations.Keyboard;
 using Phobos.Configurations;
 using System.Configuration;
 using Nini.Config;
+using System.Windows.Forms;
 
 namespace Phobos.Engine
 {
@@ -53,7 +54,6 @@ namespace Phobos.Engine
             if (PhobosConfigurationManager.source.Configs["Keyboard"] == null || PhobosConfigurationManager.source.Configs["Keyboard"].Get("lastKeyboardLayout") == null)
             {
                 Console.WriteLine("boum");
-                PhobosConfigurationManager.source.AddConfig("Keyboard");
                 PhobosConfigurationManager.set("Keyboard", "lastKeyboardLayout", currentLayout);
             }
             else
@@ -122,8 +122,8 @@ namespace Phobos.Engine
             this.manager.ApplyChanges(); 
 
             //on masque récupère la fenêtre.
-            System.Windows.Forms.Form MyGameForm = (System.Windows.Forms.Form)System.Windows.Forms.Form.FromHandle(this.Window.Handle);
-            MyGameForm.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None; //Retrait de la bordure
+            Form MyGameForm = (Form)Form.FromHandle(this.Window.Handle);
+            MyGameForm.FormBorderStyle = FormBorderStyle.None; //Retrait de la bordure
             MyGameForm.Location = new System.Drawing.Point(0, 0); // on place la fenêtre correctement à l'origine de l'écran.
         }
     }
