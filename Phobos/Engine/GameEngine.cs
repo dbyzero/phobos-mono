@@ -17,6 +17,7 @@ using Nini.Config;
 using System.Windows.Forms;
 using Phobos.Gui;
 using Phobos.Gui.Widgets;
+using Phobos.Engine.Content;
 
 namespace Phobos.Engine
 {
@@ -24,14 +25,13 @@ namespace Phobos.Engine
     class GameEngine : Microsoft.Xna.Framework.Game
     {
 
-        #region Propriété publiques
+        #region Propriété
         GraphicsDeviceManager manager;
         public static SpriteBatch spriteBatch;
         DisplayModeCollection displayModes;
-        public static Dictionary<string, Texture2D> textures;
-        public static Dictionary<string, SpriteFont> fonts;
+        public static Stack<string> contentToLoad;
         private static GameEngine singleton;
-        public SimpleButton button;
+        public static bool loading;
 
         #endregion
 
@@ -40,12 +40,11 @@ namespace Phobos.Engine
             this.manager = new GraphicsDeviceManager(this);
             PhobosConfigurationManager.Init("Phobos.ini");
             PhobosConfigurationManager.SetAutoSave(true);
+            ContentHelper.Initialize();
             Content.RootDirectory = "Content";
-            if (textures == null)
-                textures = new Dictionary<string, Texture2D>();
-
-            if (fonts == null)
-                fonts = new Dictionary<string, SpriteFont>();
+            contentToLoad = new Stack<string>();
+            loading = false;
+            //TODO: déterminer si un dictionnaire est bien nécessaire pour éviter les chargement multiples d'une meme ressource.
         }
 
         public static GameEngine Instance {
@@ -67,6 +66,9 @@ namespace Phobos.Engine
         /// </summary>
         protected override void Initialize()
         {
+            
+            base.Initialize();
+            
             #region Initialisation des paramètres graphiques.
             // TODO: Géré la config externe
             this.displayModes = GraphicsDevice.Adapter.SupportedDisplayModes;
@@ -87,11 +89,11 @@ namespace Phobos.Engine
                 PhobosConfigurationManager.set("Keyboard", "lastKeyboardLayout", currentLayout);
             }
             #endregion
+            
+            
+            
             // TODO: Add your initialization logic here
-
-            base.Initialize();
-
-            button = new SimpleButton( null, 5, 5, "DoomTest" );
+            
             
         }
 
@@ -101,28 +103,29 @@ namespace Phobos.Engine
         /// </summary>
         protected override void LoadContent()
         {
+
+            loading = true;
             // Create a new SpriteBatch, which can be used to draw textures.
             if(spriteBatch == null) spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // use this.Content to load your game content here
             #region Elements d'UI
-            GuiTemplate.LoadContent();
+            SimpleButton button = new SimpleButton( null, 5, 5, "Enabled" );
+
+            this.Components.Add( button );
+            button = new SimpleButton( null, 5, 40, "Hover" );
+            button.status = SimpleButton.ButtonState.HOVER;
+            this.Components.Add( button );
+            button = new SimpleButton( null, 5, 75, "Down" );
+            button.status = SimpleButton.ButtonState.DOWN;
+            this.Components.Add( button );
+            button = new SimpleButton( null, 5, 110, "Disabled" );
+            button.status = SimpleButton.ButtonState.DISABLED;
+            this.Components.Add( button );
+
             #endregion
 
-        }
-
-        public static T LoadRessource<T>(string assetName) {
-            T ressource = GameEngine.Instance.Content.Load<T>(assetName);
-            switch (ressource.GetType().Name) {
-                case "Texture2D":
-                    GameEngine.textures.Add(assetName, ressource as Texture2D);
-                    break;
-                case "SpriteFont":
-                    GameEngine.fonts.Add(assetName, ressource as SpriteFont);
-                    break;
-            }
-
-            return ressource;
+            loading = false;
         }
 
         /// <summary>
@@ -155,12 +158,13 @@ namespace Phobos.Engine
             spriteBatch.Begin();
 
             #region Affichage de l'UI
-            button.Draw(gameTime);
+            //
             #endregion Affichage de l'UI
 
-            spriteBatch.End();
+            
             // Add your drawing code here
             base.Draw(gameTime); // Garder en fin de procédure ?
+            spriteBatch.End();
         }
 
         /// <summary>
