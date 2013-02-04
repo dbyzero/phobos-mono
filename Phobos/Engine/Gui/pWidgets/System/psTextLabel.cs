@@ -29,7 +29,11 @@ namespace Phobos.Engine.Gui.pWidgets.System {
         public psTextLabel( ApWidget parent, int x, int y, int width, int height, string text)
             : base( parent, x, y, width, height, text ) {
             text = text.Trim();
-            color = Color.White;
+            if( parent.isActivated ) {
+                color = Color.White;
+            } else {
+                color = Color.Gray;
+            }
             Vector2 textSize = spriteFont.MeasureString( text );
 
             while( textSize.X > width ) {

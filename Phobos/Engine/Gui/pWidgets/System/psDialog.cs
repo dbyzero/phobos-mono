@@ -19,7 +19,7 @@ namespace Phobos.Engine.Gui.pWidgets.System {
         }
 
         static psDialog() {
-            dialogSprite_focus = ContentHelper.Load<Texture2D>( @"gui\system\dialog_focus" );
+
         }
 
         public override void Draw( Microsoft.Xna.Framework.GameTime gameTime ) {

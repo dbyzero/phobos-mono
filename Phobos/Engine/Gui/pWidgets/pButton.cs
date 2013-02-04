@@ -68,10 +68,7 @@ namespace Phobos.Engine.Gui.pWidgets {
         /// Le constucteur statique contient le chargement des ressources.
         /// </summary>
         static pButton() {
-            spriteButton = ContentHelper.Load<Texture2D>( @"gui\button" );
-            spriteButton_down = ContentHelper.Load<Texture2D>( @"gui\button_down" );
-            spriteButton_hover = ContentHelper.Load<Texture2D>( @"gui\button_hover" );
-            spriteButton_disabled = ContentHelper.Load<Texture2D>( @"gui\button_down" );
+            
         }
 
         #endregion
