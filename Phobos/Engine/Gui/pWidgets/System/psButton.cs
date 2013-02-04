@@ -6,12 +6,12 @@ namespace Phobos.Engine.Gui.pWidgets.System {
     class psButton : ApButton {
 
         protected static Texture2D spriteButton;
-        private psTextLabel label;
+        public psTextLabel label;
 
-        public psButton( ApWidget parent, int x, int y, int width, string text )
-            : base( parent, x, y, width, 32 ) {
+        public psButton( ApWidget parent, int x, int y, string text )
+            : base( parent, x, y, 128, 35 ) {
             label =
-                new psTextLabel( this, x, y, width, 32, text, Color.Black );
+                new psTextLabel( this, x, y, 128, 35, text);
 
             Children = new GameComponentCollection();
             Children.Add( label );
@@ -30,30 +30,21 @@ namespace Phobos.Engine.Gui.pWidgets.System {
         }
 
         static psButton() {
-            spriteButton = ContentHelper.Load<Texture2D>( @"gui\system\button" );
+            spriteButton = ContentHelper.Load<Texture2D>( @"gui\system\psButton" );
         }
 
         public override void Draw( GameTime gameTime ) {
             if( isActivated ) {
                 if( IsActionKeyPressed && isMouseOver) {
-                    GameEngine.spriteBatch.Draw( spriteButton, new Rectangle( location.X, location.Y, 32, 32 ), new Rectangle( 32, 0, 32, 32 ), Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f );
-                    GameEngine.spriteBatch.Draw( spriteButton, new Rectangle( location.X + 32, location.Y, location.Width-64, 32 ), new Rectangle( 48, 0, 1, 32 ), Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f );
-                    GameEngine.spriteBatch.Draw( spriteButton, new Rectangle( location.X + location.Width - 32, location.Y, 32, 32 ), new Rectangle( 32, 0, 32, 32 ), Color.White, 0f, Vector2.Zero, SpriteEffects.FlipHorizontally, 0f );
+                    GameEngine.spriteBatch.Draw( spriteButton, new Rectangle( location.X, location.Y, 128, 35 ), new Rectangle( 0, 70, 128, 35 ), Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f );
                 } else if( isMouseOver ) {
-                    GameEngine.spriteBatch.Draw( spriteButton, new Rectangle( location.X, location.Y, 32, 32 ), new Rectangle( 64, 0, 32, 32 ), Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f );
-                    GameEngine.spriteBatch.Draw( spriteButton, new Rectangle( location.X + 32, location.Y, location.Width - 64, 32 ), new Rectangle( 80, 0, 1, 32 ), Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f );                    
-                    GameEngine.spriteBatch.Draw( spriteButton, new Rectangle( location.X + location.Width - 32, location.Y, 32, 32 ), new Rectangle( 64, 0, 32, 32 ), Color.White, 0f, Vector2.Zero, SpriteEffects.FlipHorizontally, 0f );
-
+                    GameEngine.spriteBatch.Draw( spriteButton, new Rectangle( location.X, location.Y, 128, 35 ), new Rectangle( 0, 35, 128, 35 ), Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f );
                 } else {
-                    GameEngine.spriteBatch.Draw( spriteButton, new Rectangle( location.X, location.Y, 32, 32 ), new Rectangle( 0, 0, 32, 32 ), Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f );
-                    GameEngine.spriteBatch.Draw( spriteButton, new Rectangle( location.X + 32, location.Y, location.Width - 64, 32 ), new Rectangle( 16, 0, 1, 32 ), Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f );                    
-                    GameEngine.spriteBatch.Draw( spriteButton, new Rectangle( location.X + location.Width - 32, location.Y, 32, 32 ), new Rectangle( 0, 0, 32, 32 ), Color.White, 0f, Vector2.Zero, SpriteEffects.FlipHorizontally, 0f );
+                    GameEngine.spriteBatch.Draw( spriteButton, new Rectangle( location.X, location.Y, 128, 35 ), new Rectangle( 0, 0, 128, 35 ), Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f );
 
                 }
             } else {
-                GameEngine.spriteBatch.Draw( spriteButton, new Rectangle( location.X, location.Y, 32, 32 ), new Rectangle( 96, 0, 32, 32 ), Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f );
-                GameEngine.spriteBatch.Draw( spriteButton, new Rectangle( location.X + 32, location.Y, location.Width - 64, 32 ), new Rectangle( 112, 0, 1, 32 ), Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f );                    
-                GameEngine.spriteBatch.Draw( spriteButton, new Rectangle( location.X + location.Width - 32, location.Y, 32, 32 ), new Rectangle( 96, 0, 32, 32 ), Color.White, 0f, Vector2.Zero, SpriteEffects.FlipHorizontally, 0f );
+                GameEngine.spriteBatch.Draw( spriteButton, new Rectangle( location.X, location.Y, 128, 35 ), new Rectangle( 0, 0, 128, 35 ), Color.Gray, 0f, Vector2.Zero, SpriteEffects.None, 0f );
             }
 
             foreach( ApWidget child in Children ) {

@@ -113,34 +113,35 @@ namespace Phobos.Engine
             // use this.Content to load your game content here
             #region Elements d'UI
             MouseHandler.Initialize();
-            //psButton button1 = new psButton( null, 5, 5, 196, "test" );
-            //pButton button2 = new pButton( null, 5, 40, "HideMe!" );
-            
-            //button2.Visible = false;
-            //button1.Action += delegate( object sender, pButton.ActionEvent e ) {
-            //    button2.Visible = true;
-            //    Console.WriteLine( "Bravo, joli clic" );
-            //};
-            //button1.MouseEntering += delegate( object sender, ApWidget.MouseHoverEvent e ) {
-            //    Console.WriteLine( "La souris rentre..." );
-            //    button1.text = "Dessus";
-            //};
-            //button1.MouseLeaving += delegate( object sender, ApWidget.MouseHoverEvent e ) {
-            //    Console.WriteLine( "...puis resort." );
-            //    button1.text = "Plus dessus";
-            //};
-            //button2.Action += delegate( object sender, pButton.ActionEvent e ) {
-            //    button2.Visible = false;
-            //    Console.WriteLine( "Ni vus,ni connus" );
-            //};
-            //pButton button3 = new pButton( null, 50, 75, "Disabled" );
-            //button3.isActivated = false;
-            //this.Components.Add( button1 );
-            //this.Components.Add( button2 );
-            //this.Components.Add( button3 );
+            psButton button1 = new psButton( null, 5, 5, "ClickMe !" );
+            this.Components.Add( button1 );
+            psButton button2 = new psButton( null, 5, 40, "HideMe!" );
 
-            psDialog dialog1 = new psDialog( null, new Rectangle( 16, 16, 400, 300 ) );
-            this.Components.Add( dialog1 );
+            button2.Visible = false;
+            button1.Action += delegate( object sender, psButton.ActionEvent e ) {
+                button2.Visible = true;
+                Console.WriteLine( "Bravo, joli clic" );
+            };
+            button1.MouseEntering += delegate( object sender, ApWidget.MouseHoverEvent e ) {
+                Console.WriteLine( "La souris rentre..." );
+                button1.label.Text = "Dessus";
+            };
+            button1.MouseLeaving += delegate( object sender, ApWidget.MouseHoverEvent e ) {
+                Console.WriteLine( "...puis ressort." );
+                button1.label.Text = "Plus dessus";
+            };
+            button2.Action += delegate( object sender, psButton.ActionEvent e ) {
+                button2.Visible = false;
+                Console.WriteLine( "Ni vus,ni connus" );
+            };
+            psButton button3 = new psButton( null, 50, 75, "Disabled" );
+            button3.isActivated = false;
+
+            this.Components.Add( button2 );
+            this.Components.Add( button3 );
+
+            /*psDialog dialog1 = new psDialog( null, new Rectangle( 16, 16, 400, 300 ) );
+            this.Components.Add( dialog1 );*/
             #endregion
 
             loading = false;
@@ -172,7 +173,7 @@ namespace Phobos.Engine
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
+            GraphicsDevice.Clear(Color.LightSkyBlue);
             spriteBatch.Begin();
 
             #region Affichage de l'UI

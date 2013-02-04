@@ -26,9 +26,10 @@ namespace Phobos.Engine.Gui.pWidgets.System {
         #endregion
 
         #region Constructeurs
-        public psTextLabel( ApWidget parent, int x, int y, int width, int height, string text, Color color)
+        public psTextLabel( ApWidget parent, int x, int y, int width, int height, string text)
             : base( parent, x, y, width, height, text ) {
             text = text.Trim();
+            color = Color.White;
             Vector2 textSize = spriteFont.MeasureString( text );
 
             while( textSize.X > width ) {
@@ -62,7 +63,7 @@ namespace Phobos.Engine.Gui.pWidgets.System {
 
         #region Méthodes surchargée
         public override void Draw( GameTime gameTime ) {
-            GameEngine.spriteBatch.DrawString( spriteFont, Text, new Vector2( textLocation.X, textLocation.Y ), Color.Black);
+            GameEngine.spriteBatch.DrawString( spriteFont, Text, new Vector2( textLocation.X, textLocation.Y ), color );
         }
 
         #endregion
