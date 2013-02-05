@@ -193,11 +193,10 @@ namespace Phobos.Engine
         protected void SetWindowedFullScreen()
         {
             //On met a jour la résolution d'écran sur la résolution du bureau;
-            DisplayMode screen = this.displayModes.Last<DisplayMode>();
-            this.manager.PreferredBackBufferWidth = screen.Width;
-            this.manager.PreferredBackBufferHeight = screen.Height;
-            this.manager.PreferredBackBufferFormat = screen.Format;
-            this.manager.ApplyChanges(); 
+            this.manager.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            this.manager.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            this.manager.PreferredBackBufferFormat = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Format;
+            this.manager.ApplyChanges();
 
             //on masque récupère la fenêtre.
             Form MyGameForm = (Form)Form.FromHandle(this.Window.Handle);
