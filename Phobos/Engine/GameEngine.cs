@@ -16,8 +16,9 @@ using System.Configuration;
 using Nini.Config;
 using System.Windows.Forms;
 using Phobos.Engine.Gui;
-using Phobos.Engine.Gui.pWidgets;
-using Phobos.Engine.Gui.pWidgets.System;
+using Phobos.Engine.Gui.PWidgets;
+using Phobos.Engine.Gui.PWidgets.System;
+using Phobos.Engine.Gui.PWidgets.Events;
 using Phobos.Engine.Content;
 using Phobos.Engine.Inputs.MouseInput;
 
@@ -113,30 +114,55 @@ namespace Phobos.Engine
             // use this.Content to load your game content here
             #region Elements d'UI
             MouseHandler.Initialize();
-            psButton button1 = new psButton( null, 5, 5, "ClickMe !" );
+            PSButton button1 = new PSButton( null, 5, 5, "ClickMe !" );
             this.Components.Add( button1 );
-            psButton button2 = new psButton( null, 5, 40, "HideMe!" );
+            PSButton button2 = new PSButton( null, 5, 40, "HideMe!" );
 
             button2.Visible = false;
-            button1.Action += delegate( object sender, psButton.ActionEvent e ) {
+            button1.Action += delegate( object sender, ActionEvent e ) {
                 button2.Visible = true;
                 Console.WriteLine( "Bravo, joli clic" );
             };
-            button1.MouseEntering += delegate( object sender, ApWidget.MouseHoverEvent e ) {
-                Console.WriteLine( "La souris rentre..." );
-                button1.label.Text = "Dessus";
+            button1.MouseoverChange += delegate( object sender, BooleanChangeEvent e ) {
+                if( e.newValue ) {
+                    Console.WriteLine( "La souris rentre..." );
+                    button1.ButtonText = "Dessus";
+                }
+                
             };
-            button1.MouseLeaving += delegate( object sender, ApWidget.MouseHoverEvent e ) {
-                Console.WriteLine( "...puis ressort." );
-                button1.label.Text = "Plus dessus";
+            button1.MouseoverChange += delegate( object sender, BooleanChangeEvent e ) {
+                if( !e.newValue ) {
+                    Console.WriteLine( "...puis ressort." );
+                    button1.ButtonText = "Plus dessus";
+                }
             };
-            button2.Action += delegate( object sender, psButton.ActionEvent e ) {
+            button2.Action += delegate( object sender, ActionEvent e ) {
                 button2.Visible = false;
                 Console.WriteLine( "Ni vus,ni connus" );
             };
-            psButton button3 = new psButton( null, 50, 75, "Disabled" );
-            button3.isActivated = false;
+            PSButton button3 = new PSButton( null, 5, 75, "Disabled" );
+            button3.Activated = false;
 
+            PSCheckBox checkbox1 = new PSCheckBox( null, 140, 5 );
+            PSCheckBox checkbox2 = new PSCheckBox( null, 140, 25 );
+            checkbox2.Activated = false;
+            APRadioGroup radioGroup = new APRadioGroup( null, 0, 0, 0, 0 );
+            PSRadioButton radioButton1 = new PSRadioButton( radioGroup, 140, 45 );
+            PSRadioButton radioButton2 = new PSRadioButton( radioGroup, 140, 65 );
+            PSRadioButton radioButton3 = new PSRadioButton( radioGroup, 140, 85 );
+            PSRadioButton radioButton4 = new PSRadioButton( radioGroup, 140, 105 );
+            PSRadioButton radioButton5 = new PSRadioButton( radioGroup, 140, 125 );
+            radioButton3.Activated = false;
+            
+            radioGroup.AddRadioButton( radioButton1 );
+            radioGroup.AddRadioButton( radioButton2 );
+            radioGroup.AddRadioButton( radioButton3 );
+            radioGroup.AddRadioButton( radioButton4 );
+            radioGroup.AddRadioButton( radioButton5 );
+
+            this.Components.Add( checkbox1 );
+            this.Components.Add( checkbox2 );
+            this.Components.Add( radioGroup );
             this.Components.Add( button2 );
             this.Components.Add( button3 );
 
