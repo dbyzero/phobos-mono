@@ -143,6 +143,14 @@ namespace Phobos.Engine
             PSButton button3 = new PSButton( null, 5, 75, "Disabled" );
             button3.Activated = false;
 
+            //quit button
+            PSButton button4 = new PSButton(null, this.manager.PreferredBackBufferWidth - 128, 0, "Quit !");
+            this.Components.Add(button4);
+            button4.Action += delegate(object sender, ActionEvent e)
+            {
+                GameEngine.Instance.Exit();
+            };
+
             PSCheckBox checkbox1 = new PSCheckBox( null, 140, 5 );
             PSCheckBox checkbox2 = new PSCheckBox( null, 140, 25 );
             checkbox2.Activated = false;
