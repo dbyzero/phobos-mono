@@ -2,54 +2,71 @@
 using Microsoft.Xna.Framework;
 using Phobos.Engine.Content;
 
-namespace Phobos.Engine.Gui.pWidgets.System {
-    class psButton : ApButton {
+namespace Phobos.Engine.Gui.PWidgets.System {
+    class PSButton : APButton {
 
+        #region Fields and propreties
+
+        #region Protected
         protected static Texture2D spriteButton;
-        public psTextLabel label;
+        protected PSTextLabel label;
+        #endregion
 
-        public psButton( ApWidget parent, int x, int y, string text )
+        #endregion
+
+        #region Constructors / Indexers
+        public PSButton( APWidget parent, int x, int y, string text )
             : base( parent, x, y, 128, 35 ) {
             label =
-                new psTextLabel( this, x, y, 128, 35, text);
+                new PSTextLabel( this, x, y, 128, 35, text);
 
             Children = new GameComponentCollection();
             Children.Add( label );
 
-            #region Bases events
-            this.MouseHoverChanged += delegate( object sender, MouseHoverEvent e ) {
-                if( isActivated ) {
-                    if( e.hover ) {
-                        isMouseOver = true;
-                    } else {
-                        isMouseOver = false;
-                    }
-                }
-            };
-            #endregion
+            
         }
-
-        static psButton() {
+        
+        /// <summary>
+        /// Contient tous les chargements de textures.
+        /// </summary>
+        static PSButton() {
             spriteButton = ContentHelper.Load<Texture2D>( @"gui\system\psButton" );
         }
+        #endregion
 
+        #region Methods
+        #region Mutators and Accessors
+
+        public string ButtonText {
+            get {
+                return label.Text;
+            }
+            set {
+                label.Text = value;
+            }
+        }
+
+        #endregion
+        #region IDrawable
         public override void Draw( GameTime gameTime ) {
-            if( isActivated ) {
-                if( IsActionKeyPressed && isMouseOver) {
+            if( Activated ) {
+                if( IsActionKeyPressed && Mouseover) {
                     GameEngine.spriteBatch.Draw( spriteButton, new Rectangle( location.X, location.Y, 128, 35 ), new Rectangle( 0, 70, 128, 35 ), Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f );
-                } else if( isMouseOver ) {
+                } else if( Mouseover ) {
                     GameEngine.spriteBatch.Draw( spriteButton, new Rectangle( location.X, location.Y, 128, 35 ), new Rectangle( 0, 35, 128, 35 ), Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f );
                 } else {
                     GameEngine.spriteBatch.Draw( spriteButton, new Rectangle( location.X, location.Y, 128, 35 ), new Rectangle( 0, 0, 128, 35 ), Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f );
 
                 }
             } else {
-                GameEngine.spriteBatch.Draw( spriteButton, new Rectangle( location.X, location.Y, 128, 35 ), new Rectangle( 0, 0, 128, 35 ), Color.Gray, 0f, Vector2.Zero, SpriteEffects.None, 0f );
+                GameEngine.spriteBatch.Draw( spriteButton, new Rectangle( location.X, location.Y, 128, 35 ), new Rectangle( 0, 105, 128, 35 ), Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f );
             }
 
-            foreach( ApWidget child in Children ) {
+            foreach( APWidget child in Children ) {
                 child.Draw( gameTime );
             }
         }
+        #endregion
+        #endregion
     }
 }

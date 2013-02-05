@@ -5,73 +5,113 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using Phobos.Engine.Gui.PWidgets.Events;
 
-namespace Phobos.Engine.Gui.pWidgets
+namespace Phobos.Engine.Gui.PWidgets
 {
-    abstract class ApButton : ApWidget
+    abstract class APButton : APWidget
     {
         #region Propreties & Fields
-        #region Events
-
+        #region Events and delegates
         public delegate void ActionHandler( object sender, ActionEvent e );
-        public event ActionHandler Action;
-        public class ActionEvent : EventArgs {
-            public MouseState mouse;
-            public ActionEvent() {
-                mouse = new MouseState();
-            }
-        }
 
+        public event ActionHandler Action;
+        public event ActionHandler ActionKeyPressed;
+        public event ActionHandler ActionKeyReleased;
+        public event ActionHandler ActionKeyStatusChanged;
         #endregion
 
         #region Public
-        public bool IsActionKeyPressed = false;
+        
         #endregion
 
-        #region Protected
-
+        #region Privates
+        private bool isActionKeyPressed = false;
         #endregion
 
         #endregion
 
         #region Constructeurs
 
-        public ApButton(ApWidget parent, int x, int y, int width, int height)
+        public APButton(APWidget parent, int x, int y, int width, int height)
             : base(parent, x, y, width, height)
         {
-            location = new Rectangle(x, y, width, height);
-            MouseHoverChanged += delegate( object sender, ApWidget.MouseHoverEvent e ) {
-                if( isActivated ) {
-                    if( e.hover ) {
-                        isMouseOver = true;
-                    } else {
-                        isMouseOver = false;
-                    }
-                }
-            };
+
+            #region Bases events
+
+            #endregion
         }
 
+        public APButton(APWidget parent, Rectangle _location)
+            : base( parent, _location ) {
+
+            #region Bases events
+
+            #endregion
+        }
         #endregion
 
         #region Methods
+        #region Accessors and mutators
+        public bool IsActionKeyPressed{
+            get{
+                return isActionKeyPressed;
+            }
+            set {
+                if( isActionKeyPressed != value ) {
+                    isActionKeyPressed = value;
+                    if( value ) {
+                        OnActionKeyPressed();
+                        OnActionKeyStatusChanged();
+                    } else {
+                        OnActionKeyReleased();
+                        OnActionKeyStatusChanged();
+                        OnAction();
+                    }
+                }
+            }
+        }
+        #endregion
+        #region Events handling
         protected void OnAction() {
             if( Action != null ) {
                 Action( this, new ActionEvent() );
             }
         }
 
+        protected void OnActionKeyPressed() {
+            if( ActionKeyPressed != null ) {
+                ActionKeyPressed( this, new ActionEvent() );
+            }
+        }
+
+        protected void OnActionKeyReleased() {
+            if( ActionKeyReleased != null ) {
+                ActionKeyReleased( this, new ActionEvent() );
+            }
+        }
+
+        protected void OnActionKeyStatusChanged() {
+            if( ActionKeyStatusChanged != null ) {
+                ActionKeyStatusChanged( this, new ActionEvent() );
+            }
+        }
+        #endregion
+
+        #region IUpdatable
+
         public override void Update( GameTime gameTime ) {
             base.Update( gameTime );
-            if( isActivated && isMouseOver ) {
+            if( Visible && Activated && Mouseover ) {
                 if( Mouse.GetState().LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed ) {
                     IsActionKeyPressed = true;
                 } else if( IsActionKeyPressed == true ) {
-                    OnAction();
                     IsActionKeyPressed = false;
                 }
             }
 
         }
+        #endregion
         #endregion
     }
 }

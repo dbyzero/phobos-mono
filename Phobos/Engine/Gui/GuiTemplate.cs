@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Phobos.Engine.Gui.pWidgets;
+using Phobos.Engine.Gui.PWidgets;
 
-namespace Phobos.Gui {
+namespace Phobos.Engine.Gui {
 
     /// <summary>
     /// Cette classe permet de définir les ressources utilisée par le template de l'ui afin d'alleger le code propre au widgets.

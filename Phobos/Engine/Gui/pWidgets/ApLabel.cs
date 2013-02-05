@@ -7,25 +7,18 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections;
 using Phobos.Engine;
+using Phobos.Engine.Gui.PWidgets.Events;
 
 //TODO: text and font changed Event management
-namespace Phobos.Engine.Gui.pWidgets {
-    abstract class ApLabel : ApWidget {
+namespace Phobos.Engine.Gui.PWidgets {
+    abstract class APLabel : APWidget {
 
         #region Fields and propreties
 
-        #region Events
-        public delegate void TextChangeHandler( object sender, TextChangedEvent e );
-        public event TextChangeHandler TextChanged;
+        #region Events and delegates
+        public delegate void TextChangeHandler( object sender, StringChangeEvent e );
 
-        public class TextChangedEvent : EventArgs {
-            public string newText;
-            public string previousText;
-            public TextChangedEvent( string _newText, string _previousText ) {
-                newText = _newText;
-                previousText = _previousText;
-            }
-        }
+        public event TextChangeHandler TextChange;
         #endregion
 
         #region Private
@@ -37,7 +30,7 @@ namespace Phobos.Engine.Gui.pWidgets {
 
         #region Constructeurs
 
-        public ApLabel( ApWidget parent, int x, int y, int width, int height, string text )
+        public APLabel( APWidget parent, int x, int y, int width, int height, string text )
             : base( parent, x, y, width, height ) {
             this.Text = text;
 
@@ -46,23 +39,27 @@ namespace Phobos.Engine.Gui.pWidgets {
         #endregion
 
         #region Methods
-
+        #region Accessors and mutators
         public string Text {
             get {
                 return text;
             }
             set {
-                OnTextChanged( value, text );
-                text = value;
+                if( text != value ) {
+                    OnTextChanged( value, text );
+                    text = value;
+                }
             }
         }
+        #endregion
 
+        #region Events handling
         protected void OnTextChanged( string _new, string _previous ) {
-            if( TextChanged != null ) {
-                TextChanged( this, new TextChangedEvent( _new, _previous ) );
+            if( TextChange != null ) {
+                TextChange( this, new StringChangeEvent( _new, _previous ) );
             }
         }
-
+        #endregion
         #endregion
 
     }

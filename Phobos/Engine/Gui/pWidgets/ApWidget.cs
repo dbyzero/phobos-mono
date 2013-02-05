@@ -8,75 +8,52 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Phobos.Engine;
 using Phobos.Engine.Inputs.MouseInput;
+using Phobos.Engine.Gui.PWidgets.Events;
 
-namespace Phobos.Engine.Gui.pWidgets {
-    abstract class ApWidget : DrawableGameComponent {
+namespace Phobos.Engine.Gui.PWidgets {
+    abstract class APWidget : DrawableGameComponent {
 
         #region Fields and propreties
         #region Events and delegates
-        public delegate void MouseHoverHandler( object sender, MouseHoverEvent e );
-        public delegate void ActivateStatusHandler( object sender, ActivatedStatusEvent e );
 
-        public event MouseHoverHandler MouseEntering;
-        public event MouseHoverHandler MouseLeaving;
-        public event MouseHoverHandler MouseHoverChanged;
-        public event MouseHoverHandler MouseMoved;
-        public event ActivateStatusHandler ActivatedStatusChanged;
-        public event ActivateStatusHandler Activated;
-        public event ActivateStatusHandler Desactivated;
+        public delegate void MouseoverChangeHandler( object sender, BooleanChangeEvent e );
+        public delegate void ActivatedChangeHandler( object sender, BooleanChangeEvent e );
+
+        public event MouseoverChangeHandler MouseoverChange;
+        public event ActivatedChangeHandler ActivatedChange;
+
         #endregion
-
         #region Public
 
         public Rectangle location;
         public Rectangle mouseArea;
         public GameComponentCollection Children;
-        public ApWidget Parent;
-        public bool isActivated = true;
-        public bool isMouseOver = false;
-        public Layer layer;
+        public APWidget Parent;
 
         #endregion
-
         #region Protected
 
-        #endregion
+        protected bool isActivated = true;
+        protected bool isMouseover = false;
 
         #endregion
-
+        #endregion
         #region Constructors / Indexers
 
-        public ApWidget( ApWidget parent, int x, int y, int width, int height )
+        public APWidget( APWidget parent, int x, int y, int width, int height )
             : base( GameEngine.Instance ) {
             this.Parent = parent;
             location = new Rectangle( x, y, width, height );
             mouseArea = location;
         }
 
-        public ApWidget( ApWidget parent, Rectangle _location )
+        public APWidget( APWidget parent, Rectangle _location )
             : base( GameEngine.Instance ) {
             this.Parent = parent;
             location = _location;
             mouseArea = _location;
         }
 
-        #endregion
-
-        #region Events
-
-        public class ActivatedStatusEvent : EventArgs {
-            public bool activated;
-            public ActivatedStatusEvent( bool _activated ) {
-                activated = _activated;
-            }
-        }
-
-        public class MouseHoverEvent : EventArgs {
-            public bool hover;
-            public MouseHoverEvent( bool isMouseHover ) {
-                hover = isMouseHover;
-            }
-        }
         #endregion
 
         #region Methods
@@ -92,69 +69,62 @@ namespace Phobos.Engine.Gui.pWidgets {
             this.location.X += dx;
             this.location.Y += dy;
 
-            foreach( ApWidget Child in Children ) {
+            foreach( APWidget Child in Children ) {
                 Child.Translate( dx, dy );
             }
         }
 
         #endregion
-
-        protected void OnActivation() {
-            if( Activated != null ) {
-                Activated( this, new ActivatedStatusEvent( true ) );
+        #region Accessors and mutators
+        public bool Activated{
+            get {
+                return isActivated;
+            }
+            set {
+                if( isActivated != value ) {
+                    isActivated = value;
+                    OnActivatedChange();
+                }
             }
         }
 
-        protected void OnDesactivation() {
-            if( Desactivated != null ) {
-                Desactivated( this, new ActivatedStatusEvent( false ) );
+        public bool Mouseover {
+            get {
+                return isMouseover;
+            }
+            set {
+                if( isMouseover != value ) {
+                    isMouseover = value;
+                    OnMouseOverChanged();
+                }
+            }
+        }
+        #endregion
+        #region Events handling
+
+        protected void OnActivatedChange() {
+            if( ActivatedChange != null ) {
+                ActivatedChange( this, new BooleanChangeEvent( Activated, "Activated" ) );
             }
         }
 
-        protected void OnActivatedStatusChanged() {
-            if( ActivatedStatusChanged != null ) {
-                ActivatedStatusChanged( this, new ActivatedStatusEvent( isActivated ) );
+        protected void OnMouseOverChanged() {
+            if( MouseoverChange != null ) {
+                MouseoverChange( this, new BooleanChangeEvent( Mouseover, "MouseHover" ) );
             }
         }
 
-        protected void OnMouseEntering() {
-            if( MouseEntering != null ) {
-                MouseEntering( this, new MouseHoverEvent( true ) );
-            }
-        }
-
-        protected void OnMouseLeaving() {
-            if( MouseLeaving != null ) {
-                MouseLeaving( this, new MouseHoverEvent( false ) );
-            }
-        }
-
-        protected void OnMouseHoverChanged() {
-            if( MouseHoverChanged != null ) {
-                MouseHoverChanged( this, new MouseHoverEvent( isMouseOver ) );
-            }
-        }
-
-        public abstract override void Draw( GameTime gameTime );
+        #endregion
+        #region IUpdateable
 
         public override void Update( GameTime gameTime ) {
             base.Update( gameTime );
             //TODO: Verification du layer et du focus.
-            if( mouseArea.Contains( new Point( Mouse.GetState().X, Mouse.GetState().Y ) ) ) {
-                if( !isMouseOver ) {
-                    isMouseOver = true;
-                    OnMouseHoverChanged();
-                    OnMouseEntering();
-                }
-            } else {
-                if( isMouseOver ) {
-                    this.isMouseOver = false;
-                    OnMouseHoverChanged();
-                    OnMouseLeaving();
-                }
-            }
+            Mouseover = mouseArea.Contains( new Point( Mouse.GetState().X, Mouse.GetState().Y ) );
+
         }
 
+        #endregion
         #endregion
     }
 }
