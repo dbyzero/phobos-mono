@@ -21,6 +21,7 @@ namespace Phobos.Engine.Inputs.MouseInput {
         }
 
         public static void DrawCursor(){
+            GameEngine.spriteBatch.Begin();
             switch( currentType ) {
                 case CursorType.SIMPLE:
                     GameEngine.spriteBatch.Draw( cursorSprite, new Vector2(Mouse.GetState().X, Mouse.GetState().Y), new Rectangle( 0, 0, 32, 32 ), Color.White);
@@ -32,6 +33,7 @@ namespace Phobos.Engine.Inputs.MouseInput {
                     GameEngine.spriteBatch.Draw( cursorSprite, new Vector2(Mouse.GetState().X, Mouse.GetState().Y), new Rectangle( 64, 0, 32, 32 ), Color.White);
                     break;
             }
+            GameEngine.spriteBatch.End();
         }
     }
 }

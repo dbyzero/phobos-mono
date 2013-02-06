@@ -21,6 +21,9 @@ using Phobos.Engine.Gui.PWidgets.System;
 using Phobos.Engine.Gui.PWidgets.Events;
 using Phobos.Engine.Content;
 using Phobos.Engine.Inputs.MouseInput;
+using Phobos.Engine.GameStates;
+using Phobos.Engine.GameStates.Menu;
+using Phobos.Engine.GameStates.UiDebug;
 
 namespace Phobos.Engine
 {
@@ -32,9 +35,8 @@ namespace Phobos.Engine
         GraphicsDeviceManager manager;
         public static SpriteBatch spriteBatch;
         DisplayModeCollection displayModes;
-        public static Stack<string> contentToLoad;
         private static GameEngine singleton;
-        public static bool loading;
+        public static GameStateManager gameStateManager;
 
         #endregion
 
@@ -45,8 +47,7 @@ namespace Phobos.Engine
             PhobosConfigurationManager.SetAutoSave(true);
             ContentHelper.Initialize();
             Content.RootDirectory = "Content";
-            contentToLoad = new Stack<string>();
-            loading = false;
+
             //TODO: déterminer si un dictionnaire est bien nécessaire pour éviter les chargement multiples d'une meme ressource.
         }
 
@@ -70,7 +71,7 @@ namespace Phobos.Engine
         protected override void Initialize()
         {
             
-            base.Initialize();
+            
             
             #region Initialisation des paramètres graphiques.
             // TODO: Géré la config externe
@@ -92,11 +93,17 @@ namespace Phobos.Engine
                 PhobosConfigurationManager.set("Keyboard", "lastKeyboardLayout", currentLayout);
             }
             #endregion
-            
-            
-            
-            // TODO: Add your initialization logic here
-            
+
+            MouseHandler.Initialize();
+
+            #region GameStateManager
+            gameStateManager = new GameStateManager();
+            gameStateManager.AddGameState( new MenuGameState(gameStateManager), GameStateList.MENU );
+            gameStateManager.AddGameState( new UIDebugState( gameStateManager ), GameStateList.UIDEBUG );
+            gameStateManager.Initialize();
+            GameEngine.Instance.Components.Add( gameStateManager );
+            #endregion
+            base.Initialize();
             
         }
 
@@ -107,78 +114,9 @@ namespace Phobos.Engine
         protected override void LoadContent()
         {
 
-            loading = true;
             // Create a new SpriteBatch, which can be used to draw textures.
             if(spriteBatch == null) spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // use this.Content to load your game content here
-            #region Elements d'UI
-            MouseHandler.Initialize();
-            PSButton button1 = new PSButton( null, 5, 5, "ClickMe !" );
-            this.Components.Add( button1 );
-            PSButton button2 = new PSButton( null, 5, 40, "HideMe!" );
-
-            button2.Visible = false;
-            button1.Action += delegate( object sender, ActionEvent e ) {
-                button2.Visible = true;
-                Console.WriteLine( "Bravo, joli clic" );
-            };
-            button1.MouseoverChange += delegate( object sender, BooleanChangeEvent e ) {
-                if( e.newValue ) {
-                    Console.WriteLine( "La souris rentre..." );
-                    button1.ButtonText = "Dessus";
-                }
-                
-            };
-            button1.MouseoverChange += delegate( object sender, BooleanChangeEvent e ) {
-                if( !e.newValue ) {
-                    Console.WriteLine( "...puis ressort." );
-                    button1.ButtonText = "Plus dessus";
-                }
-            };
-            button2.Action += delegate( object sender, ActionEvent e ) {
-                button2.Visible = false;
-                Console.WriteLine( "Ni vus,ni connus" );
-            };
-            PSButton button3 = new PSButton( null, 5, 75, "Disabled" );
-            button3.Activated = false;
-
-            //quit button
-            PSButton button4 = new PSButton(null, this.manager.PreferredBackBufferWidth - 128, 0, "Quit !");
-            this.Components.Add(button4);
-            button4.Action += delegate(object sender, ActionEvent e)
-            {
-                GameEngine.Instance.Exit();
-            };
-
-            PSCheckBox checkbox1 = new PSCheckBox( null, 140, 5 );
-            PSCheckBox checkbox2 = new PSCheckBox( null, 140, 25 );
-            checkbox2.Activated = false;
-            APRadioGroup radioGroup = new APRadioGroup( null, 0, 0, 0, 0 );
-            PSRadioButton radioButton1 = new PSRadioButton( radioGroup, 140, 45 );
-            PSRadioButton radioButton2 = new PSRadioButton( radioGroup, 140, 65 );
-            PSRadioButton radioButton3 = new PSRadioButton( radioGroup, 140, 85 );
-            PSRadioButton radioButton4 = new PSRadioButton( radioGroup, 140, 105 );
-            PSRadioButton radioButton5 = new PSRadioButton( radioGroup, 140, 125 );
-            radioButton3.Activated = false;
             
-            radioGroup.AddRadioButton( radioButton1 );
-            radioGroup.AddRadioButton( radioButton2 );
-            radioGroup.AddRadioButton( radioButton3 );
-            radioGroup.AddRadioButton( radioButton4 );
-            radioGroup.AddRadioButton( radioButton5 );
-
-            this.Components.Add( checkbox1 );
-            this.Components.Add( checkbox2 );
-            this.Components.Add( radioGroup );
-            this.Components.Add( button2 );
-            this.Components.Add( button3 );
-
-            /*psDialog dialog1 = new psDialog( null, new Rectangle( 16, 16, 400, 300 ) );
-            this.Components.Add( dialog1 );*/
-            #endregion
-
-            loading = false;
         }
 
         /// <summary>
@@ -197,8 +135,8 @@ namespace Phobos.Engine
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            // Add your update logic here
-            base.Update(gameTime);
+            gameStateManager.Update( gameTime );
+            base.Update( gameTime );
         }
 
         /// <summary>
@@ -208,17 +146,10 @@ namespace Phobos.Engine
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.LightSkyBlue);
-            spriteBatch.Begin();
-
-            #region Affichage de l'UI
-            //
-            #endregion Affichage de l'UI
-
+            gameStateManager.Draw( gameTime );
             
-            // Add your drawing code here
-            base.Draw(gameTime); // Garder en fin de procédure ?
+            base.Draw( gameTime );
             MouseHandler.DrawCursor();
-            spriteBatch.End();
         }
 
         /// <summary>

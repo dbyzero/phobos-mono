@@ -30,6 +30,11 @@
     <Reference Include="Microsoft.Xna.Framework.Content.Pipeline.VideoImporters, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="fonts\Corbel12Normal.spritefont">
+      <Name>Corbel12Normal</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+    </Compile>
     <Compile Include="gui\box.png">
       <Name>box</Name>
       <Importer>TextureImporter</Importer>
@@ -75,6 +80,11 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="gui\cursors_basic.png">
+      <Name>cursors_basic</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Compile Include="gui\label.png">
       <Name>label</Name>
       <Importer>TextureImporter</Importer>
@@ -100,6 +110,21 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="gui\system\psButton.png">
+      <Name>psButton</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="gui\system\psCheckboxes.png">
+      <Name>psCheckboxes</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="gui\system\psRadioButton.png">
+      <Name>psRadioButton</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Compile Include="gui\text.png">
       <Name>text</Name>
       <Importer>TextureImporter</Importer>
@@ -117,24 +142,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="fonts\Corbel12Normal.spritefont">
-      <Name>Corbel12Normal</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="fonts\Corbel14Bold.spritefont">
       <Name>Corbel14Bold</Name>
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="gui\cursors_basic.png">
-      <Name>cursors_basic</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -152,20 +163,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="gui\system\psButton.png">
-      <Name>psButton</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="gui\system\psCheckboxes.png">
-      <Name>psCheckboxes</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="gui\system\psRadioButton.png">
-      <Name>psRadioButton</Name>
+    <Compile Include="gui\system\psDialog.png">
+      <Name>psDialog</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

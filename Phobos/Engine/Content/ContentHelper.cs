@@ -16,7 +16,7 @@ namespace Phobos.Engine.Content {
         }
 
         public static T Load<T>( string contentName ) {
-            if( !GameEngine.loading ) throw new ContentLoadException( "T ContentHelper.Load<T> ne peut être appelé en dehors du contexte de la méthode GameEngine.LoadContent()" );
+            //if( !GameEngine.loading ) throw new ContentLoadException( "T ContentHelper.Load<T> ne peut être appelé en dehors du contexte de la méthode GameEngine.LoadContent()" );
             T ressource = GameEngine.Instance.Content.Load<T>( contentName );
             
             switch( ressource.GetType().Name ) {
