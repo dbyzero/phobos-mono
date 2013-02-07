@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Phobos.Engine.Content;
+using Phobos.Engine.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +19,7 @@ namespace Phobos.Engine.Gui.PWidgets.System {
             : base( parent, x, y, 18, 18 ) { }
 
         static PSRadioButton() {
-            spriteButton = ContentHelper.Load<Texture2D>( @"gui\system\psRadioButton" );
+            spriteButton = ServicesManager.GetService<ContentManager>().Load<Texture2D>( @"gui\system\psRadioButton" );
         }
         #endregion
 

@@ -2,27 +2,35 @@
 using Phobos.Engine.Gui.PWidgets;
 using Phobos.Engine.Gui.PWidgets.Events;
 using Phobos.Engine.Gui.PWidgets.System;
+using Phobos.Engine.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace Phobos.Engine.GameStates.UiDebug {
-    class UIDebugState : AGameState{
+    class UIDebugState : AGameState {
 
+        #region Fields & Properties
         List<APWidget> Components;
 
+        #endregion
+
+        #region Constructors & Indexer
         public UIDebugState( GameStateManager manager )
-            : base( manager ) {
+            : base() {
             Components = new List<APWidget>();
             Status = GameStateStatus.Inactive;
         }
 
+        #endregion
+
+        #region Methods
         protected override void LoadContent() {
             PSButton button0 = new PSButton( null, 4, GameEngine.Instance.Window.ClientBounds.Height - 38, "Menu" );
             button0.Action += delegate( object sender, ActionEvent e ) {
                 Status = GameStateStatus.Inactive;
-                stateManager.getGameState( GameStateList.MENU ).Status = GameStateStatus.Active;
+                ServicesManager.GetService<GameStateManager>().getGameState( GameStateList.MENU ).Status = GameStateStatus.Active;
             };
             Components.Add( button0 );
 
@@ -107,6 +115,7 @@ namespace Phobos.Engine.GameStates.UiDebug {
             base.Update( gameTime );
 
         }
+        #endregion
         #endregion
     }
 }

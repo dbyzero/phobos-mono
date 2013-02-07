@@ -1,20 +1,28 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Phobos.Engine.Content;
+using Phobos.Engine.Services;
+using Microsoft.Xna.Framework.Content;
 
 namespace Phobos.Engine.Gui.PWidgets.System {
     class PSButton : APButton {
 
-        #region Fields and propreties
-
-        #region Protected
+        #region Fields & Properties
         protected static Texture2D spriteButton;
         protected PSTextLabel label;
-        #endregion
+
+        public string ButtonText {
+            get {
+                return label.Text;
+            }
+            set {
+                label.Text = value;
+            }
+        }
 
         #endregion
 
-        #region Constructors / Indexers
+        #region Constructors & Indexer
         public PSButton( APWidget parent, int x, int y, string text )
             : base( parent, x, y, 128, 35 ) {
             label =
@@ -30,23 +38,12 @@ namespace Phobos.Engine.Gui.PWidgets.System {
         /// Contient tous les chargements de textures.
         /// </summary>
         static PSButton() {
-            spriteButton = ContentHelper.Load<Texture2D>( @"gui\system\psButton" );
+            spriteButton = ServicesManager.GetService<ContentManager>().Load<Texture2D>( @"gui\system\psButton" );
         }
         #endregion
 
         #region Methods
-        #region Mutators and Accessors
 
-        public string ButtonText {
-            get {
-                return label.Text;
-            }
-            set {
-                label.Text = value;
-            }
-        }
-
-        #endregion
         #region IDrawable
         public override void Draw( GameTime gameTime ) {
             if( Activated ) {

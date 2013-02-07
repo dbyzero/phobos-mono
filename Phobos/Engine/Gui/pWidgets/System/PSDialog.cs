@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Phobos.Engine.Services;
+using Microsoft.Xna.Framework.Content;
 
 namespace Phobos.Engine.Gui.PWidgets.System {
     class PSDialog : APDialog{
@@ -32,7 +34,7 @@ namespace Phobos.Engine.Gui.PWidgets.System {
         }
 
         static PSDialog() {
-            sprite = ContentHelper.Load<Texture2D>( @"gui\system\psDialog" );
+            sprite = ServicesManager.GetService<ContentManager>().Load<Texture2D>( @"gui\system\psDialog" );
         }
 
         #endregion

@@ -8,6 +8,7 @@ using Phobos.Engine;
 using Phobos.Engine.Content;
 using Microsoft.Xna.Framework.Content;
 using Phobos.Engine.Gui.PWidgets.Events;
+using Phobos.Engine.Services;
 
 namespace Phobos.Engine.Gui.PWidgets.System {
     class PSTextLabel : APLabel {
@@ -53,7 +54,7 @@ namespace Phobos.Engine.Gui.PWidgets.System {
         }
 
         static PSTextLabel() {
-            spriteFont = ContentHelper.Load<SpriteFont>( @"fonts\Corbel14Normal" );
+            spriteFont = ServicesManager.GetService<ContentManager>().Load<SpriteFont>( @"fonts\Corbel14Normal" );
         }
         #endregion
 

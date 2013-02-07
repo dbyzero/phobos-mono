@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Phobos.Engine.Gui.PWidgets.Events;
 using Phobos.Engine.Gui.PWidgets.System;
+using Phobos.Engine.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace Phobos.Engine.GameStates.Menu {
         PSButton uiDebugButton;
 
         public MenuGameState( GameStateManager manager )
-            : base( manager ) {
+            : base( ) {
                 Status = GameStateStatus.Active;
         }
 
@@ -28,7 +29,7 @@ namespace Phobos.Engine.GameStates.Menu {
             optionButton = new PSButton( optionButton, 64, 180, "Options" );
             uiDebugButton = new PSButton( uiDebugButton, 64, 220, "Debug UI" );
             uiDebugButton.Action += delegate( object sender, ActionEvent e ) {
-                stateManager.getGameState(GameStateList.UIDEBUG).Status = GameStateStatus.Active;
+                ServicesManager.GetService<GameStateManager>().getGameState( GameStateList.UIDEBUG ).Status = GameStateStatus.Active;
                 Status = GameStateStatus.Inactive;
             };
             exitButton = new PSButton( exitButton, 64, 260, "Exit" );

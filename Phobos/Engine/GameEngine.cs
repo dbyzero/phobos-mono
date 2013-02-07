@@ -24,6 +24,7 @@ using Phobos.Engine.Inputs.MouseInput;
 using Phobos.Engine.GameStates;
 using Phobos.Engine.GameStates.Menu;
 using Phobos.Engine.GameStates.UiDebug;
+using Phobos.Engine.Services;
 
 namespace Phobos.Engine
 {
@@ -31,18 +32,23 @@ namespace Phobos.Engine
     class GameEngine : Microsoft.Xna.Framework.Game
     {
 
-        #region Propriété
-        GraphicsDeviceManager manager;
-        public static SpriteBatch spriteBatch;
-        DisplayModeCollection displayModes;
-        private static GameEngine singleton;
-        public static GameStateManager gameStateManager;
+        #region Fields & Propreties
+        #region Fields
 
+        GraphicsDeviceManager deviceManager;
+        DisplayModeCollection displayModes;
+
+        public static SpriteBatch spriteBatch;
+        
+        private static GameEngine singleton;
+        GameStateManager gameStateManager;
+
+        #endregion
         #endregion
 
         #region Constructors / Instanciateur
         private GameEngine(){
-            this.manager = new GraphicsDeviceManager(this);
+            this.deviceManager = new GraphicsDeviceManager(this);
             PhobosConfigurationManager.Init("Phobos.ini");
             PhobosConfigurationManager.SetAutoSave(true);
             ContentHelper.Initialize();
@@ -68,16 +74,19 @@ namespace Phobos.Engine
         /// related content. Calling base.Initialize will enumerate through any components
         /// and initialize them as well.
         /// </summary>
-        protected override void Initialize()
-        {
+        protected override void Initialize() {
+
+            #region Services
+            ServicesManager.AddService<GraphicsDevice>( GraphicsDevice );
+            ServicesManager.AddService<ContentManager>( Content );
             
-            
-            
+            #endregion
+
             #region Initialisation des paramètres graphiques.
             // TODO: Géré la config externe
-            this.displayModes = GraphicsDevice.Adapter.SupportedDisplayModes;
-            this.Window.AllowUserResizing = false;
-            this.Window.Title = "Phobos";
+            displayModes = ServicesManager.GetService<GraphicsDevice>().Adapter.SupportedDisplayModes;
+            Window.AllowUserResizing = false;
+            Window.Title = "Phobos";
             #endregion
 
             #region Initialisation du clavier
@@ -96,12 +105,15 @@ namespace Phobos.Engine
 
             MouseHandler.Initialize();
 
+
+
             #region GameStateManager
             gameStateManager = new GameStateManager();
             gameStateManager.AddGameState( new MenuGameState(gameStateManager), GameStateList.MENU );
             gameStateManager.AddGameState( new UIDebugState( gameStateManager ), GameStateList.UIDEBUG );
             gameStateManager.Initialize();
             GameEngine.Instance.Components.Add( gameStateManager );
+            ServicesManager.AddService<GameStateManager>( gameStateManager );
             #endregion
             base.Initialize();
             
@@ -135,7 +147,7 @@ namespace Phobos.Engine
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            gameStateManager.Update( gameTime );
+            ServicesManager.GetService<GameStateManager>().Update( gameTime );
             base.Update( gameTime );
         }
 
@@ -145,8 +157,8 @@ namespace Phobos.Engine
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.LightSkyBlue);
-            gameStateManager.Draw( gameTime );
+            ServicesManager.GetService<GraphicsDevice>().Clear( Color.LightSkyBlue );
+            ServicesManager.GetService<GameStateManager>().Draw( gameTime );
             
             base.Draw( gameTime );
             MouseHandler.DrawCursor();
@@ -158,10 +170,10 @@ namespace Phobos.Engine
         protected void SetWindowedFullScreen()
         {
             //On met a jour la résolution d'écran sur la résolution du bureau;
-            this.manager.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-            this.manager.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-            this.manager.PreferredBackBufferFormat = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Format;
-            this.manager.ApplyChanges();
+            this.deviceManager.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            this.deviceManager.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            this.deviceManager.PreferredBackBufferFormat = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Format;
+            this.deviceManager.ApplyChanges();
 
             //on masque récupère la fenêtre.
             Form MyGameForm = (Form)Form.FromHandle(this.Window.Handle);

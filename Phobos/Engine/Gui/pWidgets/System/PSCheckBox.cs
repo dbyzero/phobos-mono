@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Phobos.Engine.Services;
+using Microsoft.Xna.Framework.Content;
 
 namespace Phobos.Engine.Gui.PWidgets.System {
     class PSCheckBox : APCheckBox {
@@ -20,7 +22,7 @@ namespace Phobos.Engine.Gui.PWidgets.System {
         }
 
         static PSCheckBox() {
-            spriteButton = ContentHelper.Load<Texture2D>( @"gui\system\psCheckboxes" );
+            spriteButton = ServicesManager.GetService<ContentManager>().Load<Texture2D>( @"gui\system\psCheckboxes" );
         }
         #endregion
 
