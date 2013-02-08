@@ -116,8 +116,9 @@
     <Compile Include="Engine\Configurations\Keyboard\KeyboardConfiguration.cs" />
     <Compile Include="Engine\Configurations\Keyboard\WindowsKeyboardExtractor.cs" />
     <Compile Include="Engine\Configurations\PhobosConfigurationManager.cs" />
-    <Compile Include="Engine\Graphics\Sprite.cs" />
+    <Compile Include="Engine\GameStates\Game\MainState.cs" />
     <Compile Include="Engine\Models\Entities\AEntity.cs" />
+    <Compile Include="Engine\Models\Entities\SolidEntity.cs" />
     <Compile Include="Engine\Services\ContentBundle.cs" />
     <Compile Include="Engine\Services\ContentHelper.cs" />
     <Compile Include="Engine\GameEngine.cs" />

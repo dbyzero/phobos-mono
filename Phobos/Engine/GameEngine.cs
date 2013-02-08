@@ -22,6 +22,7 @@ using Phobos.Engine.Gui.PWidgets.Events;
 using Phobos.Engine.Content;
 using Phobos.Engine.Inputs.MouseInput;
 using Phobos.Engine.GameStates;
+using Phobos.Engine.GameStates.Game;
 using Phobos.Engine.GameStates.Menu;
 using Phobos.Engine.GameStates.UiDebug;
 using Phobos.Engine.Services;
@@ -109,6 +110,7 @@ namespace Phobos.Engine
 
             #region GameStateManager
             gameStateManager = new GameStateManager();
+            gameStateManager.AddGameState( new MainState(gameStateManager), GameStateList.GAME );
             gameStateManager.AddGameState( new MenuGameState(gameStateManager), GameStateList.MENU );
             gameStateManager.AddGameState( new UIDebugState( gameStateManager ), GameStateList.UIDEBUG );
             gameStateManager.Initialize();
