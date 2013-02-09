@@ -28,7 +28,7 @@ namespace Phobos.Engine.GameStates.UiDebug {
         #region Methods
         protected override void LoadContent() {
             PSButton button0 = new PSButton( null, 4, GameEngine.Instance.Window.ClientBounds.Height - 38, "Menu" );
-            button0.Action += delegate( object sender, ActionEvent e ) {
+            button0.Action += delegate( APButton sender, ActionEvent e ) {
                 Status = GameStateStatus.Inactive;
                 ServicesManager.GetService<GameStateManager>().getGameState( GameStateList.MENU ).Status = GameStateStatus.Active;
             };
@@ -37,48 +37,47 @@ namespace Phobos.Engine.GameStates.UiDebug {
             PSButton button1 = new PSButton( null, 5, 5, "ClickMe !" );
             this.Components.Add( button1 );
             PSButton button2 = new PSButton( null, 5, 40, "HideMe!" );
+            button2.IsVisible = false;
 
-            button2.Visible = false;
-            button1.Action += delegate( object sender, ActionEvent e ) {
-                button2.Visible = true;
+            button1.Action += delegate( APButton sender, ActionEvent e ) {
+                button2.IsVisible = true;
                 Console.WriteLine( "Bravo, joli clic" );
             };
-            button1.MouseoverChange += delegate( object sender, BooleanChangeEvent e ) {
-                if( e.newValue ) {
+            button1.MouseoverChanged += delegate( APWidget sender, EventArgs e ) {
+                if( sender.IsMouseover ) {
                     Console.WriteLine( "La souris rentre..." );
                     button1.ButtonText = "Dessus";
                 }
-
             };
-            button1.MouseoverChange += delegate( object sender, BooleanChangeEvent e ) {
-                if( !e.newValue ) {
+            button1.MouseoverChanged += delegate( APWidget sender, EventArgs e ) {
+                if( !sender.IsMouseover ) {
                     Console.WriteLine( "...puis ressort." );
                     button1.ButtonText = "Plus dessus";
                 }
             };
-            button2.Action += delegate( object sender, ActionEvent e ) {
-                button2.Visible = false;
+            button2.Action += delegate( APButton sender, ActionEvent e ) {
+                button2.IsVisible = false;
                 Console.WriteLine( "Ni vus,ni connus" );
             };
             PSButton button3 = new PSButton( null, 5, 75, "Disabled" );
-            button3.Activated = false;
+            button3.IsEnabled = false;
 
             PSCheckBox checkbox1 = new PSCheckBox( null, 140, 5 );
             PSCheckBox checkbox2 = new PSCheckBox( null, 140, 25 );
-            checkbox2.Activated = false;
+            checkbox2.IsEnabled = false;
             APRadioGroup radioGroup = new APRadioGroup( null, 0, 0, 0, 0 );
             PSRadioButton radioButton1 = new PSRadioButton( radioGroup, 140, 45 );
             PSRadioButton radioButton2 = new PSRadioButton( radioGroup, 140, 65 );
             PSRadioButton radioButton3 = new PSRadioButton( radioGroup, 140, 85 );
             PSRadioButton radioButton4 = new PSRadioButton( radioGroup, 140, 105 );
             PSRadioButton radioButton5 = new PSRadioButton( radioGroup, 140, 125 );
-            radioButton3.Activated = false;
+            radioButton3.IsEnabled = false;
 
-            radioGroup.AddRadioButton( radioButton1 );
-            radioGroup.AddRadioButton( radioButton2 );
-            radioGroup.AddRadioButton( radioButton3 );
-            radioGroup.AddRadioButton( radioButton4 );
-            radioGroup.AddRadioButton( radioButton5 );
+            radioGroup.Add( radioButton1 );
+            radioGroup.Add( radioButton2 );
+            radioGroup.Add( radioButton3 );
+            radioGroup.Add( radioButton4 );
+            radioGroup.Add( radioButton5 );
 
             PSDialog dialog1 = new PSDialog( null, 200, 5, 256, 256 );
 
@@ -95,7 +94,7 @@ namespace Phobos.Engine.GameStates.UiDebug {
         #region IDrawable
         public override void Draw( GameTime gameTime ) {
             if( Status != GameStateStatus.Active ) return;
-            base.Draw( gameTime );
+
             GameEngine.spriteBatch.Begin();
             foreach( APWidget widget in Components ) {
                 widget.Draw( gameTime );

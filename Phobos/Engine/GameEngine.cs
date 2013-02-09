@@ -105,9 +105,7 @@ namespace Phobos.Engine
             #endregion
 
             MouseHandler.Initialize();
-
-
-
+            
             #region GameStateManager
             gameStateManager = new GameStateManager();
             gameStateManager.AddGameState( new MainState(gameStateManager), GameStateList.GAME );

@@ -13,44 +13,34 @@ namespace Phobos.Engine.Gui.PWidgets
     {
         #region Propreties & Fields
         #region Events and delegates
-        public delegate void ActionHandler( object sender, ActionEvent e );
+
+        public delegate void ActionHandler( APButton sender, ActionEvent e );
 
         public event ActionHandler Action;
         public event ActionHandler ActionKeyPressed;
         public event ActionHandler ActionKeyReleased;
         public event ActionHandler ActionKeyStatusChanged;
-        #endregion
 
-        #region Public
-        
         #endregion
+        #region Fields
 
-        #region Privates
         private bool isActionKeyPressed = false;
-        #endregion
 
         #endregion
-
-        #region Constructeurs
+        #endregion
+        #region Constructors & Indexer
 
         public APButton(APWidget parent, int x, int y, int width, int height)
             : base(parent, x, y, width, height)
         {
 
-            #region Bases events
-
-            #endregion
         }
 
         public APButton(APWidget parent, Rectangle _location)
             : base( parent, _location ) {
 
-            #region Bases events
-
-            #endregion
         }
         #endregion
-
         #region Methods
         #region Accessors and mutators
         public bool IsActionKeyPressed{
@@ -102,7 +92,7 @@ namespace Phobos.Engine.Gui.PWidgets
 
         public override void Update( GameTime gameTime ) {
             base.Update( gameTime );
-            if( Visible && Activated && Mouseover ) {
+            if( IsVisible && IsEnabled && IsMouseover ) {
                 if( Mouse.GetState().LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed ) {
                     IsActionKeyPressed = true;
                 } else if( IsActionKeyPressed == true ) {

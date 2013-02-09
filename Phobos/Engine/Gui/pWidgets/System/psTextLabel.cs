@@ -14,23 +14,23 @@ namespace Phobos.Engine.Gui.PWidgets.System {
     class PSTextLabel : APLabel {
 
         #region Fields and propreties
+        #region Fields
 
-        #region Protected
         protected static SpriteFont spriteFont;
         protected Rectangle textLocation;
-        #endregion
 
+        #endregion
         #endregion
 
         #region Constructors and Indexers
-        public PSTextLabel( APWidget parent, int x, int y, int width, int height, string text)
-            : base( parent, x, y, width, height, text ) {
-            Text = text.Trim();
+        public PSTextLabel( APWidget parent, int x, int y, int width, int height, string _text)
+            : base( parent, x, y, width, height, _text ) {
+            _text = _text.Trim();
 
-            Vector2 textSize = spriteFont.MeasureString( Text );
+            Vector2 textSize = spriteFont.MeasureString( _text );
 
             while( textSize.X > width ) {
-                Text = Text.Substring( 0, text.Count() - 2 );
+                Text = Text.Substring( 0, _text.Count() - 2 );
                 textSize = spriteFont.MeasureString( Text );
             }
 
@@ -38,13 +38,13 @@ namespace Phobos.Engine.Gui.PWidgets.System {
             textLocation.Y = y + (int) ( ( height - textSize.Y ) / 2 );
 
             #region Basic Events
-            TextChange += delegate( object sender, StringChangeEvent e ) {
-                String txt = e.newText.Trim();
-                Vector2 size = spriteFont.MeasureString( txt );
+            TextChanged += delegate( APLabel sender , EventArgs e) {
+
+                Vector2 size = spriteFont.MeasureString( text );
 
                 while( size.X > width ) {
-                    txt = txt.Substring( 0, txt.Count() - 2 );
-                    size = spriteFont.MeasureString( txt );
+                    text = text.Substring( 0, text.Count() - 2 );
+                    size = spriteFont.MeasureString( text );
                 }
 
                 textLocation.X = location.X + (int) ( ( location.Width - size.X ) / 2 );
@@ -61,7 +61,7 @@ namespace Phobos.Engine.Gui.PWidgets.System {
         #region Methods
         #region IDrawable
         public override void Draw( GameTime gameTime ) {
-            if( Parent.Activated ) {
+            if( parent.IsEnabled ) {
                 GameEngine.spriteBatch.DrawString( spriteFont, Text, new Vector2( textLocation.X, textLocation.Y ), Color.White );
             } else {
                 GameEngine.spriteBatch.DrawString( spriteFont, Text, new Vector2( textLocation.X, textLocation.Y ), Color.Gray );

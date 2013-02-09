@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Content;
 
 namespace Phobos.Engine.Gui.PWidgets.System {
     class PSDialog : APDialog{
-        #region Propreties & Fields
+        #region Fields
         #region Protected
 
         protected static Texture2D sprite;
@@ -30,7 +30,10 @@ namespace Phobos.Engine.Gui.PWidgets.System {
 
         public PSDialog( APWidget parent, int x, int y, int width, int height )
             : base( parent, x, y, width, height ) {
-
+                mouseArea.X += left.Width - 7;
+            mouseArea.Y += top.Height -7;
+            mouseArea.Height -= top.Height + bottom.Height -14;
+            mouseArea.Width -= right.Width + left.Width -14;
         }
 
         static PSDialog() {
@@ -42,19 +45,13 @@ namespace Phobos.Engine.Gui.PWidgets.System {
         #region IDrawable
 
         public override void Draw( Microsoft.Xna.Framework.GameTime gameTime ) {
-            base.Draw( gameTime );
-            
+
             GameEngine.spriteBatch.Draw( sprite, new Rectangle( location.X, location.Y, topLeft.Width, topLeft.Height ), topLeft, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f );
             GameEngine.spriteBatch.Draw( sprite, new Rectangle( location.X + location.Width - topRight.Width, location.Y, topRight.Width, topRight.Height ), topRight, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f );
             GameEngine.spriteBatch.Draw( sprite, new Rectangle( location.X, location.Y + location.Height - bottomLeft.Height, bottomLeft.Width, bottomLeft.Height ), bottomLeft, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f );
             GameEngine.spriteBatch.Draw( sprite, new Rectangle( location.X + location.Width - bottomRight.Width, location.Y + location.Height - bottomRight.Height, bottomRight.Width, bottomRight.Height), bottomRight, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f );
-            Rectangle drawRegion = location;
-            /*drawRegion.X -= left.Width;
-            drawRegion.Y -= top.Height;
-            drawRegion.Height += top.Height + bottom.Height;
-            drawRegion.Width += right.Width + left.Width;*/
 
-            Rectangle dest = drawRegion;
+            Rectangle dest = location;
 
             dest.X = location.X + topLeft.Width;
             dest.Y = location.Y;
@@ -90,6 +87,10 @@ namespace Phobos.Engine.Gui.PWidgets.System {
             dest.Height = location.Height - bottom.Height - top.Height;
 
             GraphicalHelpers.fillRectangle( sprite, texture, dest, GameEngine.spriteBatch );
+            //Montre en rouge la mouseArea.
+            /*Texture2D rect = new Texture2D( ServicesManager.GetService<GraphicsDevice>(), 1, 1 );
+            rect.SetData( new[] { Color.Red } );
+            GameEngine.spriteBatch.Draw( rect, mouseArea, Color.Red );*/
 
         }
 

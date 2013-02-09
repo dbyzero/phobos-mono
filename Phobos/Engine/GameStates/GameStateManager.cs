@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Phobos.Engine.GameStates {
 
-    public enum GameStateList {
+    public enum     GameStateList {
         MENU, GAME, UIDEBUG
     }
 

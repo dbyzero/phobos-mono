@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Phobos.Engine.Models.Entities;
+using Phobos.Engine.Gui.PWidgets;
 
 namespace Phobos.Engine.GameStates.Game {
     class MainState : AGameState{
@@ -16,8 +17,8 @@ namespace Phobos.Engine.GameStates.Game {
         SolidEntity entity1 ;
 
         public MainState( GameStateManager manager )
-            : base( ) {
-                Status = GameStateStatus.Active;
+            : base() {
+            Status = GameStateStatus.Inactive;
         }
 
         protected override void LoadContent() {
@@ -30,16 +31,19 @@ namespace Phobos.Engine.GameStates.Game {
             base.LoadContent();
             entity1 = new SolidEntity(Vector3.Zero);
         }
+
         #region IDrawable
+
         public override void Draw( GameTime gameTime ) {
             if( Status != GameStateStatus.Active ) return;
-            base.Draw( gameTime );
+            
             GameEngine.spriteBatch.Begin();
             returnButton.Draw( gameTime );
             GameEngine.spriteBatch.End();
             base.Draw( gameTime );
 
         }
+
         #endregion
         #region IUpdateable
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Phobos.Engine.Gui.PWidgets;
 using Phobos.Engine.Gui.PWidgets.Events;
 using Phobos.Engine.Gui.PWidgets.System;
 using Phobos.Engine.Services;
@@ -26,19 +27,19 @@ namespace Phobos.Engine.GameStates.Menu {
 
             menuBG = new PSDialog( null, 32, 32, 192, GameEngine.Instance.Window.ClientBounds.Height - 64 );
             gameButton = new PSButton(gameButton, 64, 140, "Game");
-            gameButton.Action += delegate(object sender, ActionEvent e)
+            gameButton.Action += delegate( APButton sender, ActionEvent e )
             {
                 ServicesManager.GetService<GameStateManager>().getGameState(GameStateList.GAME).Status = GameStateStatus.Active;
                 Status = GameStateStatus.Inactive;
             };
             optionButton = new PSButton( optionButton, 64, 180, "Options" );
             uiDebugButton = new PSButton( uiDebugButton, 64, 220, "Debug UI" );
-            uiDebugButton.Action += delegate( object sender, ActionEvent e ) {
+            uiDebugButton.Action += delegate( APButton sender, ActionEvent e ) {
                 ServicesManager.GetService<GameStateManager>().getGameState( GameStateList.UIDEBUG ).Status = GameStateStatus.Active;
                 Status = GameStateStatus.Inactive;
             };
             exitButton = new PSButton( exitButton, 64, 260, "Exit" );
-            exitButton.Action += delegate( object sender, ActionEvent e ) {
+            exitButton.Action += delegate( APButton sender, ActionEvent e ) {
                 GameEngine.Instance.Exit();
             };
 

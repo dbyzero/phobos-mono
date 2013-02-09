@@ -10,7 +10,7 @@ namespace Phobos.Engine.Gui.PWidgets {
 
         #region Fields & Propreties
         #region Events and delegates
-        public delegate void CheckedChangeHandler(object sender, BooleanChangeEvent e);
+        public delegate void CheckedChangeHandler(object sender, SimpleValueChangedEvent<bool> e);
 
         public event CheckedChangeHandler CheckedChange;
 
@@ -25,8 +25,8 @@ namespace Phobos.Engine.Gui.PWidgets {
         public APCheckBox( APWidget parent, int x, int y, int width, int height )
             : base( parent, x, y, width, height ) {
             #region Bases events
-            Action += delegate( object sender, ActionEvent e ) {
-                if(Activated && Visible){
+                Action += delegate( APButton sender, ActionEvent e ) {
+                if(IsEnabled && IsVisible){
                     if( Checked ) {
                         Checked = false;
                     } else {
@@ -58,7 +58,7 @@ namespace Phobos.Engine.Gui.PWidgets {
 
         protected void OnCheckedChange() {
             if(CheckedChange != null){
-                CheckedChange( this, new BooleanChangeEvent( Checked, "Checked" ) );
+                CheckedChange( this, new SimpleValueChangedEvent<bool>( Checked ) );
             }
         }
 

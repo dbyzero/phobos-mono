@@ -12,3 +12,4 @@ bin/
 **/*.user
 **/*.cachefile
 **/*.suo
+*.vpp~1

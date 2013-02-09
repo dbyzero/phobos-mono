@@ -11,10 +11,9 @@ using Microsoft.Xna.Framework.Content;
 namespace Phobos.Engine.Gui.PWidgets.System {
     class PSCheckBox : APCheckBox {
 
-        #region Fields & Propreties
+        #region Fields & Properties
         protected static Texture2D spriteButton;
         #endregion
-
         #region Constructors and Indexers
         public PSCheckBox(APWidget parent, int x, int y)
             : base( parent, x, y, 18, 18 ) {
@@ -25,14 +24,13 @@ namespace Phobos.Engine.Gui.PWidgets.System {
             spriteButton = ServicesManager.GetService<ContentManager>().Load<Texture2D>( @"gui\system\psCheckboxes" );
         }
         #endregion
-
-        #region
+        #region Methods
         #region IDrawable
         public override void Draw( GameTime gameTime ) {
             Rectangle _source = new Rectangle(0,0,18,18);
-            base.Draw( gameTime );
-            if( Activated ) {
-                if( Mouseover ){
+
+            if( IsEnabled ) {
+                if( IsMouseover ){
                     _source.Y = 19;
                     if( IsActionKeyPressed ) {
                         _source.X = 19;
