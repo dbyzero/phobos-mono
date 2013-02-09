@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 
 namespace Phobos.Engine.Gui.PWidgets {
-    class APTextField : APLabel {
+    abstract class APTextField : APLabel {
         #region Fields and propreties
         #region Events and delegates
         #endregion

@@ -14,18 +14,32 @@ namespace Phobos.Engine.Gui.PWidgets {
     abstract class APLabel : APWidget {
 
         #region Fields and propreties
-
         #region Events and delegates
-        public delegate void TextChangeHandler( object sender, StringChangeEvent e );
+        public delegate void TextChangedHandler( APLabel sender, EventArgs e );
 
-        public event TextChangeHandler TextChange;
-        #endregion
-
-        #region Private
-        private string text;
+        public event TextChangedHandler TextChanged;
 
         #endregion
+        #region Fields
 
+        protected string text;
+
+        #endregion
+        #region Properties
+
+        public string Text {
+            get {
+                return text;
+            }
+            set {
+                if( text != value ) {
+                    text = value;
+                    OnTextChanged();
+                }
+            }
+        }
+
+        #endregion
         #endregion
 
         #region Constructeurs
@@ -37,28 +51,15 @@ namespace Phobos.Engine.Gui.PWidgets {
         }
 
         #endregion
-
         #region Methods
-        #region Accessors and mutators
-        public string Text {
-            get {
-                return text;
-            }
-            set {
-                if( text != value ) {
-                    OnTextChanged( value, text );
-                    text = value;
-                }
-            }
-        }
-        #endregion
-
         #region Events handling
-        protected void OnTextChanged( string _new, string _previous ) {
-            if( TextChange != null ) {
-                TextChange( this, new StringChangeEvent( _new, _previous ) );
+
+        protected void OnTextChanged() {
+            if( TextChanged != null ) {
+                TextChanged( this, EventArgs.Empty );
             }
         }
+
         #endregion
         #endregion
 

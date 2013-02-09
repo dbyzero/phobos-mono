@@ -29,8 +29,8 @@ namespace Phobos.Engine.Gui.PWidgets.System {
             base.Draw( gameTime );
             Rectangle _source = new Rectangle( 0, 0, 18, 18 );
 
-            if( Activated ) {
-                if( Mouseover ) {
+            if( IsEnabled ) {
+                if( IsMouseover ) {
                     _source.Y = 19;
                     if( IsActionKeyPressed ) {
                         _source.X = 19;
