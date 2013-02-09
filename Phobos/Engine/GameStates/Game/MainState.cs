@@ -12,7 +12,7 @@ using Phobos.Engine.Models.Entities;
 namespace Phobos.Engine.GameStates.Game {
     class MainState : AGameState{
 
-        PSButton menuButton ;
+        PSButton returnButton ;
         SolidEntity entity1 ;
 
         public MainState( GameStateManager manager )
@@ -22,8 +22,8 @@ namespace Phobos.Engine.GameStates.Game {
 
         protected override void LoadContent() {
 
-            menuButton = new PSButton(menuButton, 64, 64, "Menu");
-            menuButton.Action += delegate( object sender, ActionEvent e ) {
+            returnButton = new PSButton(returnButton, 64, 64, "Retour");
+            returnButton.Action += delegate( object sender, ActionEvent e ) {
                 ServicesManager.GetService<GameStateManager>().getGameState( GameStateList.MENU ).Status = GameStateStatus.Active;
                 Status = GameStateStatus.Inactive;
             };
@@ -35,7 +35,7 @@ namespace Phobos.Engine.GameStates.Game {
             if( Status != GameStateStatus.Active ) return;
             base.Draw( gameTime );
             GameEngine.spriteBatch.Begin();
-            menuButton.Draw( gameTime );
+            returnButton.Draw( gameTime );
             GameEngine.spriteBatch.End();
             base.Draw( gameTime );
 
@@ -46,7 +46,7 @@ namespace Phobos.Engine.GameStates.Game {
         public override void Update( GameTime gameTime ) {
             if( Status != GameStateStatus.Active ) return;
             base.Update( gameTime );
-            menuButton.Update( gameTime );
+            returnButton.Update( gameTime );
             Console.WriteLine(entity1.WorldPosition.ToString());
         }
         #endregion
