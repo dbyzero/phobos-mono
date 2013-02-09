@@ -24,7 +24,7 @@ namespace Phobos.Engine.GameStates.Game {
         protected override void LoadContent() {
 
             returnButton = new PSButton(returnButton, 64, 64, "Retour");
-            returnButton.Action += delegate( object sender, ActionEvent e ) {
+            returnButton.Action += delegate( APButton sender, ActionEvent e ) {
                 ServicesManager.GetService<GameStateManager>().getGameState( GameStateList.MENU ).Status = GameStateStatus.Active;
                 Status = GameStateStatus.Inactive;
             };
