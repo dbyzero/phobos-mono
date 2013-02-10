@@ -57,27 +57,38 @@ namespace Phobos.Engine.GameStates.Game {
         public override void Draw( GameTime gameTime ) {
             if( Status != GameStateStatus.Active ) return;
             
-            GameEngine.spriteBatch.Begin();
-            returnButton.Draw(gameTime);
-            exitButton.Draw(gameTime);
-            GameEngine.spriteBatch.End();
-            base.Draw( gameTime );
-
             Rectangle areaToDraw ;
+
             spriteBatch.Begin();
 
+            int i = 0;
+            entity1.X = 0 ;
+            entity1.Y = 0;
             areaToDraw = new Rectangle(
                 (int)entity1.ScreenPosition.X,
                 (int)entity1.ScreenPosition.Y,
                 entity1.Width,
                 entity1.Height);
-            spriteBatch.Draw(
-                entity1.SpriteSheet, 
-                areaToDraw, 
-                entity1.SpriteRect,
-                Color.White);
-
+            while (i < 4000)
+            {
+                entity1.X = i % 60 + (int)i / 60;
+                entity1.Y = 0 - i % 60 + (int)i / 60;
+                areaToDraw.X = (int)entity1.ScreenPosition.X;
+                areaToDraw.Y = (int)entity1.ScreenPosition.Y;
+                spriteBatch.Draw(
+                    entity1.SpriteSheet,
+                    areaToDraw,
+                    entity1.SpriteRect,
+                    Color.White);
+                i++;
+            }
             spriteBatch.End();
+
+            GameEngine.spriteBatch.Begin();
+            returnButton.Draw(gameTime);
+            exitButton.Draw(gameTime);
+            GameEngine.spriteBatch.End();
+            base.Draw(gameTime);
 
         }
 

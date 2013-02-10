@@ -123,6 +123,7 @@ namespace Phobos.Engine
             GameEngine.Instance.Components.Add( gameStateManager );
             ServicesManager.AddService<GameStateManager>( gameStateManager );
             #endregion
+            SetWindowedFullScreen();
             base.Initialize();
             
         }
