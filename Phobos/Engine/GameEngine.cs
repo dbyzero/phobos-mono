@@ -26,6 +26,7 @@ using Phobos.Engine.GameStates.Game;
 using Phobos.Engine.GameStates.Menu;
 using Phobos.Engine.GameStates.UiDebug;
 using Phobos.Engine.Services;
+using Phobos.Engine.View;
 
 namespace Phobos.Engine
 {
@@ -43,6 +44,7 @@ namespace Phobos.Engine
         
         private static GameEngine singleton;
         GameStateManager gameStateManager;
+        SceneManager sceneManager;
 
         #endregion
         #endregion
@@ -89,8 +91,8 @@ namespace Phobos.Engine
             Window.AllowUserResizing = false;
             Window.Title = "Phobos v0.0";
             //set windows to 1280x768
-            deviceManager.PreferredBackBufferWidth = 1280;
-            deviceManager.PreferredBackBufferHeight = 768;
+            deviceManager.PreferredBackBufferWidth = 1200;
+            deviceManager.PreferredBackBufferHeight = 600;
             deviceManager.ApplyChanges();
 
             //Limitation des refresh a 50 par seconde
@@ -120,10 +122,21 @@ namespace Phobos.Engine
             gameStateManager.AddGameState( new MenuGameState(gameStateManager), GameStateList.MENU );
             gameStateManager.AddGameState( new UIDebugState( gameStateManager ), GameStateList.UIDEBUG );
             gameStateManager.Initialize();
-            GameEngine.Instance.Components.Add( gameStateManager );
+            GameEngine.Instance.Components.Add( gameStateManager ); //Auto-instancier par le GameEngine
             ServicesManager.AddService<GameStateManager>( gameStateManager );
             #endregion
-            SetWindowedFullScreen();
+
+            #region SceneManager
+            sceneManager = new SceneManager();
+            sceneManager.AddScene(SceneList.SO, new Scene());
+            sceneManager.AddScene(SceneList.SE, new Scene());
+            sceneManager.AddScene(SceneList.NO, new Scene());
+            sceneManager.AddScene(SceneList.NE, new Scene());
+            GameEngine.Instance.Components.Add(sceneManager);
+            ServicesManager.AddService<SceneManager>(sceneManager);
+            #endregion
+
+            //SetWindowedFullScreen();
             base.Initialize();
             
         }
@@ -156,7 +169,8 @@ namespace Phobos.Engine
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            ServicesManager.GetService<GameStateManager>().Update( gameTime );
+            ServicesManager.GetService<GameStateManager>().Update(gameTime);
+            ServicesManager.GetService<SceneManager>().Update(gameTime);
             base.Update( gameTime );
         }
 
@@ -167,7 +181,8 @@ namespace Phobos.Engine
         protected override void Draw(GameTime gameTime)
         {
             ServicesManager.GetService<GraphicsDevice>().Clear( Color.LightSkyBlue );
-            ServicesManager.GetService<GameStateManager>().Draw( gameTime );
+            ServicesManager.GetService<GameStateManager>().Draw(gameTime);
+            ServicesManager.GetService<SceneManager>().Draw(gameTime);
             
             base.Draw( gameTime );
             MouseHandler.DrawCursor();

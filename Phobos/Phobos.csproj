@@ -153,6 +153,9 @@
     <Compile Include="Engine\Layer.cs" />
     <Compile Include="Engine\Models\World\Generators\BasicGenerator.cs" />
     <Compile Include="Engine\Services\ServicesManager.cs" />
+    <Compile Include="Engine\View\Camera.cs" />
+    <Compile Include="Engine\View\Scene.cs" />
+    <Compile Include="Engine\View\SceneManager.cs" />
     <Compile Include="lib\Nini\Config\AliasText.cs" />
     <Compile Include="lib\Nini\Config\ConfigBase.cs" />
     <Compile Include="lib\Nini\Config\ConfigCollection.cs" />
@@ -206,6 +209,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <!--

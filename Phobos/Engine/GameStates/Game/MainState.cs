@@ -71,15 +71,11 @@ namespace Phobos.Engine.GameStates.Game {
 
             #region Test to draw sprites
             int j = -20;
-            spriteSolGrass.X = 40;
-            spriteSolGrass.Y = 20;
-            spriteSolGrass.X = 39;
-            spriteSolGrass.Y = 19;
             while (j < 20)
             {
-                spriteSolGrass.X = 40;
+                spriteSolGrass.X = 20;
                 spriteSolGrass.Y = j;
-                testAvatar.X = 40;
+                testAvatar.X = 20;
                 testAvatar.Y = j;
                 int i = 0;
                 while (i < 40)
