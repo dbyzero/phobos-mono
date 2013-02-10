@@ -50,8 +50,8 @@ namespace Phobos.Engine
         #region Constructors / Instanciateur
         private GameEngine(){
             this.deviceManager = new GraphicsDeviceManager(this);
-            PhobosConfigurationManager.Init("Phobos.ini");
-            PhobosConfigurationManager.SetAutoSave(true);
+            //PhobosConfigurationManager.Init("Phobos.ini");
+            //PhobosConfigurationManager.SetAutoSave(true);
             ContentHelper.Initialize();
             Content.RootDirectory = "Content";
 
@@ -100,7 +100,7 @@ namespace Phobos.Engine
 
             #region Initialisation du clavier
             string currentLayout = (new WindowsKeyboardExtractor()).getCurrentSystemLayout();
-            if (PhobosConfigurationManager.Source.Configs["Keyboard"] == null || PhobosConfigurationManager.Source.Configs["Keyboard"].Get("lastKeyboardLayout") == null)
+            /*if (PhobosConfigurationManager.Source.Configs["Keyboard"] == null || PhobosConfigurationManager.Source.Configs["Keyboard"].Get("lastKeyboardLayout") == null)
             {
                 
                 PhobosConfigurationManager.set("Keyboard", "lastKeyboardLayout", currentLayout);
@@ -109,7 +109,7 @@ namespace Phobos.Engine
             {
                 Console.WriteLine("bam");
                 PhobosConfigurationManager.set("Keyboard", "lastKeyboardLayout", currentLayout);
-            }
+            }*/
             #endregion
 
             MouseHandler.Initialize();

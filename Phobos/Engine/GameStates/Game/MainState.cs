@@ -16,7 +16,8 @@ namespace Phobos.Engine.GameStates.Game {
 
         PSButton returnButton;
         PSButton exitButton;
-        SolidEntity entity1 ;
+        SolidEntity spriteSolGrass;
+        SolidEntity testAvatar;
         SpriteBatch spriteBatch;
 
         public MainState( GameStateManager manager )
@@ -29,11 +30,20 @@ namespace Phobos.Engine.GameStates.Game {
             base.Initialize();
             
             /* TEST */
-            entity1 = new SolidEntity(new Vector3(41, 3, 0));
-            entity1.SpriteSheet = GameEngine.Instance.Content.Load<Texture2D>(@"spriteSheets\temp_sprite");
-            entity1.SpriteRect = new Rectangle(0, 0, 32, 32);
-            entity1.Width = 32;
-            entity1.Height = 32;
+            spriteSolGrass = new SolidEntity(new Vector3(41, 3, 0));
+            spriteSolGrass.SpriteSheet = GameEngine.Instance.Content.Load<Texture2D>(@"spriteSheets\temp_sprite");
+            spriteSolGrass.SpriteSheetRect = new Rectangle(64, 32, 32, 32);
+            spriteSolGrass.Width = 32;
+            spriteSolGrass.Height = 32;
+            spriteSolGrass.CenterSprite = new Vector2(16,8);
+
+            testAvatar = new SolidEntity(new Vector3(42, 4, 0));
+            testAvatar.SpriteSheet = GameEngine.Instance.Content.Load<Texture2D>(@"spriteSheets\temp_sprite");
+            testAvatar.SpriteSheetRect = new Rectangle(32, 0, 32, 32);
+            testAvatar.Width = 32;
+            testAvatar.Height = 32;
+            testAvatar.CenterSprite = new Vector2(16, 28);
+
             spriteBatch = new SpriteBatch(GameEngine.Instance.GraphicsDevice);
         }
 
@@ -57,32 +67,36 @@ namespace Phobos.Engine.GameStates.Game {
         public override void Draw( GameTime gameTime ) {
             if( Status != GameStateStatus.Active ) return;
             
-            Rectangle areaToDraw ;
-
             spriteBatch.Begin();
 
-            int i = 0;
-            entity1.X = 0 ;
-            entity1.Y = 0;
-            areaToDraw = new Rectangle(
-                (int)entity1.ScreenPosition.X,
-                (int)entity1.ScreenPosition.Y,
-                entity1.Width,
-                entity1.Height);
-            while (i < 4000)
+            #region Test to draw sprites
+            int j = -20;
+            spriteSolGrass.X = 40;
+            spriteSolGrass.Y = 20;
+            spriteSolGrass.X = 39;
+            spriteSolGrass.Y = 19;
+            while (j < 20)
             {
-                entity1.X = i % 60 + (int)i / 60;
-                entity1.Y = 0 - i % 60 + (int)i / 60;
-                areaToDraw.X = (int)entity1.ScreenPosition.X;
-                areaToDraw.Y = (int)entity1.ScreenPosition.Y;
-                spriteBatch.Draw(
-                    entity1.SpriteSheet,
-                    areaToDraw,
-                    entity1.SpriteRect,
-                    Color.White);
-                i++;
-            }
-            spriteBatch.End();
+                spriteSolGrass.X = 40;
+                spriteSolGrass.Y = j;
+                testAvatar.X = 40;
+                testAvatar.Y = j;
+                int i = 0;
+                while (i < 40)
+                {
+                    spriteSolGrass.X += 1;
+                    spriteSolGrass.Y = j;
+                    spriteSolGrass.Draw(spriteBatch);
+
+                    testAvatar.X += 1;
+                    testAvatar.Y = j;
+                    testAvatar.Draw(spriteBatch);
+                    i++;
+                }
+                j++;
+            } 
+            #endregion
+            spriteBatch.End(); 
 
             GameEngine.spriteBatch.Begin();
             returnButton.Draw(gameTime);
@@ -101,18 +115,16 @@ namespace Phobos.Engine.GameStates.Game {
             base.Update( gameTime );
             returnButton.Update(gameTime);
             exitButton.Update(gameTime);
-            Console.WriteLine(entity1.WorldPosition.ToString());
-            Console.WriteLine(entity1.ScreenPosition);
 
             /** TEST KeyBoard SPACE BAR */
-            if (Keyboard.GetState().IsKeyDown(Keys.Right)) entity1.X += 1;
-            if (Keyboard.GetState().IsKeyDown(Keys.Left)) entity1.X -= 1;
-            if (Keyboard.GetState().IsKeyDown(Keys.Up)) entity1.Y -= 1;
-            if (Keyboard.GetState().IsKeyDown(Keys.Down)) entity1.Y += 1;
-            if (Keyboard.GetState().IsKeyDown(Keys.Space)) entity1.Z += 1;
-            if (Keyboard.GetState().IsKeyDown(Keys.LeftControl)) entity1.Z -= 1;
-            if (Keyboard.GetState().IsKeyDown(Keys.RightControl)) entity1.Z -= 1;
-            if (Keyboard.GetState().IsKeyDown(Keys.W)) entity1.move(new Vector3(10,10,10));
+            if (Keyboard.GetState().IsKeyDown(Keys.Right)) spriteSolGrass.X += 1;
+            if (Keyboard.GetState().IsKeyDown(Keys.Left)) spriteSolGrass.X -= 1;
+            if (Keyboard.GetState().IsKeyDown(Keys.Up)) spriteSolGrass.Y -= 1;
+            if (Keyboard.GetState().IsKeyDown(Keys.Down)) spriteSolGrass.Y += 1;
+            if (Keyboard.GetState().IsKeyDown(Keys.Space)) spriteSolGrass.Z += 1;
+            if (Keyboard.GetState().IsKeyDown(Keys.LeftControl)) spriteSolGrass.Z -= 1;
+            if (Keyboard.GetState().IsKeyDown(Keys.RightControl)) spriteSolGrass.Z -= 1;
+            if (Keyboard.GetState().IsKeyDown(Keys.W)) spriteSolGrass.move(new Vector3(10,10,10));
         }
         #endregion
     }
