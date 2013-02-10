@@ -20,7 +20,7 @@ namespace Phobos.Engine.GameStates.Menu {
 
         public MenuGameState( GameStateManager manager )
             : base( ) {
-                Status = GameStateStatus.Active;
+                Status = GameStateStatus.Inactive;
         }
 
         protected override void LoadContent() {

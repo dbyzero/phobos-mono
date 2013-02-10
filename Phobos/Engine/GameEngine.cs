@@ -87,7 +87,15 @@ namespace Phobos.Engine
             // TODO: Géré la config externe
             displayModes = ServicesManager.GetService<GraphicsDevice>().Adapter.SupportedDisplayModes;
             Window.AllowUserResizing = false;
-            Window.Title = "Phobos";
+            Window.Title = "Phobos v0.0";
+            //set windows to 1280x768
+            deviceManager.PreferredBackBufferWidth = 1280;
+            deviceManager.PreferredBackBufferHeight = 768;
+            deviceManager.ApplyChanges();
+
+            //Limitation des refresh a 50 par seconde
+            IsFixedTimeStep = true;
+            TargetElapsedTime = new TimeSpan(0,0,0,0,20);
             #endregion
 
             #region Initialisation du clavier
