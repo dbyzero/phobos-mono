@@ -55,7 +55,8 @@
 
             #endregion 
 
-            public void move(Vector3 v) {
+            public virtual void move(Vector3 v)
+            {
                 worldPosition += v;
             }
 

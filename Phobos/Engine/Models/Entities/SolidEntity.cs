@@ -136,6 +136,13 @@ namespace Phobos.Engine.Models.Entities
             return 1;
         }
 
+        public override void move(Vector3 v)
+        {
+            base.move(v);
+            calculateScreenRect();
+        }
+
+
         #endregion
     }
 }
