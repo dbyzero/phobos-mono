@@ -35,6 +35,7 @@ namespace Phobos.Engine.View
         {
             if (!Active) return;
             //TODO DRAW SCENE
+            //Think about adding entity in scene
             base.Draw(gameTime);
         }
         
