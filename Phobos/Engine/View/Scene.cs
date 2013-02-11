@@ -35,7 +35,6 @@ namespace Phobos.Engine.View
         {
             if (!Active) return;
             //TODO DRAW SCENE
-            //Think about adding entity in scene
             base.Draw(gameTime);
         }
         
@@ -43,6 +42,13 @@ namespace Phobos.Engine.View
         {
             if (!active) return;
             base.Update(gameTime);
+        }
+
+        public override void Initialize()
+        {
+            if (!active) return;
+            Console.WriteLine(this);
+            base.Initialize();
         }
 
         #endregion

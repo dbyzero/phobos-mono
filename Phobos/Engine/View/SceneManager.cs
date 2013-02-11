@@ -44,7 +44,6 @@ namespace Phobos.Engine.View
             foreach (KeyValuePair<SceneList, Scene> entry in scenes)
             {
                 entry.Value.Draw(gameTime);
-                // Console.WriteLine("Draw " + entry.ToString());
             }
 
             base.Draw(gameTime);
@@ -55,7 +54,6 @@ namespace Phobos.Engine.View
             foreach (KeyValuePair<SceneList, Scene> entry in scenes)
             {
                 entry.Value.Update(gameTime);
-               // Console.WriteLine("Update " + entry.ToString());
             }
 
             base.Update(gameTime);

@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using Phobos.Engine.Models.Entities;
 using Phobos.Engine.Gui.PWidgets;
+using Phobos.Engine.View;
 
 namespace Phobos.Engine.GameStates.Game {
     class MainState : AGameState{
@@ -19,6 +20,7 @@ namespace Phobos.Engine.GameStates.Game {
         SolidEntity spriteSolGrass;
         SolidEntity testAvatar;
         SpriteBatch spriteBatch;
+        SceneManager sceneManager;
 
         public MainState( GameStateManager manager )
             : base() {
@@ -28,6 +30,15 @@ namespace Phobos.Engine.GameStates.Game {
         public override void Initialize()
         {
             base.Initialize();
+
+            #region SceneManager
+            sceneManager = new SceneManager();
+            sceneManager.AddScene(SceneList.SO, new Scene());
+            sceneManager.AddScene(SceneList.SE, new Scene());
+            sceneManager.AddScene(SceneList.NO, new Scene());
+            sceneManager.AddScene(SceneList.NE, new Scene());
+            sceneManager.Initialize();
+            #endregion
             
             /* TEST */
             spriteSolGrass = new SolidEntity(new Vector3(41, 3, 0));
@@ -39,10 +50,10 @@ namespace Phobos.Engine.GameStates.Game {
 
             testAvatar = new SolidEntity(new Vector3(42, 4, 0));
             testAvatar.SpriteSheet = GameEngine.Instance.Content.Load<Texture2D>(@"spriteSheets\temp_sprite");
-            testAvatar.SpriteSheetRect = new Rectangle(32, 0, 32, 32);
+            testAvatar.SpriteSheetRect = new Rectangle(224, 0, 32, 64);
             testAvatar.Width = 32;
-            testAvatar.Height = 32;
-            testAvatar.CenterSprite = new Vector2(16, 28);
+            testAvatar.Height = 64;
+            testAvatar.CenterSprite = new Vector2(16, 60);
 
             spriteBatch = new SpriteBatch(GameEngine.Instance.GraphicsDevice);
         }
@@ -65,12 +76,15 @@ namespace Phobos.Engine.GameStates.Game {
         #region IDrawable
 
         public override void Draw( GameTime gameTime ) {
-            if( Status != GameStateStatus.Active ) return;
-            
-            spriteBatch.Begin();
+            if (Status != GameStateStatus.Active) return;
+
+            sceneManager.Draw(gameTime);
+
 
             #region Test to draw sprites
-            int j = -20;
+            spriteBatch.Begin();
+            int j = -20; 
+            
             while (j < 20)
             {
                 spriteSolGrass.X = 20;
@@ -90,14 +104,17 @@ namespace Phobos.Engine.GameStates.Game {
                     i++;
                 }
                 j++;
-            } 
-            #endregion
+            }
             spriteBatch.End(); 
+            #endregion
 
+            #region Test Bench Sprite
             GameEngine.spriteBatch.Begin();
             returnButton.Draw(gameTime);
             exitButton.Draw(gameTime);
-            GameEngine.spriteBatch.End();
+            GameEngine.spriteBatch.End(); 
+            #endregion
+
             base.Draw(gameTime);
 
         }
@@ -111,16 +128,7 @@ namespace Phobos.Engine.GameStates.Game {
             base.Update( gameTime );
             returnButton.Update(gameTime);
             exitButton.Update(gameTime);
-
-            /** TEST KeyBoard SPACE BAR */
-            if (Keyboard.GetState().IsKeyDown(Keys.Right)) spriteSolGrass.X += 1;
-            if (Keyboard.GetState().IsKeyDown(Keys.Left)) spriteSolGrass.X -= 1;
-            if (Keyboard.GetState().IsKeyDown(Keys.Up)) spriteSolGrass.Y -= 1;
-            if (Keyboard.GetState().IsKeyDown(Keys.Down)) spriteSolGrass.Y += 1;
-            if (Keyboard.GetState().IsKeyDown(Keys.Space)) spriteSolGrass.Z += 1;
-            if (Keyboard.GetState().IsKeyDown(Keys.LeftControl)) spriteSolGrass.Z -= 1;
-            if (Keyboard.GetState().IsKeyDown(Keys.RightControl)) spriteSolGrass.Z -= 1;
-            if (Keyboard.GetState().IsKeyDown(Keys.W)) spriteSolGrass.move(new Vector3(10,10,10));
+            sceneManager.Update(gameTime);
         }
         #endregion
     }

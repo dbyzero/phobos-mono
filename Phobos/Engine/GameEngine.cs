@@ -26,7 +26,6 @@ using Phobos.Engine.GameStates.Game;
 using Phobos.Engine.GameStates.Menu;
 using Phobos.Engine.GameStates.UiDebug;
 using Phobos.Engine.Services;
-using Phobos.Engine.View;
 
 namespace Phobos.Engine
 {
@@ -44,7 +43,6 @@ namespace Phobos.Engine
         
         private static GameEngine singleton;
         GameStateManager gameStateManager;
-        SceneManager sceneManager;
 
         #endregion
         #endregion
@@ -95,9 +93,9 @@ namespace Phobos.Engine
             deviceManager.PreferredBackBufferHeight = 600;
             deviceManager.ApplyChanges();
 
-            //Limitation des refresh a 50 par seconde
+            //Limitation des refresh a 60 par seconde
             IsFixedTimeStep = true;
-            TargetElapsedTime = new TimeSpan(0,0,0,0,20);
+            TargetElapsedTime = new TimeSpan(0,0,0,0,13);
             #endregion
 
             #region Initialisation du clavier
@@ -121,20 +119,11 @@ namespace Phobos.Engine
             gameStateManager.AddGameState( new MainState(gameStateManager), GameStateList.GAME );
             gameStateManager.AddGameState( new MenuGameState(gameStateManager), GameStateList.MENU );
             gameStateManager.AddGameState( new UIDebugState( gameStateManager ), GameStateList.UIDEBUG );
-            gameStateManager.Initialize();
+            //gameStateManager.Initialize();//auto initialized cd ci dessous
             GameEngine.Instance.Components.Add( gameStateManager ); //Auto-instancier par le GameEngine
             ServicesManager.AddService<GameStateManager>( gameStateManager );
             #endregion
 
-            #region SceneManager
-            sceneManager = new SceneManager();
-            sceneManager.AddScene(SceneList.SO, new Scene());
-            sceneManager.AddScene(SceneList.SE, new Scene());
-            sceneManager.AddScene(SceneList.NO, new Scene());
-            sceneManager.AddScene(SceneList.NE, new Scene());
-            GameEngine.Instance.Components.Add(sceneManager);
-            ServicesManager.AddService<SceneManager>(sceneManager);
-            #endregion
 
             //SetWindowedFullScreen();
             base.Initialize();
@@ -170,7 +159,6 @@ namespace Phobos.Engine
         protected override void Update(GameTime gameTime)
         {
             ServicesManager.GetService<GameStateManager>().Update(gameTime);
-            ServicesManager.GetService<SceneManager>().Update(gameTime);
             base.Update( gameTime );
         }
 
@@ -182,7 +170,6 @@ namespace Phobos.Engine
         {
             ServicesManager.GetService<GraphicsDevice>().Clear( Color.LightSkyBlue );
             ServicesManager.GetService<GameStateManager>().Draw(gameTime);
-            ServicesManager.GetService<SceneManager>().Draw(gameTime);
             
             base.Draw( gameTime );
             MouseHandler.DrawCursor();
