@@ -12,8 +12,8 @@ namespace Phobos.Engine.Gui.PWidgets {
 
         #endregion
         #region Constructors & Indexers
-        public APRadioGroup( APWidget parent, int x, int y, int width, int height )
-            : base( parent, x, y, width, height ) {
+        public APRadioGroup( int x, int y, int width, int height )
+            : base( x, y, width, height ) {
             
         }
         #endregion

@@ -27,16 +27,16 @@ namespace Phobos.Engine.GameStates.UiDebug {
 
         #region Methods
         protected override void LoadContent() {
-            PSButton button0 = new PSButton( null, 4, GameEngine.Instance.Window.ClientBounds.Height - 38, "Menu" );
+            PSButton button0 = new PSButton( 4, GameEngine.Instance.Window.ClientBounds.Height - 38, "Menu" );
             button0.Action += delegate( APButton sender, ActionEvent e ) {
                 Status = GameStateStatus.Inactive;
                 ServicesManager.GetService<GameStateManager>().getGameState( GameStateList.MENU ).Status = GameStateStatus.Active;
             };
             Components.Add( button0 );
 
-            PSButton button1 = new PSButton( null, 5, 5, "ClickMe !" );
+            PSButton button1 = new PSButton( 5, 5, "ClickMe !" );
             this.Components.Add( button1 );
-            PSButton button2 = new PSButton( null, 5, 40, "HideMe!" );
+            PSButton button2 = new PSButton( 5, 40, "HideMe!" );
             button2.IsVisible = false;
 
             button1.Action += delegate( APButton sender, ActionEvent e ) {
@@ -59,18 +59,23 @@ namespace Phobos.Engine.GameStates.UiDebug {
                 button2.IsVisible = false;
                 Console.WriteLine( "Ni vus,ni connus" );
             };
-            PSButton button3 = new PSButton( null, 5, 75, "Disabled" );
+            PSButton button3 = new PSButton( 5, 75, "Disabled" );
             button3.IsEnabled = false;
 
-            PSCheckBox checkbox1 = new PSCheckBox( null, 140, 5 );
-            PSCheckBox checkbox2 = new PSCheckBox( null, 140, 25 );
+            PSCheckBox checkbox1 = new PSCheckBox( 140, 5 );
+            PSCheckBox checkbox2 = new PSCheckBox( 140, 25 );
             checkbox2.IsEnabled = false;
-            APRadioGroup radioGroup = new APRadioGroup( null, 0, 0, 0, 0 );
-            PSRadioButton radioButton1 = new PSRadioButton( radioGroup, 140, 45 );
-            PSRadioButton radioButton2 = new PSRadioButton( radioGroup, 140, 65 );
-            PSRadioButton radioButton3 = new PSRadioButton( radioGroup, 140, 85 );
-            PSRadioButton radioButton4 = new PSRadioButton( radioGroup, 140, 105 );
-            PSRadioButton radioButton5 = new PSRadioButton( radioGroup, 140, 125 );
+            APRadioGroup radioGroup = new APRadioGroup( 0, 0, 0, 0 );
+            PSRadioButton radioButton1 = new PSRadioButton( 140, 45 );
+            radioGroup.Add( radioButton1 );
+            PSRadioButton radioButton2 = new PSRadioButton( 140, 65 );
+            radioGroup.Add( radioButton2 );
+            PSRadioButton radioButton3 = new PSRadioButton( 140, 85 );
+            radioGroup.Add( radioButton3 );
+            PSRadioButton radioButton4 = new PSRadioButton( 140, 105 );
+            radioGroup.Add( radioButton4 );
+            PSRadioButton radioButton5 = new PSRadioButton( 140, 125 );
+            radioGroup.Add( radioButton5 );
             radioButton3.IsEnabled = false;
 
             radioGroup.Add( radioButton1 );
@@ -79,7 +84,7 @@ namespace Phobos.Engine.GameStates.UiDebug {
             radioGroup.Add( radioButton4 );
             radioGroup.Add( radioButton5 );
 
-            PSDialog dialog1 = new PSDialog( null, 200, 5, 256, 256 );
+            PSDialog dialog1 = new PSDialog( 200, 5, 256, 256 );
 
             this.Components.Add( dialog1 );
             this.Components.Add( checkbox1 );

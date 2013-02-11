@@ -83,13 +83,33 @@ namespace Phobos.Engine.Gui.PWidgets {
             }
         }
 
+        public Rectangle Location {
+            get {
+                return location;
+            }
+            set {
+                if( location != value ) {
+                    location = value;
+                }
+            }
+        }
+
+        public APWidget Parent {
+            get {
+                return parent;
+            }
+            set {
+                if( parent != value ) {
+                    parent = value;
+                }
+            }
+        }
+
         #endregion
         #region Fields
 
-        public Rectangle location;
-        public Rectangle mouseArea;
-
-        protected APWidget parent;
+        protected APWidget parent = null;
+        protected Rectangle location;
         protected bool isEnabled = true;
         protected bool isMouseover = false;
         protected bool isVisible = true;
@@ -98,20 +118,17 @@ namespace Phobos.Engine.Gui.PWidgets {
         #endregion
         #region Constructors & Indexer
 
-        public APWidget( APWidget parent, int x, int y, int width, int height ) {
+        public APWidget( int x, int y, int width, int height ) {
             location = new Rectangle( x, y, width, height );
-            this.parent = parent;
-            mouseArea = location;
         }
 
-        public APWidget( APWidget parent, Rectangle _location ) {
+        public APWidget( Rectangle _location ) {
             location = _location;
-            mouseArea = _location;
         }
 
         #endregion
         #region Methods
-        #region Transformations
+        #region Location & Transformations
 
         /// <summary>
         /// Applique une translation au Widget ainsi qu'à tous ses enfants.
@@ -121,8 +138,22 @@ namespace Phobos.Engine.Gui.PWidgets {
         public virtual void Translate( int dx, int dy ) {
             location.X += dx;
             location.Y += dy;
-            mouseArea.X += dx;
-            mouseArea.Y += dy;
+        }
+
+        public Rectangle AbsoluteLocation {
+            get {
+                if( parent == null ) {
+                    return Location;
+                } else {
+
+                    return new Rectangle(
+                        parent.AbsoluteLocation.X + Location.X,
+                        parent.AbsoluteLocation.Y + Location.Y,
+                        Location.Width,
+                        Location.Height );
+
+                }
+            }
         }
 
         #endregion
@@ -188,7 +219,7 @@ namespace Phobos.Engine.Gui.PWidgets {
 
         public virtual void Update( GameTime gameTime ) {
             //TODO: Verification du layer et du focus.
-            IsMouseover = mouseArea.Contains( new Point( Mouse.GetState().X, Mouse.GetState().Y ) );
+            IsMouseover = AbsoluteLocation.Contains( new Point( Mouse.GetState().X, Mouse.GetState().Y ) );
         }
 
         #endregion

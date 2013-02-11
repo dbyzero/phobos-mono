@@ -15,8 +15,8 @@ namespace Phobos.Engine.Gui.PWidgets.System {
         #endregion
 
         #region Constructors and Indexers
-        public PSRadioButton( APWidget parent, int x, int y )
-            : base( parent, x, y, 18, 18 ) { }
+        public PSRadioButton( int x, int y )
+            : base( x, y, 18, 18 ) { }
 
         static PSRadioButton() {
             spriteButton = ServicesManager.GetService<ContentManager>().Load<Texture2D>( @"gui\system\psRadioButton" );

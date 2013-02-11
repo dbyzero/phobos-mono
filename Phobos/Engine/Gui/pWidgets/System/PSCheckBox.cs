@@ -15,8 +15,8 @@ namespace Phobos.Engine.Gui.PWidgets.System {
         protected static Texture2D spriteButton;
         #endregion
         #region Constructors and Indexers
-        public PSCheckBox(APWidget parent, int x, int y)
-            : base( parent, x, y, 18, 18 ) {
+        public PSCheckBox(int x, int y)
+            : base( x, y, 18, 18 ) {
 
         }
 

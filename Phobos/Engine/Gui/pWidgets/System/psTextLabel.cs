@@ -23,8 +23,8 @@ namespace Phobos.Engine.Gui.PWidgets.System {
         #endregion
 
         #region Constructors and Indexers
-        public PSTextLabel( APWidget parent, int x, int y, int width, int height, string _text)
-            : base( parent, x, y, width, height, _text ) {
+        public PSTextLabel( int x, int y, int width, int height, string _text)
+            : base( x, y, width, height, _text ) {
             _text = _text.Trim();
 
             Vector2 textSize = spriteFont.MeasureString( _text );
@@ -47,8 +47,8 @@ namespace Phobos.Engine.Gui.PWidgets.System {
                     size = spriteFont.MeasureString( text );
                 }
 
-                textLocation.X = location.X + (int) ( ( location.Width - size.X ) / 2 );
-                textLocation.Y = location.Y + (int) ( ( location.Height - size.Y ) / 2 );
+                textLocation.X = Location.X + (int) ( ( Location.Width - size.X ) / 2 );
+                textLocation.Y = Location.Y + (int) ( ( Location.Height - size.Y ) / 2 );
             };
             #endregion
         }
@@ -62,9 +62,9 @@ namespace Phobos.Engine.Gui.PWidgets.System {
         #region IDrawable
         public override void Draw( GameTime gameTime ) {
             if( parent.IsEnabled ) {
-                GameEngine.spriteBatch.DrawString( spriteFont, Text, new Vector2( textLocation.X, textLocation.Y ), Color.White );
+                GameEngine.spriteBatch.DrawString( spriteFont, Text, new Vector2( AbsoluteLocation.X + textLocation.X, AbsoluteLocation.Y + textLocation.Y ), Color.White );
             } else {
-                GameEngine.spriteBatch.DrawString( spriteFont, Text, new Vector2( textLocation.X, textLocation.Y ), Color.Gray );
+                GameEngine.spriteBatch.DrawString( spriteFont, Text, new Vector2( AbsoluteLocation.X + textLocation.X, AbsoluteLocation.Y + textLocation.Y ), Color.Gray );
             }
 
         }

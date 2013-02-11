@@ -21,8 +21,8 @@ namespace Phobos.Engine.Gui.PWidgets {
         #endregion
 
         #region Constructors & Indexer
-        public APContainer( APWidget parent, int x, int y, int width, int height )
-            : base( parent, x, y, width, height ) {
+        public APContainer( int x, int y, int width, int height )
+            : base( x, y, width, height ) {
             children = new List<APWidget>();
         }
         #endregion
@@ -37,11 +37,13 @@ namespace Phobos.Engine.Gui.PWidgets {
 
         public void Add( APWidget item ) {
             children.Add( item );
+            item.Parent = this;
             OnChildAdded( item );
         }
 
         public void Remove( APWidget item ) {
             children.Remove( item );
+            item.Parent = null;
             OnChildRemoved( item );
         }
 

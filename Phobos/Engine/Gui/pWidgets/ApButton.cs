@@ -7,10 +7,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Phobos.Engine.Gui.PWidgets.Events;
 
-namespace Phobos.Engine.Gui.PWidgets
-{
-    abstract class APButton : APWidget
-    {
+namespace Phobos.Engine.Gui.PWidgets {
+    abstract class APButton : APWidget {
         #region Propreties & Fields
         #region Events and delegates
 
@@ -24,27 +22,26 @@ namespace Phobos.Engine.Gui.PWidgets
         #endregion
         #region Fields
 
-        private bool isActionKeyPressed = false;
+        protected bool isActionKeyPressed = false;
 
         #endregion
         #endregion
         #region Constructors & Indexer
 
-        public APButton(APWidget parent, int x, int y, int width, int height)
-            : base(parent, x, y, width, height)
-        {
+        public APButton( int x, int y, int width, int height )
+            : base( x, y, width, height ) {
 
         }
 
-        public APButton(APWidget parent, Rectangle _location)
-            : base( parent, _location ) {
+        public APButton( APWidget parent, Rectangle _location )
+            : base( _location ) {
 
         }
         #endregion
         #region Methods
         #region Accessors and mutators
-        public bool IsActionKeyPressed{
-            get{
+        public bool IsActionKeyPressed {
+            get {
                 return isActionKeyPressed;
             }
             set {

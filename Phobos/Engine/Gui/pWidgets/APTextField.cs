@@ -15,8 +15,8 @@ namespace Phobos.Engine.Gui.PWidgets {
         #endregion
         #endregion
         #region Constructors / Indexers
-        public APTextField(APWidget parent, int x, int y, int width, int height, string text)
-            : base( parent, x, y, width, height, text ) {
+        public APTextField( int x, int y, int width, int height, string text)
+            : base( x, y, width, height, text ) {
 
         }
         #endregion

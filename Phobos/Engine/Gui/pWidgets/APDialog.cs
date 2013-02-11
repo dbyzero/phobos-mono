@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 
 namespace Phobos.Engine.Gui.PWidgets {
-    abstract class APDialog : APWidget {
+    abstract class APDialog : APContainer {
         #region Propreties & Fields
 
         #endregion
         #region Constructors & Indexer
 
-        public APDialog( APWidget parent, int x, int y, int width, int height ) : base (parent, x, y, width, height){
+        public APDialog( int x, int y, int width, int height )
+            : base( x, y, width, height ) {
 
         }
         #endregion
