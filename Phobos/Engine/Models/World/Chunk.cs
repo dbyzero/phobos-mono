@@ -8,7 +8,7 @@ namespace Phobos.Engine.Models.World
     class Chunk
     {
         /// <summary>
-        /// test
+        /// test // pb avec les autres camera...
         /// </summary>
         private SortedList<VectorComparable2, Core> cores;
     }

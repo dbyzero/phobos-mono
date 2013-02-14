@@ -19,7 +19,7 @@ namespace Phobos.Engine.View
         private Camera activeCamera;
 
         /// <summary>
-        /// test
+        /// test // pb avec les autres camera...
         /// </summary>
         private SortedDictionary<VectorComparable2, Chunk> chunks = new SortedDictionary<VectorComparable2, Chunk>();
 
