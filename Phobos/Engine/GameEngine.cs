@@ -69,6 +69,14 @@ namespace Phobos.Engine
 
         #endregion
 
+        #region Ascesseur
+        public GraphicsDeviceManager DeviceManager
+        {
+            get { return deviceManager; }
+        }
+
+        #endregion
+
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic

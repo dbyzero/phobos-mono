@@ -122,6 +122,8 @@
     <Compile Include="Engine\Gui\PWidgets\Events\SimpleValueChangedEvent.cs" />
     <Compile Include="Engine\Models\Entities\AEntity.cs" />
     <Compile Include="Engine\Models\Entities\SolidEntity.cs" />
+    <Compile Include="Engine\Models\World\Core.cs" />
+    <Compile Include="Engine\Models\World\VectorComparable2.cs" />
     <Compile Include="Engine\Services\ContentBundle.cs" />
     <Compile Include="Engine\Services\ContentHelper.cs" />
     <Compile Include="Engine\GameEngine.cs" />
@@ -154,6 +156,8 @@
     <Compile Include="Engine\Models\World\Generators\BasicGenerator.cs" />
     <Compile Include="Engine\Services\ServicesManager.cs" />
     <Compile Include="Engine\View\Camera.cs" />
+    <Compile Include="Engine\Models\World\Chunk.cs" />
+    <Compile Include="Engine\View\Orientation.cs" />
     <Compile Include="Engine\View\Scene.cs" />
     <Compile Include="Engine\View\SceneManager.cs" />
     <Compile Include="lib\Nini\Config\AliasText.cs" />

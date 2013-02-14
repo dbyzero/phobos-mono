@@ -20,7 +20,7 @@ namespace Phobos.Engine.GameStates.Game {
         SolidEntity spriteSolGrass;
         SolidEntity testAvatar;
         SpriteBatch spriteBatch;
-        SceneManager sceneManager;
+        Scene scene ;
 
         public MainState( GameStateManager manager )
             : base() {
@@ -31,14 +31,7 @@ namespace Phobos.Engine.GameStates.Game {
         {
             base.Initialize();
 
-            #region SceneManager
-            sceneManager = new SceneManager();
-            sceneManager.AddScene(SceneList.SO, new Scene());
-            sceneManager.AddScene(SceneList.SE, new Scene());
-            sceneManager.AddScene(SceneList.NO, new Scene());
-            sceneManager.AddScene(SceneList.NE, new Scene());
-            sceneManager.Initialize();
-            #endregion
+            scene = new Scene();
             
             /* TEST */
             spriteSolGrass = new SolidEntity(new Vector3(41, 3, 0));
@@ -78,7 +71,7 @@ namespace Phobos.Engine.GameStates.Game {
         public override void Draw( GameTime gameTime ) {
             if (Status != GameStateStatus.Active) return;
 
-            sceneManager.Draw(gameTime);
+            scene.Draw(gameTime);
 
 
             #region Test to draw sprites
@@ -128,7 +121,7 @@ namespace Phobos.Engine.GameStates.Game {
             base.Update( gameTime );
             returnButton.Update(gameTime);
             exitButton.Update(gameTime);
-            sceneManager.Update(gameTime);
+            scene.Update(gameTime);
         }
         #endregion
     }

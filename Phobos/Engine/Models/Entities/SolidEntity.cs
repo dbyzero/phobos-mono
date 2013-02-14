@@ -105,6 +105,7 @@ namespace Phobos.Engine.Models.Entities
         public Rectangle ScreenRect
         {
             get { return screenRect; }
+            set { screenRect = value ; }
         }
 
         public Vector2 CenterSprite
