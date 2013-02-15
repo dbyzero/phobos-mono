@@ -9,9 +9,12 @@ using Microsoft.Xna.Framework.Input;
 using Phobos.Engine;
 using Phobos.Engine.Inputs.MouseInput;
 using Phobos.Engine.Gui.PWidgets.Events;
+using Phobos.Engine.Services;
 
 namespace Phobos.Engine.Gui.PWidgets {
+
     abstract class APWidget {
+
 
         #region Fields & Properties
         #region Events & delegates
@@ -19,6 +22,7 @@ namespace Phobos.Engine.Gui.PWidgets {
         public delegate void MouseoverChangedHandler( APWidget sender, EventArgs e );
         public delegate void EnabledChangedHandler( APWidget sender, EventArgs e );
         public delegate void VisibleChangedHandler( APWidget sender, EventArgs e );
+        public delegate void LocationChangedHandler( APWidget sender, ValueChangedEvent<Rectangle> e );
 
         public event MouseoverChangedHandler MouseoverChanged;
         public event MouseoverChangedHandler MouseEntered;
@@ -26,9 +30,10 @@ namespace Phobos.Engine.Gui.PWidgets {
         public event EnabledChangedHandler EnabledChanged;
         public event EnabledChangedHandler Enabled;
         public event EnabledChangedHandler Disabled;
-        public event VisibleChangedHandler VisibleChanged;
+        public event VisibleChangedHandler VisibilityChanged;
         public event VisibleChangedHandler Shown;
         public event VisibleChangedHandler Hidden;
+        public event LocationChangedHandler LocationChanged;
 
         #endregion
         #region Properties
@@ -67,8 +72,8 @@ namespace Phobos.Engine.Gui.PWidgets {
         }
 
         public bool IsVisible {
-            get { 
-                return isVisible; 
+            get {
+                return isVisible;
             }
             set {
                 if( isVisible != value ) {
@@ -89,7 +94,19 @@ namespace Phobos.Engine.Gui.PWidgets {
             }
             set {
                 if( location != value ) {
+                    OnLocationChange( value, location );
                     location = value;
+                }
+            }
+        }
+
+        public Rectangle MouseoverArea {
+            get {
+                return mouseoverArea;
+            }
+            set {
+                if( mouseoverArea != value ) {
+                    mouseoverArea = value;
                 }
             }
         }
@@ -101,6 +118,50 @@ namespace Phobos.Engine.Gui.PWidgets {
             set {
                 if( parent != value ) {
                     parent = value;
+                    if( parent.Layer != null ) {
+                        RegisterToLayer( parent.Layer );
+                    }
+
+                }
+            }
+        }
+
+        public Rectangle AbsoluteLocation {
+            get {
+                if( parent == null ) {
+                    return Location;
+                } else {
+                    return new Rectangle(
+                        parent.AbsoluteLocation.X + Location.X,
+                        parent.AbsoluteLocation.Y + Location.Y,
+                        Location.Width,
+                        Location.Height );
+                }
+            }
+        }
+
+        public GUILayer Layer {
+            get {
+                return layer;
+            }
+            set {
+                if( layer != value ) {
+                    layer = value;
+                    value.Register( this );
+                }
+            }
+        }
+
+        public Rectangle AbsoluteMouseoverArea {
+            get {
+                if( parent == null ) {
+                    return mouseoverArea;
+                } else {
+                    return new Rectangle(
+                        parent.AbsoluteMouseoverArea.X + mouseoverArea.X,
+                        parent.AbsoluteMouseoverArea.Y + mouseoverArea.Y,
+                        mouseoverArea.Width,
+                        mouseoverArea.Height );
                 }
             }
         }
@@ -110,9 +171,11 @@ namespace Phobos.Engine.Gui.PWidgets {
 
         protected APWidget parent = null;
         protected Rectangle location;
+        protected Rectangle mouseoverArea;
         protected bool isEnabled = true;
         protected bool isMouseover = false;
         protected bool isVisible = true;
+        protected GUILayer layer;
 
         #endregion
         #endregion
@@ -120,44 +183,49 @@ namespace Phobos.Engine.Gui.PWidgets {
 
         public APWidget( int x, int y, int width, int height ) {
             location = new Rectangle( x, y, width, height );
+            mouseoverArea = location;
+
+            #region Base event
+            LocationChanged += delegate( APWidget sender, ValueChangedEvent<Rectangle> e ) {
+                MouseoverArea = new Rectangle(
+                    MouseoverArea.X + e.newValue.X - e.previousValue.X,
+                    MouseoverArea.Y + e.newValue.Y - e.previousValue.Y,
+                    MouseoverArea.Width + e.newValue.Width - e.previousValue.Width,
+                    MouseoverArea.Height + e.newValue.Height - e.previousValue.Height );
+            };
+            #endregion
         }
 
         public APWidget( Rectangle _location ) {
             location = _location;
+            mouseoverArea = _location;
         }
 
         #endregion
         #region Methods
-        #region Location & Transformations
+        #region Transformations
 
         /// <summary>
-        /// Applique une translation au Widget ainsi qu'à tous ses enfants.
+        /// Apply a basic translation to the widget.
         /// </summary>
-        /// <param name="dx"></param>
-        /// <param name="dy"></param>
+        /// <remarks>
+        /// If the widget implements children, you have to override this method to call Translate on each child.
+        /// </remarks>
+        /// <param name="dx"><typeparamref name="int"/></param>
+        /// <param name="dy"><typeparamref name="int"/></param>
         public virtual void Translate( int dx, int dy ) {
-            location.X += dx;
-            location.Y += dy;
-        }
+            Rectangle result = new Rectangle( location.X + dx, location.Y + dy, location.Width, location.Height );
+            OnLocationChange( result, location );
 
-        public Rectangle AbsoluteLocation {
-            get {
-                if( parent == null ) {
-                    return Location;
-                } else {
-
-                    return new Rectangle(
-                        parent.AbsoluteLocation.X + Location.X,
-                        parent.AbsoluteLocation.Y + Location.Y,
-                        Location.Width,
-                        Location.Height );
-
-                }
-            }
         }
 
         #endregion
         #region Events handling
+        protected void OnLocationChange( Rectangle _newValue, Rectangle _previousValue ) {
+            if( LocationChanged != null ) {
+                LocationChanged( this, new ValueChangedEvent<Rectangle>( _newValue, _previousValue ) );
+            }
+        }
 
         protected void OnEnabledChange() {
             if( EnabledChanged != null ) {
@@ -165,7 +233,7 @@ namespace Phobos.Engine.Gui.PWidgets {
             }
         }
 
-        protected void OnEnabled(){
+        protected void OnEnabled() {
             if( Enabled != null ) {
                 Enabled( this, EventArgs.Empty );
             }
@@ -190,8 +258,8 @@ namespace Phobos.Engine.Gui.PWidgets {
         }
 
         protected void OnVisibleChange() {
-            if( VisibleChanged != null ) {
-                VisibleChanged( this, EventArgs.Empty );
+            if( VisibilityChanged != null ) {
+                VisibilityChanged( this, EventArgs.Empty );
             }
         }
 
@@ -215,11 +283,19 @@ namespace Phobos.Engine.Gui.PWidgets {
 
 
         #endregion
+        #region Layer
+
+        public void RegisterToLayer( GUILayer layer ) {
+            layer.Register( this );
+        }
+
+        #endregion
         #region IUpdateable
 
         public virtual void Update( GameTime gameTime ) {
             //TODO: Verification du layer et du focus.
-            IsMouseover = AbsoluteLocation.Contains( new Point( Mouse.GetState().X, Mouse.GetState().Y ) );
+
+            IsMouseover = AbsoluteMouseoverArea.Contains( new Point( Mouse.GetState().X, Mouse.GetState().Y ) );
         }
 
         #endregion

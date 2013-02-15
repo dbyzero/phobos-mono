@@ -42,7 +42,6 @@ namespace Phobos.Engine
         public static SpriteBatch spriteBatch;
         
         private static GameEngine singleton;
-        GameStateManager gameStateManager;
 
         #endregion
         #endregion
@@ -107,13 +106,8 @@ namespace Phobos.Engine
             MouseHandler.Initialize();
             
             #region GameStateManager
-            gameStateManager = new GameStateManager();
-            gameStateManager.AddGameState( new MainState(gameStateManager), GameStateList.GAME );
-            gameStateManager.AddGameState( new MenuGameState(gameStateManager), GameStateList.MENU );
-            gameStateManager.AddGameState( new UIDebugState( gameStateManager ), GameStateList.UIDEBUG );
-            gameStateManager.Initialize();
-            GameEngine.Instance.Components.Add( gameStateManager );
-            ServicesManager.AddService<GameStateManager>( gameStateManager );
+            GameStateManager.Initialize();
+            
             #endregion
             base.Initialize();
             
@@ -147,7 +141,7 @@ namespace Phobos.Engine
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            ServicesManager.GetService<GameStateManager>().Update( gameTime );
+            GameStateManager.Update( gameTime );
             base.Update( gameTime );
         }
 
@@ -158,7 +152,7 @@ namespace Phobos.Engine
         protected override void Draw(GameTime gameTime)
         {
             ServicesManager.GetService<GraphicsDevice>().Clear( Color.LightSkyBlue );
-            ServicesManager.GetService<GameStateManager>().Draw( gameTime );
+            GameStateManager.Draw( gameTime );
             
             base.Draw( gameTime );
             MouseHandler.DrawCursor();

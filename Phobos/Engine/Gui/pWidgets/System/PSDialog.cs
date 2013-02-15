@@ -28,9 +28,10 @@ namespace Phobos.Engine.Gui.PWidgets.System {
         #endregion
         #region Constructors & Indexer
 
-        public PSDialog( int x, int y, int width, int height )
-            : base( x, y, width, height ) {
-
+        public PSDialog( int x, int y, int width, int height, GUILayer layer)
+            : base( x, y, width, height, layer ) {
+            if(layer != null)
+                layer.Register( this );
         }
 
         static PSDialog() {
@@ -96,6 +97,10 @@ namespace Phobos.Engine.Gui.PWidgets.System {
             GameEngine.spriteBatch.Draw( rect, drawLocation, Color.Blue );
             rect.SetData( new[] { Color.Red } );
             GameEngine.spriteBatch.Draw( rect, AbsoluteLocation, Color.Red );*/
+
+            foreach( APWidget child in children ) {
+                child.Draw( gameTime );
+            }
         }
 
         #endregion

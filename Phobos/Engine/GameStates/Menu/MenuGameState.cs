@@ -18,18 +18,18 @@ namespace Phobos.Engine.GameStates.Menu {
         PSButton optionButton;
         PSButton uiDebugButton;
 
-        public MenuGameState( GameStateManager manager )
+        public MenuGameState()
             : base( ) {
                 Status = GameStateStatus.Active;
         }
 
         protected override void LoadContent() {
 
-            menuBG = new PSDialog( 32, 32, 192, GameEngine.Instance.Window.ClientBounds.Height - 64 );
+            menuBG = new PSDialog( 32, 32, 192, GameEngine.Instance.Window.ClientBounds.Height - 64, null );
             gameButton = new PSButton(32, 64, "Game");
             gameButton.Action += delegate( APButton sender, ActionEvent e )
             {
-                ServicesManager.GetService<GameStateManager>().getGameState(GameStateList.GAME).Status = GameStateStatus.Active;
+                GameStateManager.GetGameState(GameStateList.GAME).Status = GameStateStatus.Active;
                 Status = GameStateStatus.Inactive;
             };
             menuBG.Add( gameButton );
@@ -37,7 +37,7 @@ namespace Phobos.Engine.GameStates.Menu {
             menuBG.Add( optionButton );
             uiDebugButton = new PSButton( 32, 144, "Debug UI" );
             uiDebugButton.Action += delegate( APButton sender, ActionEvent e ) {
-                ServicesManager.GetService<GameStateManager>().getGameState( GameStateList.UIDEBUG ).Status = GameStateStatus.Active;
+                GameStateManager.GetGameState( GameStateList.UIDEBUG ).Status = GameStateStatus.Active;
                 Status = GameStateStatus.Inactive;
             };
             menuBG.Add( uiDebugButton );

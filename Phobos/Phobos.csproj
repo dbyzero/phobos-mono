@@ -111,12 +111,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Engine\ALayerFactory.cs" />
+    <Compile Include="Engine\Gui\ALayerManager.cs" />
     <Compile Include="Engine\Configurations\Keyboard\AKeyboardLayoutExtractor.cs" />
     <Compile Include="Engine\Configurations\Keyboard\KeyboardConfiguration.cs" />
     <Compile Include="Engine\Configurations\Keyboard\WindowsKeyboardExtractor.cs" />
     <Compile Include="Engine\Configurations\PhobosConfigurationManager.cs" />
     <Compile Include="Engine\GameStates\Game\MainState.cs" />
+    <Compile Include="Engine\Gui\GUIGlobalManager.cs" />
     <Compile Include="Engine\Gui\PWidgets\APContainer.cs" />
     <Compile Include="Engine\Gui\PWidgets\Events\ContainerChildEvent.cs" />
     <Compile Include="Engine\Gui\PWidgets\Events\SimpleValueChangedEvent.cs" />
@@ -130,9 +131,8 @@
     <Compile Include="Engine\GameStates\Menu\MenuGameState.cs" />
     <Compile Include="Engine\GameStates\UiDebug\UIDebugState.cs" />
     <Compile Include="Engine\GraphicalHelpers.cs" />
-    <Compile Include="Engine\Gui\GuiLayerFactory.cs" />
-    <Compile Include="Engine\Gui\GuiTemplate.cs" />
-    <Compile Include="Engine\Gui\pUILevel.cs" />
+    <Compile Include="Engine\Gui\GUIStrataManager.cs" />
+    <Compile Include="Engine\Gui\GUIStrata.cs" />
     <Compile Include="Engine\Gui\PWidgets\APButton.cs" />
     <Compile Include="Engine\Gui\PWidgets\APCheckBox.cs" />
     <Compile Include="Engine\Gui\PWidgets\APDialog.cs" />
@@ -150,8 +150,9 @@
     <Compile Include="Engine\Gui\PWidgets\System\PSTextLabel.cs" />
     <Compile Include="Engine\Inputs\MouseInput\MouseEvent.cs" />
     <Compile Include="Engine\Inputs\MouseInput\MouseHandler.cs" />
-    <Compile Include="Engine\Layer.cs" />
+    <Compile Include="Engine\Gui\GUILayer.cs" />
     <Compile Include="Engine\Models\World\Generators\BasicGenerator.cs" />
+    <Compile Include="Engine\Services\MathHelper.cs" />
     <Compile Include="Engine\Services\ServicesManager.cs" />
     <Compile Include="lib\Nini\Config\AliasText.cs" />
     <Compile Include="lib\Nini\Config\ConfigBase.cs" />
