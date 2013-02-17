@@ -1,11 +1,11 @@
 ﻿    using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
-    namespace Phobos.Engine.Entities
+    namespace Phobos.Engine.Models.Entities
     {
         abstract class AEntity
         {
-            private Vector3 worldPosition;
+            protected Vector3 worldPosition;
 
             #region method
             public AEntity()

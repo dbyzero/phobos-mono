@@ -85,6 +85,8 @@ namespace Phobos.Engine
         /// </summary>
         protected override void Initialize() {
 
+            //this.deviceManager.GraphicsDevice.SamplerStates[0].Filter = TextureFilter.Linear;
+
             #region Services
             ServicesManager.AddService<GraphicsDevice>( GraphicsDevice );
             ServicesManager.AddService<ContentManager>( Content );
@@ -97,8 +99,8 @@ namespace Phobos.Engine
             Window.AllowUserResizing = false;
             Window.Title = "Phobos v0.0";
             //set windows to 1280x768
-            deviceManager.PreferredBackBufferWidth = 1200;
-            deviceManager.PreferredBackBufferHeight = 600;
+            deviceManager.PreferredBackBufferWidth = 1280;
+            deviceManager.PreferredBackBufferHeight = 640;
             deviceManager.ApplyChanges();
 
             //Limitation des refresh a 60 par seconde

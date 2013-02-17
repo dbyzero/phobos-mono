@@ -169,7 +169,13 @@
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Compile Include="spriteSheets\test_rpg.png">
+      <Name>test_rpg</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="spriteSheets\temp_sprite.png">
       <Name>temp_sprite</Name>

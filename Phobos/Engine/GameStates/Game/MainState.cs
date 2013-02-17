@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using Phobos.Engine.Gui.PWidgets.Events;
 using Phobos.Engine.Gui.PWidgets.System;
 using Phobos.Engine.Services;
@@ -17,9 +16,6 @@ namespace Phobos.Engine.GameStates.Game {
 
         PSButton returnButton;
         PSButton exitButton;
-        SolidEntity spriteSolGrass;
-        SolidEntity testAvatar;
-        SpriteBatch spriteBatch;
         Scene scene ;
 
         public MainState( GameStateManager manager )
@@ -30,25 +26,8 @@ namespace Phobos.Engine.GameStates.Game {
         public override void Initialize()
         {
             base.Initialize();
-
-            scene = new Scene();
-            
-            /* TEST */
-            spriteSolGrass = new SolidEntity(new Vector3(41, 3, 0));
-            spriteSolGrass.SpriteSheet = GameEngine.Instance.Content.Load<Texture2D>(@"spriteSheets\temp_sprite");
-            spriteSolGrass.SpriteSheetRect = new Rectangle(64, 32, 32, 32);
-            spriteSolGrass.Width = 32;
-            spriteSolGrass.Height = 32;
-            spriteSolGrass.CenterSprite = new Vector2(16,8);
-
-            testAvatar = new SolidEntity(new Vector3(42, 4, 0));
-            testAvatar.SpriteSheet = GameEngine.Instance.Content.Load<Texture2D>(@"spriteSheets\temp_sprite");
-            testAvatar.SpriteSheetRect = new Rectangle(224, 0, 32, 64);
-            testAvatar.Width = 32;
-            testAvatar.Height = 64;
-            testAvatar.CenterSprite = new Vector2(16, 60);
-
-            spriteBatch = new SpriteBatch(GameEngine.Instance.GraphicsDevice);
+            scene = Scene.getInstance();
+            scene.Initialize();
         }
 
         protected override void LoadContent() {
@@ -73,35 +52,7 @@ namespace Phobos.Engine.GameStates.Game {
 
             scene.Draw(gameTime);
 
-
-            #region Test to draw sprites
-            spriteBatch.Begin();
-            int j = -20; 
-            
-            while (j < 20)
-            {
-                spriteSolGrass.X = 20;
-                spriteSolGrass.Y = j;
-                testAvatar.X = 20;
-                testAvatar.Y = j;
-                int i = 0;
-                while (i < 40)
-                {
-                    spriteSolGrass.X += 1;
-                    spriteSolGrass.Y = j;
-                    spriteSolGrass.Draw(spriteBatch);
-
-                    testAvatar.X += 1;
-                    testAvatar.Y = j;
-                    testAvatar.Draw(spriteBatch);
-                    i++;
-                }
-                j++;
-            }
-            spriteBatch.End(); 
-            #endregion
-
-            #region Test Bench Sprite
+            #region UI
             GameEngine.spriteBatch.Begin();
             returnButton.Draw(gameTime);
             exitButton.Draw(gameTime);

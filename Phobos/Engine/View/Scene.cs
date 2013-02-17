@@ -5,88 +5,210 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Phobos.Engine.Models.World;
+using Phobos.Engine.Models.Entities;
+using Microsoft.Xna.Framework.Input;
 
+public delegate void CalculRenderEntitiesHandler() ;
 namespace Phobos.Engine.View
 {
     class Scene : DrawableGameComponent
     {
+        public CalculRenderEntitiesHandler calculRenderEntitiesHandler;
+        static private Scene scene = null;
         private Camera cameraNO;
         private Camera cameraNE;
         private Camera cameraSO;
-        private Camera cameraSE;
+        private Camera cameraSE;    
+        Orientation orientation;
         SpriteBatch spriteBatch;
+        MouseState prevMouseState;
+        Vector2 mouveMovement;
 
-        private Camera activeCamera;
+        private List<Chunk> chunks = new List<Chunk>();
 
-        /// <summary>
-        /// test // pb avec les autres camera...
-        /// </summary>
-        private SortedDictionary<VectorComparable2, Chunk> chunks = new SortedDictionary<VectorComparable2, Chunk>();
+        static public Scene getInstance()
+        {
+            if (scene == null)
+            {
+                scene = new Scene();
+            }
+            return scene;
+        }
 
-        public Scene()
+        private Scene()
             : base(GameEngine.Instance)
         {
-            cameraNO = new Camera(Orientation.NO);
-            cameraNE = new Camera(Orientation.NE);
-            cameraSO = new Camera(Orientation.SO);
-            cameraSE = new Camera(Orientation.SE);
-            activeCamera = cameraSE;
-            spriteBatch = new SpriteBatch(GameEngine.Instance.GraphicsDevice);
-            
-            chunks.Add(new VectorComparable2(1,2), new Chunk());
-            chunks.Add(new VectorComparable2(2,1), new Chunk());
-            VectorComparable2 v1 = new VectorComparable2(1, 2);
-            VectorComparable2 v2 = new VectorComparable2(1, 1);
-            Console.WriteLine(v1.CompareTo(v1));
         }
-
-        #region Ascessor et mutator
-        
-        public Camera currentCamera
+       
+        public Camera currentCamera()
         {
-            get { return activeCamera; }
-            set { activeCamera = value; }
-        }
-        #endregion
-
-        public Camera switchCamera(Orientation or)
-        {
-            switch (or)
+            switch (orientation)
             {
                 case Orientation.SE:
-                    activeCamera = cameraSE;
-                    break;
-                case Orientation.SO:
-                    activeCamera = cameraSO;
-                    break;
-                case Orientation.NE:
-                    activeCamera = cameraNE;
-                    break;
-                case Orientation.NO:
-                    activeCamera = cameraNO;
-                    break;
-            }
-            return activeCamera;
-        }
+                    return cameraSE;
 
-        public void move(Vector2 v)
-        {
-            activeCamera.move(v);
+                case Orientation.SO:
+                    return cameraSO;
+                        
+                case Orientation.NE:
+                    return cameraNE;
+
+                case Orientation.NO:
+                    return cameraNO;
+            }
+            throw new Exception("Cannot find camera");
         }
 
         public override void Draw(GameTime gameTime)
         {
-            base.Draw(gameTime);
+            spriteBatch.Begin(SpriteSortMode.Deferred,BlendState.AlphaBlend,SamplerState.PointWrap,DepthStencilState.Default,RasterizerState.CullNone);
+            foreach (Chunk chunk in chunks)
+            {
+                chunk.Draw(spriteBatch, gameTime);
+            }
+            spriteBatch.End();
         }
         
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+
+            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+            {
+                mouveMovement = Vector2.Zero;
+
+                float deltaX = prevMouseState.X - Mouse.GetState().X;
+                if (deltaX != 0)
+                {
+                    mouveMovement.X = deltaX/currentCamera().Coefficient;
+                }
+
+                float deltaY = prevMouseState.Y - Mouse.GetState().Y;
+                if (deltaY != 0)
+                {
+                    mouveMovement.Y = deltaY/currentCamera().Coefficient;
+                }
+            }
+            currentCamera().Position += mouveMovement;
+
+            if (Mouse.GetState().ScrollWheelValue != prevMouseState.ScrollWheelValue)
+            {
+                //old cam
+                int old_coeff = this.currentCamera().Coefficient;
+                int old_camera_width = this.currentCamera().Width;
+                int old_camera_height = this.currentCamera().Height;
+                
+                //apply coeff
+                this.currentCamera().Coefficient += (int)((Mouse.GetState().ScrollWheelValue - prevMouseState.ScrollWheelValue)/120) ;
+
+                //new cam
+                int new_coeff = this.currentCamera().Coefficient;
+                int new_camera_width = this.currentCamera().Width;
+                int new_camera_height = this.currentCamera().Height;
+
+                currentCamera().Position += new Vector2(0.5f * (old_camera_width - new_camera_width),
+                                                        0.5f * (old_camera_height - new_camera_height));
+            }
+
+            prevMouseState = Mouse.GetState();
         }
 
         public override void Initialize()
         {
             base.Initialize();
+            cameraNO = new Camera();
+            cameraSE = new Camera();
+            cameraNE = new Camera();
+            cameraSO = new Camera();
+
+            orientation = Orientation.SE;
+
+            spriteBatch = new SpriteBatch(GameEngine.Instance.GraphicsDevice);
+
+            #region Test
+            /* TEST */
+            Chunk testChunk = new Chunk(0, 0);
+            Texture2D text = GameEngine.Instance.Content.Load<Texture2D>(@"spriteSheets\temp_sprite");
+            Texture2D text2 = GameEngine.Instance.Content.Load<Texture2D>(@"spriteSheets\test_rpg");
+            int j = -20;
+            while (j < 20)
+            {
+                int i = 20;
+                while (i < 60)
+                {
+                    Core core = new Core(new Vector3(i, j, 0), 32, 32, new Vector2(16, 16), text, new Rectangle(64, 32, 32, 32));
+                    testChunk.addCore(core);
+                    calculRenderEntitiesHandler += core.calculateScreenRect;
+
+                    if (i % 4 == 0 && j % 4 == 0)
+                    {
+
+                        DrawableEntity testFontain = new DrawableEntity(new Vector3(i, j, 1), 27, 34, new Vector2(13, 24), text2, new Rectangle(344, 714, 27, 34));
+                        core.addEntity(testFontain);
+                        calculRenderEntitiesHandler += testFontain.calculateScreenRect;
+
+                        DrawableEntity testContainable = new DrawableEntity(new Vector3(i, j, 2.7f), 32, 32, new Vector2(16, 24), text2, new Rectangle(205, 136, 32, 32));
+                        core.addEntity(testContainable);
+                        calculRenderEntitiesHandler += testContainable.calculateScreenRect;
+
+                    }
+                    i++;
+                }
+                j++;
+            }
+
+            Chunk testChunk2 = new Chunk(0, 1);
+            j = 20;
+            while (j < 60)
+            {
+                int i = 20;
+                while (i < 60)
+                {
+                    Core core = new Core(new Vector3(i, j, 0), 32, 32, new Vector2(16, 16), text, new Rectangle(0, 32, 32, 32));
+                    testChunk2.addCore(core);
+                    calculRenderEntitiesHandler += core.calculateScreenRect;
+                    if (i == 40 && j == 40)
+                    {
+
+                        DrawableEntity testContainable = new DrawableEntity(new Vector3(i, j, 1), 32, 32, new Vector2(16, 24), text, new Rectangle(32, 96, 32, 32));
+                        core.addEntity(testContainable);
+                        calculRenderEntitiesHandler += testContainable.calculateScreenRect;
+                    }
+                    i++;
+                }
+                j++;
+            }
+
+            Chunk testChunk3 = new Chunk(0, 1);
+            j = -20;
+            while (j < 20)
+            {
+                int i = -20;
+                while (i < 20)
+                {
+                    Core core = new Core(new Vector3(i, j, 0), 32, 32, new Vector2(16, 16), text, new Rectangle(160, 32, 32, 32));
+                    core.Width = 32;
+                    core.Height = 32;
+                    core.CenterSprite = new Vector2(16, 16);
+
+                    if (i == 0 && j == 0)
+                    {
+
+                        DrawableEntity testContainable = new DrawableEntity(new Vector3(i, j, 1), 32, 32, new Vector2(16, 24), text, new Rectangle(32, 0, 32, 32));
+                        core.addEntity(testContainable);
+                        calculRenderEntitiesHandler += testContainable.calculateScreenRect;
+                    }
+
+                    testChunk3.addCore(core);
+                    calculRenderEntitiesHandler += core.calculateScreenRect;
+                    i++;
+                }
+                j++;
+            }
+            chunks.Add(testChunk3);
+            chunks.Add(testChunk);
+            chunks.Add(testChunk2);
+            #endregion
         }
 
     }

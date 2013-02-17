@@ -121,9 +121,8 @@
     <Compile Include="Engine\Gui\PWidgets\Events\ContainerChildEvent.cs" />
     <Compile Include="Engine\Gui\PWidgets\Events\SimpleValueChangedEvent.cs" />
     <Compile Include="Engine\Models\Entities\AEntity.cs" />
-    <Compile Include="Engine\Models\Entities\SolidEntity.cs" />
+    <Compile Include="Engine\Models\Entities\DrawableEntity.cs" />
     <Compile Include="Engine\Models\World\Core.cs" />
-    <Compile Include="Engine\Models\World\VectorComparable2.cs" />
     <Compile Include="Engine\Services\ContentBundle.cs" />
     <Compile Include="Engine\Services\ContentHelper.cs" />
     <Compile Include="Engine\GameEngine.cs" />

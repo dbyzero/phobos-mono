@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
-using Phobos.Engine.Entities;
 using Microsoft.Xna.Framework.Graphics;
+using Phobos.Engine.View;
 
 namespace Phobos.Engine.Models.Entities
 {
-    class SolidEntity : AEntity
+    class DrawableEntity : AEntity
     {
         private Texture2D spriteSheet;
 
@@ -17,14 +17,33 @@ namespace Phobos.Engine.Models.Entities
 
         private Vector2 centerSprite ; //point central du sprit
 
-        private Int16 width;
-        private Int16 height;
+        private int width;
+        private int height;
+
+        private Color color = Color.White;
+        private float layer = 0.000001f;
+        private float rotation = 0.0f;
 
         #region Methods
 
-        #region Constructor
-        public SolidEntity(Vector3 position) : base(position)
+        #region Constructors
+
+        
+        private DrawableEntity() : base()
         {
+        }
+
+        /* Note : do not call mutator or it will make a lot of recaculate position on the screen */
+        public DrawableEntity(Vector3 position, int width, int height, Vector2 center, Texture2D texture, Rectangle texturePosition)
+        {
+            this.worldPosition = position;
+            this.width = width;
+            this.height = height;
+            this.centerSprite = center;
+            this.spriteSheet = texture;
+            this.spriteSheetRect = texturePosition;
+            calculateScreenRect();
+
         }
         #endregion
 
@@ -37,7 +56,7 @@ namespace Phobos.Engine.Models.Entities
             set
             {
                 base.WorldPosition = value;
-                calculateScreenRect();
+                //calculateScreenRect();
             }
         }
 
@@ -47,7 +66,7 @@ namespace Phobos.Engine.Models.Entities
             set
             {
                 base.X = value;
-                calculateScreenRect();
+                //calculateScreenRect();
             }
         }
 
@@ -57,7 +76,7 @@ namespace Phobos.Engine.Models.Entities
             set
             {
                 base.Y = value;
-                calculateScreenRect();
+                //calculateScreenRect();
             }
         }
 
@@ -67,26 +86,26 @@ namespace Phobos.Engine.Models.Entities
             set
             {
                 base.Z = value;
-                calculateScreenRect();
+                //calculateScreenRect();
             }
         }
 
         
-        public Int16 Width
+        public int Width
         {
             get { return width; }
             set { 
                 width = value;
-                calculateScreenRect();
+                //calculateScreenRect();
             }
         }
 
-        public Int16 Height
+        public int Height
         {
             get { return height; }
             set { 
                 height = value;
-                calculateScreenRect();
+                //calculateScreenRect();
             }
         }
 
@@ -117,10 +136,10 @@ namespace Phobos.Engine.Models.Entities
 
         public void calculateScreenRect()
         {
-            screenRect.X = (int)(X * 16 - Y * 16) - (int)CenterSprite.X;
-            screenRect.Y = (int)(X * 8 + Y * 8 - Z * 16) - (int)CenterSprite.Y;
-            screenRect.Width = Width;
-            screenRect.Height = Height;
+            screenRect.X = (int)(X * 16 - Y * 16) * Scene.getInstance().currentCamera().Coefficient;
+            screenRect.Y = (int)(X * 8 + Y * 8 - Z * 16) * Scene.getInstance().currentCamera().Coefficient;
+            screenRect.Width = Width * Scene.getInstance().currentCamera().Coefficient;
+            screenRect.Height = Height * Scene.getInstance().currentCamera().Coefficient;
         }
 
         /*
@@ -128,19 +147,25 @@ namespace Phobos.Engine.Models.Entities
          * params : SpriteBatch owning the draw call
          * 
          */
-        public int Draw(SpriteBatch spriteBatch) {
-            spriteBatch.Draw(
+        public virtual int Draw(SpriteBatch spriteBatch, GameTime gameTime)
+        {
+           spriteBatch.Draw(
                 SpriteSheet,
                 ScreenRect,
                 SpriteSheetRect,
-                new Color(255, 255, 255, 255));
+                color,
+                rotation,
+                centerSprite + Scene.getInstance().currentCamera().Position,
+                SpriteEffects.None,
+                layer
+                );
             return 1;
         }
 
         public override void move(Vector3 v)
         {
             base.move(v);
-            calculateScreenRect();
+            //calculateScreenRect();
         }
 
 

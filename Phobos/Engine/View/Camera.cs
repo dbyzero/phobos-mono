@@ -8,51 +8,53 @@ using Phobos.Engine;
 
 namespace Phobos.Engine.View
 {
-
     class Camera        
     {
-        private Rectangle frame;
-        private float coefficient;
-        private Orientation projection;
+        private Vector2 position = Vector2.Zero;
+        int width, height;
+        private int coefficient;
+        private int minZoom = 1;
+        private int maxZoom = 10;
 
-        public Camera(Orientation p = Orientation.SE, float coeff = 1)
+        public Camera(int coeff = 1)
         {
-            reinitCamera();
-            projection = p;
+            cameraFillScreen();
             coefficient = coeff;
         }
 
-        public Rectangle Frame { 
-            get { return frame; } 
-            set { frame = value; } 
-        }
+        #region ascessor & mutator
+        public Vector2 Position { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; } 
+        #endregion
 
-        public float Coefficient { 
-            get { return coefficient; } 
-            set { coefficient = value; } 
-        }
+        public int Coefficient { 
+            get { return coefficient; }
+            set {
+                    int prevCoefficient = coefficient;
+                    coefficient = value;
+                    coefficient = Math.Min(maxZoom, coefficient);
+                    coefficient = Math.Max(minZoom, coefficient);
 
-        public void reinitCamera()
-        {
-            frame.X = 0;
-            frame.Y = 0;
-            frame.Width = GameEngine.Instance.DeviceManager.PreferredBackBufferWidth;
-            frame.Height = GameEngine.Instance.DeviceManager.PreferredBackBufferHeight;
+                    /* calcul new camera resolution */
+                    Width = GameEngine.Instance.DeviceManager.PreferredBackBufferWidth / coefficient;
+                    Height = GameEngine.Instance.DeviceManager.PreferredBackBufferHeight / coefficient;
+
+                    /* redim sprites if coeff change */
+                    if (prevCoefficient != coefficient)
+                    {
+                        Scene.getInstance().calculRenderEntitiesHandler() ;
+                    }
+            } 
         }
 
         public void cameraFillScreen()
         {
-            frame.Width = GameEngine.Instance.DeviceManager.PreferredBackBufferWidth;
-            frame.Height = GameEngine.Instance.DeviceManager.PreferredBackBufferHeight;
+            Width = GameEngine.Instance.DeviceManager.PreferredBackBufferWidth;
+            Height = GameEngine.Instance.DeviceManager.PreferredBackBufferHeight;
         }
 
-        public void move(Vector2 mouvement)
-        {
-            frame.X += (int)mouvement.X;
-            frame.Y += (int)mouvement.Y;
-        }
-
-        public void ProjectToScreen(SolidEntity entity)
+        public void ProjectToScreen(DrawableEntity entity,Orientation projection)
         {
             switch (projection)
             {
