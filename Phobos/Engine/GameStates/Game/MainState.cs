@@ -10,6 +10,8 @@ using System.Text;
 using Phobos.Engine.Models.Entities;
 using Phobos.Engine.Gui.PWidgets;
 using Phobos.Engine.View;
+using System.Diagnostics;
+using Phobos.Engine.Models.World;
 
 namespace Phobos.Engine.GameStates.Game {
     class MainState : AGameState{
@@ -28,6 +30,74 @@ namespace Phobos.Engine.GameStates.Game {
             base.Initialize();
             scene = Scene.getInstance();
             scene.Initialize();
+
+            /*#region Benchmark
+
+            int size = 1000;
+            Texture2D text = GameEngine.Instance.Content.Load<Texture2D>(@"spriteSheets\temp_sprite");
+            Dictionary<int, Dictionary<int, Core>> dictListCore = new Dictionary<int, Dictionary<int, Core>>();
+            SortedDictionary<int, SortedDictionary<int, Core>> sDictListCore = new SortedDictionary<int, SortedDictionary<int, Core>>();
+            Core[,] arrayListCore = new Core[size, size];
+            for (int x = 0; x < size; x++)
+            {
+                Dictionary<int, Core> dictRow = new Dictionary<int, Core>();
+                SortedDictionary<int, Core> sDictRow = new SortedDictionary<int, Core>();
+                dictListCore.Add(x, dictRow);
+                sDictListCore.Add(x, sDictRow);
+                for (int y = 0; y < size; y++)
+                {
+                    Core core = new Core(new Vector3(x, y, 0), 32, 32, new Vector2(16, 8), text, new Rectangle(64, 32, 32, 32)) ;
+                    dictRow.Add(y, core);
+                    sDictRow.Add(y, core);
+                    arrayListCore[x,y] = core ;
+                }
+            }
+
+            Random random = new Random();
+            var sw = new Stopwatch();
+            sw.Start();
+            for (int x = 0; x < size; x++)
+            {
+                for (int y = 0; y < size; y++)
+                {
+                    int px = random.Next(999);
+                    int py = random.Next(999);  
+                    arrayListCore[px,py].calculateScreenRect();
+                }
+            }
+            sw.Stop();
+            Console.WriteLine("time for ARRAY lookups: {0} ms", sw.ElapsedMilliseconds);
+
+            sw.Reset();
+
+            sw.Start();
+            for (int x = 0; x < size; x++)
+            {
+                for (int y = 0; y < size; y++)
+                {
+                    int px = random.Next(999);
+                    int py = random.Next(999);  
+                    dictListCore[px][py].calculateScreenRect();
+                }
+            }
+            sw.Stop();
+            Console.WriteLine("time for DICTIONNARY index lookups: {0} ms", sw.ElapsedMilliseconds); 
+
+            sw.Reset();
+
+            sw.Start();
+            for (int x = 0; x < size; x++)
+            {
+                for (int y = 0; y < size; y++)
+                {
+                    int px = random.Next(999);
+                    int py = random.Next(999);  
+                    sDictListCore[px][py].calculateScreenRect();
+                }
+            }
+            sw.Stop();
+            Console.WriteLine("time for SORTED DICTIONNARY index lookups: {0} ms", sw.ElapsedMilliseconds); 
+            #endregion*/
         }
 
         protected override void LoadContent() {
