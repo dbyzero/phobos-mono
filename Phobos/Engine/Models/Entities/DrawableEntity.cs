@@ -132,14 +132,20 @@ namespace Phobos.Engine.Models.Entities
             get { return centerSprite; }
             set { centerSprite = value; }
         }
+
+        public Color Color
+        {
+            get;
+            set;
+        }
         #endregion 
 
         public void calculateScreenRect()
         {
-            screenRect.X = (int)(X * 16 - Y * 16) * Scene.getInstance().currentCamera().Coefficient;
-            screenRect.Y = (int)(X * 8 + Y * 8 - Z * 16) * Scene.getInstance().currentCamera().Coefficient;
-            screenRect.Width = Width * Scene.getInstance().currentCamera().Coefficient;
-            screenRect.Height = Height * Scene.getInstance().currentCamera().Coefficient;
+            screenRect.X = (int)((X * 16 - Y * 16) * Scene.getInstance().currentCamera().Coefficient);
+            screenRect.Y = (int)((X * 8 + Y * 8 - Z * 16) * Scene.getInstance().currentCamera().Coefficient);
+            screenRect.Width = (int)(Width * Scene.getInstance().currentCamera().Coefficient);
+            screenRect.Height = (int)(Height * Scene.getInstance().currentCamera().Coefficient);
         }
 
         /*

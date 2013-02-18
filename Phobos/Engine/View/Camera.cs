@@ -12,7 +12,7 @@ namespace Phobos.Engine.View
     {
         private Vector2 position = Vector2.Zero;
         int width, height;
-        private int coefficient;
+        private float coefficient;
         private int minZoom = 1;
         private int maxZoom = 10;
 
@@ -28,17 +28,17 @@ namespace Phobos.Engine.View
         public int Height { get; set; } 
         #endregion
 
-        public int Coefficient { 
+        public float Coefficient { 
             get { return coefficient; }
             set {
-                    int prevCoefficient = coefficient;
+                    float prevCoefficient = coefficient;
                     coefficient = value;
                     coefficient = Math.Min(maxZoom, coefficient);
                     coefficient = Math.Max(minZoom, coefficient);
 
                     /* calcul new camera resolution */
-                    Width = GameEngine.Instance.DeviceManager.PreferredBackBufferWidth / coefficient;
-                    Height = GameEngine.Instance.DeviceManager.PreferredBackBufferHeight / coefficient;
+                    Width = (int)(GameEngine.Instance.DeviceManager.PreferredBackBufferWidth / coefficient);
+                    Height = (int)(GameEngine.Instance.DeviceManager.PreferredBackBufferHeight / coefficient);
 
                     /* redim sprites if coeff change */
                     if (prevCoefficient != coefficient)

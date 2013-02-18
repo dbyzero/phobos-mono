@@ -94,7 +94,7 @@ namespace Phobos.Engine.View
             if (Mouse.GetState().ScrollWheelValue != prevMouseState.ScrollWheelValue)
             {
                 //old cam
-                int old_coeff = this.currentCamera().Coefficient;
+                float old_coeff = this.currentCamera().Coefficient;
                 int old_camera_width = this.currentCamera().Width;
                 int old_camera_height = this.currentCamera().Height;
                 
@@ -102,7 +102,7 @@ namespace Phobos.Engine.View
                 this.currentCamera().Coefficient += (int)((Mouse.GetState().ScrollWheelValue - prevMouseState.ScrollWheelValue)/120) ;
 
                 //new cam
-                int new_coeff = this.currentCamera().Coefficient;
+                float new_coeff = this.currentCamera().Coefficient;
                 int new_camera_width = this.currentCamera().Width;
                 int new_camera_height = this.currentCamera().Height;
 
@@ -136,18 +136,18 @@ namespace Phobos.Engine.View
                 int i = 20;
                 while (i < 60)
                 {
-                    Core core = new Core(new Vector3(i, j, 0), 32, 32, new Vector2(16, 16), text, new Rectangle(64, 32, 32, 32));
+                    Core core = new Core(new Vector3(i, j, 0), 32, 32, new Vector2(16, 8), text, new Rectangle(64, 32, 32, 32));
                     testChunk.addCore(core);
                     calculRenderEntitiesHandler += core.calculateScreenRect;
 
                     if (i % 4 == 0 && j % 4 == 0)
                     {
 
-                        DrawableEntity testFontain = new DrawableEntity(new Vector3(i, j, 1), 27, 34, new Vector2(13, 24), text2, new Rectangle(344, 714, 27, 34));
+                        DrawableEntity testFontain = new DrawableEntity(new Vector3(i, j, 0), 27, 34, new Vector2(13, 31), text2, new Rectangle(344, 714, 27, 34));
                         core.addEntity(testFontain);
                         calculRenderEntitiesHandler += testFontain.calculateScreenRect;
 
-                        DrawableEntity testContainable = new DrawableEntity(new Vector3(i, j, 2.7f), 32, 32, new Vector2(16, 24), text2, new Rectangle(205, 136, 32, 32));
+                        DrawableEntity testContainable = new DrawableEntity(new Vector3(i, j, 2.2f), 32, 32, new Vector2(16, 24), text2, new Rectangle(205, 136, 32, 32));
                         core.addEntity(testContainable);
                         calculRenderEntitiesHandler += testContainable.calculateScreenRect;
 
@@ -164,13 +164,13 @@ namespace Phobos.Engine.View
                 int i = 20;
                 while (i < 60)
                 {
-                    Core core = new Core(new Vector3(i, j, 0), 32, 32, new Vector2(16, 16), text, new Rectangle(0, 32, 32, 32));
+                    Core core = new Core(new Vector3(i, j, 0), 32, 32, new Vector2(16, 8), text, new Rectangle(128, 32, 32, 32));
                     testChunk2.addCore(core);
                     calculRenderEntitiesHandler += core.calculateScreenRect;
                     if (i == 40 && j == 40)
                     {
 
-                        DrawableEntity testContainable = new DrawableEntity(new Vector3(i, j, 1), 32, 32, new Vector2(16, 24), text, new Rectangle(32, 96, 32, 32));
+                        DrawableEntity testContainable = new DrawableEntity(new Vector3(i, j, 0), 32, 32, new Vector2(16, 28), text, new Rectangle(32, 96, 32, 32));
                         core.addEntity(testContainable);
                         calculRenderEntitiesHandler += testContainable.calculateScreenRect;
                     }
@@ -186,15 +186,12 @@ namespace Phobos.Engine.View
                 int i = -20;
                 while (i < 20)
                 {
-                    Core core = new Core(new Vector3(i, j, 0), 32, 32, new Vector2(16, 16), text, new Rectangle(160, 32, 32, 32));
-                    core.Width = 32;
-                    core.Height = 32;
-                    core.CenterSprite = new Vector2(16, 16);
+                    Core core = new Core(new Vector3(i, j, 0), 32, 32, new Vector2(16, 8), text, new Rectangle(160, 32, 32, 32));
 
                     if (i == 0 && j == 0)
                     {
 
-                        DrawableEntity testContainable = new DrawableEntity(new Vector3(i, j, 1), 32, 32, new Vector2(16, 24), text, new Rectangle(32, 0, 32, 32));
+                        DrawableEntity testContainable = new DrawableEntity(new Vector3(i, j, 0), 32, 32, new Vector2(16, 28), text, new Rectangle(32, 0, 32, 32));
                         core.addEntity(testContainable);
                         calculRenderEntitiesHandler += testContainable.calculateScreenRect;
                     }
@@ -205,7 +202,31 @@ namespace Phobos.Engine.View
                 }
                 j++;
             }
+            Chunk testChunk4 = new Chunk(0, 1);
+            j = 20;
+            while (j < 60)
+            {
+                int i = -20;
+                while (i < 20)
+                {
+                    Core core = new Core(new Vector3(i, j, 0), 32, 32, new Vector2(16, 8), text, new Rectangle(0, 0, 32, 32));
+
+                    if (i == 0 && j == 40)
+                    {
+
+                        DrawableEntity testContainable = new DrawableEntity(new Vector3(i, j, 0), 32, 32, new Vector2(16, 28), text, new Rectangle(32, 0, 32, 32));
+                        core.addEntity(testContainable);
+                        calculRenderEntitiesHandler += testContainable.calculateScreenRect;
+                    }
+
+                    testChunk4.addCore(core);
+                    calculRenderEntitiesHandler += core.calculateScreenRect;
+                    i++;
+                }
+                j++;
+            }
             chunks.Add(testChunk3);
+            chunks.Add(testChunk4);
             chunks.Add(testChunk);
             chunks.Add(testChunk2);
             #endregion
