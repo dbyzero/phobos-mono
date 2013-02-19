@@ -142,8 +142,9 @@ namespace Phobos.Engine.Models.Entities
 
         public void calculateScreenRect()
         {
-            screenRect.X = (int)((X * 16 - Y * 16) * Scene.getInstance().currentCamera().Coefficient);
-            screenRect.Y = (int)((X * 8 + Y * 8 - Z * 16) * Scene.getInstance().currentCamera().Coefficient);
+            //Calcul pour camerSE
+            screenRect.X = (int)((X * 16 - Y * 16 - centerSprite.X) * Scene.getInstance().currentCamera().Coefficient);
+            screenRect.Y = (int)((X * 8 + Y * 8 - Z * 16 - centerSprite.Y) * Scene.getInstance().currentCamera().Coefficient);
             screenRect.Width = (int)(Width * Scene.getInstance().currentCamera().Coefficient);
             screenRect.Height = (int)(Height * Scene.getInstance().currentCamera().Coefficient);
         }
@@ -161,7 +162,7 @@ namespace Phobos.Engine.Models.Entities
                 SpriteSheetRect,
                 color,
                 rotation,
-                centerSprite + Scene.getInstance().currentCamera().Position,
+                Scene.getInstance().currentCamera().Position,
                 SpriteEffects.None,
                 layer
                 );

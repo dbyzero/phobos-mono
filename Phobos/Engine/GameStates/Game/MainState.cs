@@ -31,7 +31,7 @@ namespace Phobos.Engine.GameStates.Game {
             scene = Scene.getInstance();
             scene.Initialize();
 
-            /*#region Benchmark
+           /* #region Benchmark
 
             int size = 1000;
             Texture2D text = GameEngine.Instance.Content.Load<Texture2D>(@"spriteSheets\temp_sprite");
@@ -60,8 +60,10 @@ namespace Phobos.Engine.GameStates.Game {
             {
                 for (int y = 0; y < size; y++)
                 {
+                    sw.Stop();
                     int px = random.Next(999);
-                    int py = random.Next(999);  
+                    int py = random.Next(999);
+                    sw.Start();
                     arrayListCore[px,py].calculateScreenRect();
                 }
             }
@@ -75,8 +77,10 @@ namespace Phobos.Engine.GameStates.Game {
             {
                 for (int y = 0; y < size; y++)
                 {
+                    sw.Stop();
                     int px = random.Next(999);
-                    int py = random.Next(999);  
+                    int py = random.Next(999);
+                    sw.Start();
                     dictListCore[px][py].calculateScreenRect();
                 }
             }
@@ -90,8 +94,10 @@ namespace Phobos.Engine.GameStates.Game {
             {
                 for (int y = 0; y < size; y++)
                 {
+                    sw.Stop();
                     int px = random.Next(999);
-                    int py = random.Next(999);  
+                    int py = random.Next(999);
+                    sw.Start();
                     sDictListCore[px][py].calculateScreenRect();
                 }
             }

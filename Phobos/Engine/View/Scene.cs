@@ -225,10 +225,34 @@ namespace Phobos.Engine.View
                 }
                 j++;
             }
+            Chunk testChunk5 = new Chunk(0, 1);
+            j = 60;
+            while (j < 160)
+            {
+                int i = 20;
+                while (i < 120)
+                {
+                    Core core = new Core(new Vector3(i, j, 0), 32, 32, new Vector2(16, 8), text, new Rectangle(64, 32, 32, 32));
+
+                    if (i == 70 && j == 110)
+                    {
+
+                        DrawableEntity testContainable = new DrawableEntity(new Vector3(i, j, 0), 32, 32, new Vector2(16, 28), text, new Rectangle(32, 0, 32, 32));
+                        core.addEntity(testContainable);
+                        calculRenderEntitiesHandler += testContainable.calculateScreenRect;
+                    }
+
+                    testChunk5.addCore(core);
+                    calculRenderEntitiesHandler += core.calculateScreenRect;
+                    i++;
+                }
+                j++;
+            }
             chunks.Add(testChunk3);
             chunks.Add(testChunk4);
             chunks.Add(testChunk);
             chunks.Add(testChunk2);
+            chunks.Add(testChunk5);
             #endregion
         }
 
