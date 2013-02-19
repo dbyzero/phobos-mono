@@ -1,4 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
+using Phobos.Engine.GameStates.Game;
+using Phobos.Engine.GameStates.Menu;
+using Phobos.Engine.GameStates.UiDebug;
+using Phobos.Engine.Gui;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,16 +10,17 @@ using System.Text;
 
 namespace Phobos.Engine.GameStates {
 
-    public enum     GameStateList {
+    public enum GameStateList {
         MENU, GAME, UIDEBUG
+        
     }
 
-    class GameStateManager : DrawableGameComponent {
+    static class GameStateManager {
 
         #region Fields & Properties
         #region Fields
 
-        private Dictionary<GameStateList, AGameState> gameStates = new Dictionary<GameStateList, AGameState>();
+        static Dictionary<GameStateList, AGameState> gameStates = new Dictionary<GameStateList, AGameState>();
 
         #endregion
         #region Properties
@@ -23,60 +28,56 @@ namespace Phobos.Engine.GameStates {
         #endregion
         #region Constructors & Indexer
 
-        public GameStateManager()
-            : base( GameEngine.Instance ) {
-
-        }
 
         #endregion
         #endregion
-
         #region Methods
 
-        public void AddGameState( AGameState gameState, GameStateList stateIdentifier ) {
+        public static void AddGameState( AGameState gameState, GameStateList stateIdentifier ) {
             gameStates.Add( stateIdentifier, gameState );
         }
 
-        public void RemoveGameState( GameStateList stateIdentifier ) {
+        public static void RemoveGameState( GameStateList stateIdentifier ) {
             gameStates.Remove( stateIdentifier );
         }
 
-        public AGameState getGameState( GameStateList stateIdentifier ) {
+        public static AGameState GetGameState( GameStateList stateIdentifier ) {
             return gameStates[ stateIdentifier ];
         }
 
         #region IGameComponent
 
-        public override void Initialize() {
-            
+        public static void Initialize() {
+            AddGameState( new MainState(), GameStateList.GAME );
+            AddGameState( new MenuGameState(), GameStateList.MENU );
+            AddGameState( new UIDebugState(), GameStateList.UIDEBUG );
+
             foreach( KeyValuePair<GameStateList, AGameState> entry in gameStates ) {
-                entry.Value.Initialize(  );
+                entry.Value.Initialize();
             }
-            base.Initialize();
+
         }
 
         #endregion
 
         #region IDrawable
-        public override void Draw( GameTime gameTime ) {
+        public static void Draw( GameTime gameTime ) {
             
             foreach( KeyValuePair<GameStateList, AGameState> entry in gameStates ) {
                 entry.Value.Draw( gameTime );
             }
 
-            base.Draw( gameTime );
         }
         #endregion
 
         #region IUpdateable
 
-        public override void Update( GameTime gameTime ) {
-
+        public static void Update( GameTime gameTime ) {
+            GUIGlobalManager.UpdateMouseover();
             foreach( KeyValuePair<GameStateList, AGameState> entry in gameStates ) {
                 entry.Value.Update( gameTime );
             }
 
-            base.Update( gameTime );
         }
 
         #endregion

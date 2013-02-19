@@ -15,8 +15,8 @@ namespace Phobos.Engine.Gui.PWidgets.System {
         protected static Texture2D spriteButton;
         #endregion
         #region Constructors and Indexers
-        public PSCheckBox(APWidget parent, int x, int y)
-            : base( parent, x, y, 18, 18 ) {
+        public PSCheckBox(int x, int y)
+            : base( x, y, 18, 18 ) {
 
         }
 
@@ -52,7 +52,7 @@ namespace Phobos.Engine.Gui.PWidgets.System {
                 }
             }
 
-            GameEngine.spriteBatch.Draw( spriteButton, new Rectangle( location.X, location.Y, 18, 18 ), _source, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f );
+            GameEngine.spriteBatch.Draw( spriteButton, new Rectangle( AbsoluteLocation.X, AbsoluteLocation.Y, 18, 18 ), _source, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f );
         }
         #endregion
         #endregion

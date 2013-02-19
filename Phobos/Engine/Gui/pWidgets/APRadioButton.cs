@@ -34,8 +34,8 @@ namespace Phobos.Engine.Gui.PWidgets {
         #endregion
         #endregion
         #region Constructors / Indexers
-        public APRadioButton( APWidget parent, int x, int y, int width, int height )
-            : base( parent, x, y, width, height ) {
+        public APRadioButton( int x, int y, int width, int height )
+            : base( x, y, width, height ) {
 
             #region Bases events
                 Action += delegate( APButton sender, ActionEvent e ) {

@@ -28,12 +28,10 @@ namespace Phobos.Engine.Gui.PWidgets.System {
         #endregion
         #region Constructors & Indexer
 
-        public PSDialog( APWidget parent, int x, int y, int width, int height )
-            : base( parent, x, y, width, height ) {
-                mouseArea.X += left.Width - 7;
-            mouseArea.Y += top.Height -7;
-            mouseArea.Height -= top.Height + bottom.Height -14;
-            mouseArea.Width -= right.Width + left.Width -14;
+        public PSDialog( int x, int y, int width, int height, GUILayer layer)
+            : base( x, y, width, height, layer ) {
+            if(layer != null)
+                layer.Register( this );
         }
 
         static PSDialog() {
@@ -46,52 +44,63 @@ namespace Phobos.Engine.Gui.PWidgets.System {
 
         public override void Draw( Microsoft.Xna.Framework.GameTime gameTime ) {
 
-            GameEngine.spriteBatch.Draw( sprite, new Rectangle( location.X, location.Y, topLeft.Width, topLeft.Height ), topLeft, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f );
-            GameEngine.spriteBatch.Draw( sprite, new Rectangle( location.X + location.Width - topRight.Width, location.Y, topRight.Width, topRight.Height ), topRight, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f );
-            GameEngine.spriteBatch.Draw( sprite, new Rectangle( location.X, location.Y + location.Height - bottomLeft.Height, bottomLeft.Width, bottomLeft.Height ), bottomLeft, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f );
-            GameEngine.spriteBatch.Draw( sprite, new Rectangle( location.X + location.Width - bottomRight.Width, location.Y + location.Height - bottomRight.Height, bottomRight.Width, bottomRight.Height), bottomRight, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f );
+            Rectangle drawLocation = AbsoluteLocation;
+            drawLocation.X -= left.Width -3;
+            drawLocation.Y -= top.Height -3;
+            drawLocation.Height += bottom.Height + top.Height -3;
+            drawLocation.Width += right.Width + left.Width - 3;
 
-            Rectangle dest = location;
+            GameEngine.spriteBatch.Draw( sprite, new Rectangle( drawLocation.X, drawLocation.Y, topLeft.Width, topLeft.Height ), topLeft, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f );
+            GameEngine.spriteBatch.Draw( sprite, new Rectangle( drawLocation.X + drawLocation.Width - topRight.Width, drawLocation.Y, topRight.Width, topRight.Height ), topRight, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f );
+            GameEngine.spriteBatch.Draw( sprite, new Rectangle( drawLocation.X, drawLocation.Y + drawLocation.Height - bottomLeft.Height, bottomLeft.Width, bottomLeft.Height ), bottomLeft, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f );
+            GameEngine.spriteBatch.Draw( sprite, new Rectangle( drawLocation.X + drawLocation.Width - bottomRight.Width, drawLocation.Y + drawLocation.Height - bottomRight.Height, bottomRight.Width, bottomRight.Height ), bottomRight, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f );
 
-            dest.X = location.X + topLeft.Width;
-            dest.Y = location.Y;
-            dest.Width = location.Width - topLeft.Width - topRight.Width;
+            Rectangle dest = drawLocation;
+
+            dest.X = drawLocation.X + topLeft.Width;
+            dest.Y = drawLocation.Y;
+            dest.Width = drawLocation.Width - topLeft.Width - topRight.Width;
             dest.Height = top.Height;
 
             GraphicalHelpers.fillRectangle( sprite, top, dest, GameEngine.spriteBatch );
 
-            dest.X = location.X + topLeft.Width;
-            dest.Y = location.Y + location.Height - bottomRight.Height;
-            dest.Width = location.Width - bottomRight.Width - bottomLeft.Width;
+            dest.X = drawLocation.X + topLeft.Width;
+            dest.Y = drawLocation.Y + drawLocation.Height - bottomRight.Height;
+            dest.Width = drawLocation.Width - bottomRight.Width - bottomLeft.Width;
             dest.Height = bottom.Height;
 
             GraphicalHelpers.fillRectangle( sprite, bottom, dest, GameEngine.spriteBatch );
 
-            dest.X = location.X + location.Width - topRight.Width;
-            dest.Y = location.Y + topRight.Height;
+            dest.X = drawLocation.X + drawLocation.Width - topRight.Width;
+            dest.Y = drawLocation.Y + topRight.Height;
             dest.Width = right.Width;
-            dest.Height = location.Height - topRight.Height - bottomRight.Height;
+            dest.Height = drawLocation.Height - topRight.Height - bottomRight.Height;
 
             GraphicalHelpers.fillRectangle( sprite, right, dest, GameEngine.spriteBatch );
 
-            dest.X = location.X;
-            dest.Y = location.Y + topLeft.Height;
+            dest.X = drawLocation.X;
+            dest.Y = drawLocation.Y + topLeft.Height;
             dest.Width = left.Width;
-            dest.Height = location.Height - topLeft.Height - bottomLeft.Height;
+            dest.Height = drawLocation.Height - topLeft.Height - bottomLeft.Height;
 
             GraphicalHelpers.fillRectangle( sprite, left, dest, GameEngine.spriteBatch );
 
-            dest.X = location.X + left.Width;
-            dest.Y = location.Y + top.Height;
-            dest.Width = location.Width - right.Width - left.Width;
-            dest.Height = location.Height - bottom.Height - top.Height;
+            dest.X = drawLocation.X + left.Width;
+            dest.Y = drawLocation.Y + top.Height;
+            dest.Width = drawLocation.Width - right.Width - left.Width;
+            dest.Height = drawLocation.Height - bottom.Height - top.Height;
 
             GraphicalHelpers.fillRectangle( sprite, texture, dest, GameEngine.spriteBatch );
-            //Montre en rouge la mouseArea.
+            //Montre la drawlocation et l'absolutelocation.
             /*Texture2D rect = new Texture2D( ServicesManager.GetService<GraphicsDevice>(), 1, 1 );
+            rect.SetData( new[] { Color.Blue } );
+            GameEngine.spriteBatch.Draw( rect, drawLocation, Color.Blue );
             rect.SetData( new[] { Color.Red } );
-            GameEngine.spriteBatch.Draw( rect, mouseArea, Color.Red );*/
+            GameEngine.spriteBatch.Draw( rect, AbsoluteLocation, Color.Red );*/
 
+            foreach( APWidget child in children ) {
+                child.Draw( gameTime );
+            }
         }
 
         #endregion

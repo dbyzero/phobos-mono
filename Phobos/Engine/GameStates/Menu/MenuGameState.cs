@@ -18,31 +18,34 @@ namespace Phobos.Engine.GameStates.Menu {
         PSButton optionButton;
         PSButton uiDebugButton;
 
-        public MenuGameState( GameStateManager manager )
+        public MenuGameState()
             : base( ) {
                 Status = GameStateStatus.Inactive;
         }
 
         protected override void LoadContent() {
 
-            menuBG = new PSDialog( null, 32, 32, 192, GameEngine.Instance.Window.ClientBounds.Height - 64 );
-            gameButton = new PSButton(gameButton, 64, 140, "Game");
+            menuBG = new PSDialog( 32, 32, 192, GameEngine.Instance.Window.ClientBounds.Height - 64, null );
+            gameButton = new PSButton(32, 64, "Game");
             gameButton.Action += delegate( APButton sender, ActionEvent e )
             {
-                ServicesManager.GetService<GameStateManager>().getGameState(GameStateList.GAME).Status = GameStateStatus.Active;
+                GameStateManager.GetGameState(GameStateList.GAME).Status = GameStateStatus.Active;
                 Status = GameStateStatus.Inactive;
             };
-            optionButton = new PSButton( optionButton, 64, 180, "Options" );
-            uiDebugButton = new PSButton( uiDebugButton, 64, 220, "Debug UI" );
+            menuBG.Add( gameButton );
+            optionButton = new PSButton( 32, 104, "Options" );
+            menuBG.Add( optionButton );
+            uiDebugButton = new PSButton( 32, 144, "Debug UI" );
             uiDebugButton.Action += delegate( APButton sender, ActionEvent e ) {
-                ServicesManager.GetService<GameStateManager>().getGameState( GameStateList.UIDEBUG ).Status = GameStateStatus.Active;
+                GameStateManager.GetGameState( GameStateList.UIDEBUG ).Status = GameStateStatus.Active;
                 Status = GameStateStatus.Inactive;
             };
-            exitButton = new PSButton( exitButton, 64, 260, "Exit" );
+            menuBG.Add( uiDebugButton );
+            exitButton = new PSButton( 32, 184, "Exit" );
             exitButton.Action += delegate( APButton sender, ActionEvent e ) {
                 GameEngine.Instance.Exit();
             };
-
+            menuBG.Add( exitButton );
             base.LoadContent();
         }
         #region IDrawable

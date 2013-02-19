@@ -44,8 +44,8 @@ namespace Phobos.Engine.Gui.PWidgets {
 
         #region Constructeurs
 
-        public APLabel( APWidget parent, int x, int y, int width, int height, string text )
-            : base( parent, x, y, width, height ) {
+        public APLabel( int x, int y, int width, int height, string text )
+            : base( x, y, width, height ) {
             this.Text = text;
 
         }

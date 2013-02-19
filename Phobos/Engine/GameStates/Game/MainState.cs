@@ -20,7 +20,7 @@ namespace Phobos.Engine.GameStates.Game {
         PSButton exitButton;
         Scene scene ;
 
-        public MainState( GameStateManager manager )
+        public MainState()
             : base() {
             Status = GameStateStatus.Active;
         }
@@ -108,9 +108,9 @@ namespace Phobos.Engine.GameStates.Game {
 
         protected override void LoadContent() {
 
-            returnButton = new PSButton(returnButton, 64, 64, "Retour");
-            returnButton.Action += delegate( APButton  sender, ActionEvent e ) {
-                ServicesManager.GetService<GameStateManager>().getGameState( GameStateList.MENU ).Status = GameStateStatus.Active;
+            returnButton = new PSButton(64, 64, "Retour");
+            returnButton.Action += delegate( APButton sender, ActionEvent e ) {
+                GameStateManager.GetGameState( GameStateList.MENU ).Status = GameStateStatus.Active;
                 Status = GameStateStatus.Inactive;
             };
             exitButton = new PSButton(exitButton, 64, 128, "Exit");
