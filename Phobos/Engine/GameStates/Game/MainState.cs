@@ -113,7 +113,7 @@ namespace Phobos.Engine.GameStates.Game {
                 GameStateManager.GetGameState( GameStateList.MENU ).Status = GameStateStatus.Active;
                 Status = GameStateStatus.Inactive;
             };
-            exitButton = new PSButton(exitButton, 64, 128, "Exit");
+            exitButton = new PSButton(64, 128, "Exit");
             exitButton.Action += delegate(APButton sender, ActionEvent e)
             {
                 GameEngine.Instance.Exit();
