@@ -142,11 +142,37 @@ namespace Phobos.Engine.Models.Entities
 
         public void calculateScreenRect()
         {
-            //Calcul pour camerSE
-            screenRect.X = (int)((X * 16 - Y * 16 - centerSprite.X) * Scene.getInstance().currentCamera().Coefficient);
-            screenRect.Y = (int)((X * 8 + Y * 8 - Z * 16 - centerSprite.Y) * Scene.getInstance().currentCamera().Coefficient);
-            screenRect.Width = (int)(Width * Scene.getInstance().currentCamera().Coefficient);
-            screenRect.Height = (int)(Height * Scene.getInstance().currentCamera().Coefficient);
+            switch (Scene.getInstance().Orientation)
+            {
+                //Calcul pour SE
+                case Orientation.SE :
+                    screenRect.X = (int)((X * 16 - Y * 16 - centerSprite.X) * Scene.getInstance().Camera.Coefficient);
+                    screenRect.Y = (int)((X * 8 + Y * 8 - Z * 16 - centerSprite.Y) * Scene.getInstance().Camera.Coefficient);
+                    screenRect.Width = (int)(Width * Scene.getInstance().Camera.Coefficient);
+                    screenRect.Height = (int)(Height * Scene.getInstance().Camera.Coefficient);
+                    break;
+                //Calcul pour SO
+                case Orientation.SO:
+                    screenRect.X = (int)((X * 16 + Y * 16 - centerSprite.X) * Scene.getInstance().Camera.Coefficient);
+                    screenRect.Y = (int)((Y * 8 - X * 8 - Z * 16 - centerSprite.Y) * Scene.getInstance().Camera.Coefficient);
+                    screenRect.Width = (int)(Width * Scene.getInstance().Camera.Coefficient);
+                    screenRect.Height = (int)(Height * Scene.getInstance().Camera.Coefficient);
+                    break;
+                //Calcul pour NO
+                case Orientation.NO:
+                    screenRect.X = (int)((Y * 16 - X * 16 - centerSprite.X) * Scene.getInstance().Camera.Coefficient);
+                    screenRect.Y = (int)((-1 * Y * 8 - X * 8 - Z * 16 - centerSprite.Y) * Scene.getInstance().Camera.Coefficient);
+                    screenRect.Width = (int)(Width * Scene.getInstance().Camera.Coefficient);
+                    screenRect.Height = (int)(Height * Scene.getInstance().Camera.Coefficient);
+                    break;
+                //Calcul pour NE
+                case Orientation.NE:
+                    screenRect.X = (int)((-1 * X * 16 - Y * 16 - centerSprite.X) * Scene.getInstance().Camera.Coefficient);
+                    screenRect.Y = (int)((X * 8 - Y * 8 - Z * 16 - centerSprite.Y) * Scene.getInstance().Camera.Coefficient);
+                    screenRect.Width = (int)(Width * Scene.getInstance().Camera.Coefficient);
+                    screenRect.Height = (int)(Height * Scene.getInstance().Camera.Coefficient);
+                    break;
+            }
         }
 
         /*
@@ -162,7 +188,7 @@ namespace Phobos.Engine.Models.Entities
                 SpriteSheetRect,
                 color,
                 rotation,
-                Scene.getInstance().currentCamera().Position,
+                Scene.getInstance().Camera.Position,
                 SpriteEffects.None,
                 layer
                 );
@@ -172,7 +198,6 @@ namespace Phobos.Engine.Models.Entities
         public override void move(Vector3 v)
         {
             base.move(v);
-            //calculateScreenRect();
         }
 
 

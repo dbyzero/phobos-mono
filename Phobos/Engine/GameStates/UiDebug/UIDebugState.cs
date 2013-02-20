@@ -89,9 +89,6 @@ namespace Phobos.Engine.GameStates.UiDebug {
 
             dialog2.Add( button4 );
 
-            Console.WriteLine( dialog2.AbsoluteLocation );
-            Console.WriteLine( dialog2.AbsoluteMouseoverArea );
-
             button4.MouseoverChanged += delegate( APWidget sender, EventArgs e ) {
                 if( sender.IsMouseover ) {
                     Console.WriteLine( "La souris rentre ... ET DEVRAIT PAS" );

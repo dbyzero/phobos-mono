@@ -14,17 +14,21 @@ namespace Phobos.Engine.View
     class Scene : DrawableGameComponent
     {
         public CalculRenderEntitiesHandler calculRenderEntitiesHandler;
-        static private Scene scene = null;
-        private Camera cameraNO;
-        private Camera cameraNE;
-        private Camera cameraSO;
-        private Camera cameraSE;    
-        Orientation orientation;
+        static Scene scene = null;
+        Camera camera = new Camera();
+        Orientation orientation = Orientation.SE;
         SpriteBatch spriteBatch;
         MouseState prevMouseState;
         Vector2 mouveMovement;
 
         private List<Chunk> chunks = new List<Chunk>();
+
+        public Orientation Orientation { get ; set ;}
+
+        public Camera Camera { 
+            get { return camera; } 
+            set { camera = value; } 
+        }
 
         static public Scene getInstance()
         {
@@ -40,25 +44,6 @@ namespace Phobos.Engine.View
         {
         }
        
-        public Camera currentCamera()
-        {
-            switch (orientation)
-            {
-                case Orientation.SE:
-                    return cameraSE;
-
-                case Orientation.SO:
-                    return cameraSO;
-                        
-                case Orientation.NE:
-                    return cameraNE;
-
-                case Orientation.NO:
-                    return cameraNO;
-            }
-            throw new Exception("Cannot find camera");
-        }
-
         public override void Draw(GameTime gameTime)
         {
             spriteBatch.Begin(SpriteSortMode.Deferred,BlendState.AlphaBlend,SamplerState.PointWrap,DepthStencilState.Default,RasterizerState.CullNone);
@@ -80,33 +65,33 @@ namespace Phobos.Engine.View
                 float deltaX = prevMouseState.X - Mouse.GetState().X;
                 if (deltaX != 0)
                 {
-                    mouveMovement.X = deltaX/currentCamera().Coefficient;
+                    mouveMovement.X = deltaX/Camera.Coefficient;
                 }
 
                 float deltaY = prevMouseState.Y - Mouse.GetState().Y;
                 if (deltaY != 0)
                 {
-                    mouveMovement.Y = deltaY/currentCamera().Coefficient;
+                    mouveMovement.Y = deltaY/Camera.Coefficient;
                 }
+                Camera.Position += mouveMovement;
             }
-            currentCamera().Position += mouveMovement;
 
             if (Mouse.GetState().ScrollWheelValue != prevMouseState.ScrollWheelValue)
             {
                 //old cam
-                float old_coeff = this.currentCamera().Coefficient;
-                int old_camera_width = this.currentCamera().Width;
-                int old_camera_height = this.currentCamera().Height;
+                float old_coeff = this.Camera.Coefficient;
+                int old_camera_width = this.Camera.Width;
+                int old_camera_height = this.Camera.Height;
                 
                 //apply coeff
-                this.currentCamera().Coefficient += (int)((Mouse.GetState().ScrollWheelValue - prevMouseState.ScrollWheelValue)/120) ;
+                this.Camera.Coefficient += (int)((Mouse.GetState().ScrollWheelValue - prevMouseState.ScrollWheelValue)/120) ;
 
                 //new cam
-                float new_coeff = this.currentCamera().Coefficient;
-                int new_camera_width = this.currentCamera().Width;
-                int new_camera_height = this.currentCamera().Height;
+                float new_coeff = this.Camera.Coefficient;
+                int new_camera_width = this.Camera.Width;
+                int new_camera_height = this.Camera.Height;
 
-                currentCamera().Position += new Vector2(0.5f * (old_camera_width - new_camera_width),
+                Camera.Position += new Vector2(0.5f * (old_camera_width - new_camera_width),
                                                         0.5f * (old_camera_height - new_camera_height));
             }
 
@@ -116,12 +101,6 @@ namespace Phobos.Engine.View
         public override void Initialize()
         {
             base.Initialize();
-            cameraNO = new Camera();
-            cameraSE = new Camera();
-            cameraNE = new Camera();
-            cameraSO = new Camera();
-
-            orientation = Orientation.SE;
 
             spriteBatch = new SpriteBatch(GameEngine.Instance.GraphicsDevice);
 
@@ -130,17 +109,17 @@ namespace Phobos.Engine.View
             Chunk testChunk = new Chunk(0, 0);
             Texture2D text = GameEngine.Instance.Content.Load<Texture2D>(@"spriteSheets\temp_sprite");
             Texture2D text2 = GameEngine.Instance.Content.Load<Texture2D>(@"spriteSheets\test_rpg");
-            int j = -20;
-            while (j < 20)
+            int j = 0;
+            while (j < Chunk.Chunk_Size)
             {
-                int i = 20;
-                while (i < 60)
+                int i = 0;
+                while (i < Chunk.Chunk_Size)
                 {
                     Core core = new Core(new Vector3(i, j, 0), 32, 32, new Vector2(16, 8), text, new Rectangle(64, 32, 32, 32));
-                    testChunk.addCore(core);
+                    testChunk.addCore(i,j,core);
                     calculRenderEntitiesHandler += core.calculateScreenRect;
 
-                    if (i % 4 == 0 && j % 4 == 0)
+                    if ((i % 30) == 0 && (j % 10) == 0)
                     {
 
                         DrawableEntity testFontain = new DrawableEntity(new Vector3(i, j, 0), 27, 34, new Vector2(13, 31), text2, new Rectangle(344, 714, 27, 34));
@@ -156,7 +135,7 @@ namespace Phobos.Engine.View
                 }
                 j++;
             }
-
+            /*
             Chunk testChunk2 = new Chunk(0, 1);
             j = 20;
             while (j < 60)
@@ -248,11 +227,11 @@ namespace Phobos.Engine.View
                 }
                 j++;
             }
-            chunks.Add(testChunk3);
-            chunks.Add(testChunk4);
-            chunks.Add(testChunk);
-            chunks.Add(testChunk2);
             chunks.Add(testChunk5);
+            chunks.Add(testChunk4);
+            chunks.Add(testChunk3);
+            chunks.Add(testChunk2);*/
+            chunks.Add(testChunk);
             #endregion
         }
 

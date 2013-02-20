@@ -54,30 +54,90 @@ namespace Phobos.Engine.View
             Height = GameEngine.Instance.DeviceManager.PreferredBackBufferHeight;
         }
 
-        public void ProjectToScreen(DrawableEntity entity,Orientation projection)
+        public override string ToString()
         {
-            switch (projection)
-            {
-                case Orientation.NE:
-                    throw new Exception("Camera projection not yet set");
-                    //break;
-                case Orientation.NO:
-                    throw new Exception("Camera projection not yet set");
-                    //break;
-                case Orientation.SE:
-                    Rectangle tmp_rect = entity.ScreenRect;
-                    tmp_rect.X = (int)(entity.X * 16 - entity.Y * 16) - (int)entity.CenterSprite.X;
-                    tmp_rect.Y = (int)(entity.X * 8 + entity.Y * 8 - entity.Z * 16) - (int)entity.CenterSprite.Y;
-                    tmp_rect.Width = entity.Width;
-                    tmp_rect.Height = entity.Height;
-                    entity.ScreenRect = tmp_rect;
-                    break;
-                case Orientation.SO:
-                    throw new Exception("Camera projection not yet set");
-                    //break;
-                default:
-                    throw new Exception("Camera have a unknow projection");
+            return "Position:" + Position + " Width:" + Width + " Height:" + Height;        }
+
+        public void turnCamera(Orientation orient)
+        {
+            Console.WriteLine(this);
+            Vector2 old_position = Scene.getInstance().Camera.Position;
+            switch(Scene.getInstance().Orientation) {
+                case Orientation.SE :
+                    switch (orient)
+                    {
+                        case Orientation.SO:
+                            Scene.getInstance().Orientation = Orientation.SO;
+                            break;
+                        case Orientation.NE:
+                            Scene.getInstance().Orientation = Orientation.NE;
+                            break;
+                        case Orientation.NO:
+                            Scene.getInstance().Orientation = Orientation.NO;
+                            Scene.getInstance().Camera.Position -= 
+                                new Vector2(2 * old_position.X + Scene.getInstance().Camera.Width, 2 * old_position.Y + Scene.getInstance().Camera.Height);
+                            break;
+                        default:
+                            return;
+                    }
+                    break ;
+                case Orientation.SO :
+                    switch (orient)
+                    {
+                        case Orientation.SE:
+                            Scene.getInstance().Orientation = Orientation.SE;
+                            break;
+                        case Orientation.NE:
+                            Scene.getInstance().Orientation = Orientation.NE;
+                            Scene.getInstance().Camera.Position -= 
+                                new Vector2(2 * old_position.X + Scene.getInstance().Camera.Width, 2 * old_position.Y + Scene.getInstance().Camera.Height);
+                            break;
+                        case Orientation.NO:
+                            Scene.getInstance().Orientation = Orientation.NO;
+                            break;
+                        default:
+                            return;
+                    }
+                    break ;
+                case Orientation.NE :
+                    switch (orient)
+                    {
+                        case Orientation.SE:
+                            Scene.getInstance().Orientation = Orientation.SE;
+                            break;
+                        case Orientation.SO:
+                            Scene.getInstance().Orientation = Orientation.SO;
+                            Scene.getInstance().Camera.Position -= 
+                                new Vector2(2 * old_position.X + Scene.getInstance().Camera.Width, 2 * old_position.Y + Scene.getInstance().Camera.Height);
+                            break;
+                        case Orientation.NO:
+                            Scene.getInstance().Orientation = Orientation.NO;
+                            break;
+                        default:
+                            return;
+                    }
+                    break ;
+                case Orientation.NO :
+                    switch (orient)
+                    {
+                        case Orientation.SE:
+                            Scene.getInstance().Orientation = Orientation.SE;
+                            Scene.getInstance().Camera.Position -= 
+                                new Vector2(2 * old_position.X + Scene.getInstance().Camera.Width, 2 * old_position.Y + Scene.getInstance().Camera.Height);
+                            break;
+                        case Orientation.SO:
+                            Scene.getInstance().Orientation = Orientation.SO;
+                            break;
+                        case Orientation.NE:
+                            Scene.getInstance().Orientation = Orientation.NE;
+                            break;
+                        default:
+                            return;
+                    }
+                    break ;
             }
+            Scene.getInstance().calculRenderEntitiesHandler();
+            Console.WriteLine(this);
         }
 
     }

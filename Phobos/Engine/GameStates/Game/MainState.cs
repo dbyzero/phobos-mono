@@ -18,6 +18,10 @@ namespace Phobos.Engine.GameStates.Game {
 
         PSButton returnButton;
         PSButton exitButton;
+        PSButton cameraSO;
+        PSButton cameraSE;
+        PSButton cameraNO;
+        PSButton cameraNE;
         Scene scene ;
 
         public MainState()
@@ -30,80 +34,6 @@ namespace Phobos.Engine.GameStates.Game {
             base.Initialize();
             scene = Scene.getInstance();
             scene.Initialize();
-
-           /* #region Benchmark
-
-            int size = 1000;
-            Texture2D text = GameEngine.Instance.Content.Load<Texture2D>(@"spriteSheets\temp_sprite");
-            Dictionary<int, Dictionary<int, Core>> dictListCore = new Dictionary<int, Dictionary<int, Core>>();
-            SortedDictionary<int, SortedDictionary<int, Core>> sDictListCore = new SortedDictionary<int, SortedDictionary<int, Core>>();
-            Core[,] arrayListCore = new Core[size, size];
-            for (int x = 0; x < size; x++)
-            {
-                Dictionary<int, Core> dictRow = new Dictionary<int, Core>();
-                SortedDictionary<int, Core> sDictRow = new SortedDictionary<int, Core>();
-                dictListCore.Add(x, dictRow);
-                sDictListCore.Add(x, sDictRow);
-                for (int y = 0; y < size; y++)
-                {
-                    Core core = new Core(new Vector3(x, y, 0), 32, 32, new Vector2(16, 8), text, new Rectangle(64, 32, 32, 32)) ;
-                    dictRow.Add(y, core);
-                    sDictRow.Add(y, core);
-                    arrayListCore[x,y] = core ;
-                }
-            }
-
-            Random random = new Random();
-            var sw = new Stopwatch();
-            sw.Start();
-            for (int x = 0; x < size; x++)
-            {
-                for (int y = 0; y < size; y++)
-                {
-                    sw.Stop();
-                    int px = random.Next(999);
-                    int py = random.Next(999);
-                    sw.Start();
-                    arrayListCore[px,py].calculateScreenRect();
-                }
-            }
-            sw.Stop();
-            Console.WriteLine("time for ARRAY lookups: {0} ms", sw.ElapsedMilliseconds);
-
-            sw.Reset();
-
-            sw.Start();
-            for (int x = 0; x < size; x++)
-            {
-                for (int y = 0; y < size; y++)
-                {
-                    sw.Stop();
-                    int px = random.Next(999);
-                    int py = random.Next(999);
-                    sw.Start();
-                    dictListCore[px][py].calculateScreenRect();
-                }
-            }
-            sw.Stop();
-            Console.WriteLine("time for DICTIONNARY index lookups: {0} ms", sw.ElapsedMilliseconds); 
-
-            sw.Reset();
-
-            sw.Start();
-            for (int x = 0; x < size; x++)
-            {
-                for (int y = 0; y < size; y++)
-                {
-                    sw.Stop();
-                    int px = random.Next(999);
-                    int py = random.Next(999);
-                    sw.Start();
-                    sDictListCore[px][py].calculateScreenRect();
-                }
-            }
-            sw.Stop();
-            Console.WriteLine("time for SORTED DICTIONNARY index lookups: {0} ms", sw.ElapsedMilliseconds); 
-            #endregion*/
         }
 
         protected override void LoadContent() {
@@ -117,6 +47,29 @@ namespace Phobos.Engine.GameStates.Game {
             exitButton.Action += delegate(APButton sender, ActionEvent e)
             {
                 GameEngine.Instance.Exit();
+
+            };
+            cameraSE = new PSButton(64, 200, "Camera SE");
+            cameraSE.Action += delegate(APButton sender, ActionEvent e)
+            {
+                //Console.WriteLine(scene.Camera);
+                Scene.getInstance().Camera.turnCamera(Orientation.SE);
+                //Console.WriteLine(scene.Camera);
+            };
+            cameraSO = new PSButton(64, 240, "Camera SO");
+            cameraSO.Action += delegate(APButton sender, ActionEvent e)
+            {
+                Scene.getInstance().Camera.turnCamera(Orientation.SO);
+            };
+            cameraNO = new PSButton(64, 280, "Camera NO");
+            cameraNO.Action += delegate(APButton sender, ActionEvent e)
+            {
+                Scene.getInstance().Camera.turnCamera(Orientation.NO);
+            };
+            cameraNE = new PSButton(64, 320, "Camera NE");
+            cameraNE.Action += delegate(APButton sender, ActionEvent e)
+            {
+                Scene.getInstance().Camera.turnCamera(Orientation.NE);
             };
             base.LoadContent();
         }
@@ -132,6 +85,10 @@ namespace Phobos.Engine.GameStates.Game {
             GameEngine.spriteBatch.Begin();
             returnButton.Draw(gameTime);
             exitButton.Draw(gameTime);
+            cameraSE.Draw(gameTime);
+            cameraSO.Draw(gameTime);
+            cameraNE.Draw(gameTime);
+            cameraNO.Draw(gameTime);
             GameEngine.spriteBatch.End(); 
             #endregion
 
@@ -149,6 +106,10 @@ namespace Phobos.Engine.GameStates.Game {
             returnButton.Update(gameTime);
             exitButton.Update(gameTime);
             scene.Update(gameTime);
+            cameraSE.Update(gameTime);
+            cameraSO.Update(gameTime);
+            cameraNE.Update(gameTime);
+            cameraNO.Update(gameTime);
         }
         #endregion
     }
