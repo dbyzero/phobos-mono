@@ -122,7 +122,9 @@ namespace Phobos.Engine
             #endregion
 
             MouseHandler.Initialize();
-            
+            MouseHandler.HorizontalyShaked += delegate( MouseEvent e ) {
+                Console.WriteLine( "Dont shake it too much or it will hurt !" );
+            };
             #region GameStateManager
             GameStateManager.Initialize();
             #endregion
@@ -162,6 +164,7 @@ namespace Phobos.Engine
         protected override void Update(GameTime gameTime)
         {
             GameStateManager.Update( gameTime );
+            MouseHandler.UpdateCursor( gameTime );
             base.Update( gameTime );
         }
 
