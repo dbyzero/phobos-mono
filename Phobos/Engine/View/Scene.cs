@@ -15,7 +15,7 @@ namespace Phobos.Engine.View
     {
         public CalculRenderEntitiesHandler calculRenderEntitiesHandler;
         static Scene scene = null;
-        Camera camera = new Camera();
+        Camera camera = new Camera(-640,160);
         Orientation orientation = Orientation.SE;
         SpriteBatch spriteBatch;
         MouseState prevMouseState;
@@ -119,7 +119,7 @@ namespace Phobos.Engine.View
                     testChunk.addCore(i,j,core);
                     calculRenderEntitiesHandler += core.calculateScreenRect;
 
-                    if ((i % 30) == 0 && (j % 10) == 0)
+                    if ((i == 3) && (j== 3))
                     {
 
                         DrawableEntity testFontain = new DrawableEntity(new Vector3(i, j, 0), 27, 34, new Vector2(13, 31), text2, new Rectangle(344, 714, 27, 34));

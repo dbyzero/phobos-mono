@@ -22,6 +22,13 @@ namespace Phobos.Engine.View
             coefficient = coeff;
         }
 
+        public Camera(float X,float Y,int coeff = 1)
+        {
+            Position = new Vector2(X, Y);
+            cameraFillScreen();
+            coefficient = coeff;
+        }
+
         #region ascessor & mutator
         public Vector2 Position { get; set; }
         public int Width { get; set; }
@@ -56,26 +63,59 @@ namespace Phobos.Engine.View
 
         public override string ToString()
         {
-            return "Position:" + Position + " Width:" + Width + " Height:" + Height;        }
+            return "Position:" + Position + " Width:" + Width + " Height:" + Height;
+        }
+
+        public void turn180()
+        {
+            Scene.getInstance().Camera.Position -=
+                new Vector2(
+                    2 * Scene.getInstance().Camera.Position.X + 
+                    Scene.getInstance().Camera.Width,
+                    
+                    2 * Scene.getInstance().Camera.Position.Y + 
+                    Scene.getInstance().Camera.Height
+                );
+        }
+
+        public void turn90Left()
+        {
+            Scene.getInstance().Camera.Position =
+                new Vector2(
+                    -2 * (Scene.getInstance().Camera.Position.Y),
+                    (Scene.getInstance().Camera.Position.X) / 2
+                );
+                           
+        }
+
+        public void turn90Right()
+        {
+            Scene.getInstance().Camera.Position =
+                new Vector2(
+                    2 * (Scene.getInstance().Camera.Position.Y),
+                    (-Scene.getInstance().Camera.Position.X) / 2
+                );
+
+        }
 
         public void turnCamera(Orientation orient)
         {
             Console.WriteLine(this);
-            Vector2 old_position = Scene.getInstance().Camera.Position;
             switch(Scene.getInstance().Orientation) {
                 case Orientation.SE :
                     switch (orient)
                     {
                         case Orientation.SO:
                             Scene.getInstance().Orientation = Orientation.SO;
+                            turn90Left();
                             break;
                         case Orientation.NE:
                             Scene.getInstance().Orientation = Orientation.NE;
+                            turn90Right();
                             break;
                         case Orientation.NO:
                             Scene.getInstance().Orientation = Orientation.NO;
-                            Scene.getInstance().Camera.Position -= 
-                                new Vector2(2 * old_position.X + Scene.getInstance().Camera.Width, 2 * old_position.Y + Scene.getInstance().Camera.Height);
+                            turn180();
                             break;
                         default:
                             return;
@@ -86,14 +126,15 @@ namespace Phobos.Engine.View
                     {
                         case Orientation.SE:
                             Scene.getInstance().Orientation = Orientation.SE;
+                            turn90Right();
                             break;
                         case Orientation.NE:
                             Scene.getInstance().Orientation = Orientation.NE;
-                            Scene.getInstance().Camera.Position -= 
-                                new Vector2(2 * old_position.X + Scene.getInstance().Camera.Width, 2 * old_position.Y + Scene.getInstance().Camera.Height);
+                            turn180();
                             break;
                         case Orientation.NO:
                             Scene.getInstance().Orientation = Orientation.NO;
+                            turn90Left();
                             break;
                         default:
                             return;
@@ -104,14 +145,15 @@ namespace Phobos.Engine.View
                     {
                         case Orientation.SE:
                             Scene.getInstance().Orientation = Orientation.SE;
+                            turn90Left();
                             break;
                         case Orientation.SO:
                             Scene.getInstance().Orientation = Orientation.SO;
-                            Scene.getInstance().Camera.Position -= 
-                                new Vector2(2 * old_position.X + Scene.getInstance().Camera.Width, 2 * old_position.Y + Scene.getInstance().Camera.Height);
+                            turn180();
                             break;
                         case Orientation.NO:
                             Scene.getInstance().Orientation = Orientation.NO;
+                            turn90Right();
                             break;
                         default:
                             return;
@@ -122,14 +164,15 @@ namespace Phobos.Engine.View
                     {
                         case Orientation.SE:
                             Scene.getInstance().Orientation = Orientation.SE;
-                            Scene.getInstance().Camera.Position -= 
-                                new Vector2(2 * old_position.X + Scene.getInstance().Camera.Width, 2 * old_position.Y + Scene.getInstance().Camera.Height);
+                            turn180();
                             break;
                         case Orientation.SO:
                             Scene.getInstance().Orientation = Orientation.SO;
+                            turn90Right();
                             break;
                         case Orientation.NE:
                             Scene.getInstance().Orientation = Orientation.NE;
+                            turn90Left();
                             break;
                         default:
                             return;
