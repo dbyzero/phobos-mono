@@ -203,7 +203,8 @@ namespace Phobos.Engine.Models.Entities
             base.move(v);
         }
 
-        public void checkCenter() {
+        public virtual void checkCenter()
+        {
             Color = new Color(0.5f, 0.5f, 0.5f);
             if (ScreenRect.X > (Scene.getInstance().Camera.Width / 2 + Scene.getInstance().Camera.Position.X - Width / 2) * Scene.getInstance().Camera.Coefficient)
             {

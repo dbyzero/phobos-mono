@@ -35,5 +35,13 @@ namespace Phobos.Engine.Models.World
 
         }
 
+        public override void checkCenter()
+        {
+            base.checkCenter() ;
+            foreach(DrawableEntity ent in entities) {
+                ent.checkCenter() ;
+            }
+        }
+
     }
 }
