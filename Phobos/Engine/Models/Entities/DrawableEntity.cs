@@ -20,7 +20,7 @@ namespace Phobos.Engine.Models.Entities
         private int width;
         private int height;
 
-        private Color color = Color.White;
+        private Color color ;
         private float layer = 0.000001f;
         private float rotation = 0.0f;
 
@@ -34,7 +34,7 @@ namespace Phobos.Engine.Models.Entities
         }
 
         /* Note : do not call mutator or it will make a lot of recaculate position on the screen */
-        public DrawableEntity(Vector3 position, int width, int height, Vector2 center, Texture2D texture, Rectangle texturePosition)
+        public DrawableEntity(Vector3 position, int width, int height, Vector2 center, Texture2D texture, Rectangle texturePosition,Color color)
         {
             this.worldPosition = position;
             this.width = width;
@@ -42,8 +42,7 @@ namespace Phobos.Engine.Models.Entities
             this.centerSprite = center;
             this.spriteSheet = texture;
             this.spriteSheetRect = texturePosition;
-            calculateScreenRect();
-
+            this.color = color;
         }
         #endregion
 
@@ -135,8 +134,8 @@ namespace Phobos.Engine.Models.Entities
 
         public Color Color
         {
-            get;
-            set;
+            get{return color;}
+            set { color = value ;}
         }
         #endregion 
 
@@ -181,7 +180,7 @@ namespace Phobos.Engine.Models.Entities
          * 
          */
         public virtual int Draw(SpriteBatch spriteBatch, GameTime gameTime)
-        {
+        {  
            spriteBatch.Draw(
                 SpriteSheet,
                 ScreenRect,
@@ -195,9 +194,32 @@ namespace Phobos.Engine.Models.Entities
             return 1;
         }
 
+        public virtual void Update(GameTime gameTime)
+        {
+        }
+
         public override void move(Vector3 v)
         {
             base.move(v);
+        }
+
+        public void checkCenter() {
+            Color = new Color(0.5f, 0.5f, 0.5f);
+            if (ScreenRect.X > (Scene.getInstance().Camera.Width / 2 + Scene.getInstance().Camera.Position.X - Width / 2) * Scene.getInstance().Camera.Coefficient)
+            {
+                if (ScreenRect.X < (Scene.getInstance().Camera.Width / 2 + Scene.getInstance().Camera.Position.X + Width / 2) * Scene.getInstance().Camera.Coefficient)
+                {
+                    if (ScreenRect.Y > (Scene.getInstance().Camera.Height / 2 + Scene.getInstance().Camera.Position.Y - Height / 2) * Scene.getInstance().Camera.Coefficient)
+                    {
+                        if (ScreenRect.Y < (Scene.getInstance().Camera.Height / 2 + Scene.getInstance().Camera.Position.Y + Height / 2) * Scene.getInstance().Camera.Coefficient)
+                        {
+                            Scene.getInstance().CenterEntity = this;
+                            color = new Color(1.0f, 0f, 0f);
+                        }
+                    }
+                }
+            }
+        
         }
 
 

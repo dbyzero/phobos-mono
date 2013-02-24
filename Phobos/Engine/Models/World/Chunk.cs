@@ -12,7 +12,7 @@ namespace Phobos.Engine.Models.World
     class Chunk
     {
         
-        public static int Chunk_Size = 40 ;
+        public static int Chunk_Size = 30 ;
         private Core[,] cores = new Core[Chunk_Size, Chunk_Size];
         private double x, y;
 
@@ -52,7 +52,36 @@ namespace Phobos.Engine.Models.World
                     
                 }
             }
-            
+        }
+
+        public void Update(GameTime gameTime)
+        {
+        }
+
+        public void CalculCenterEntity()
+        {
+            for (int x = 0; x < Chunk_Size; x++)
+            {
+                for (int y = 0; y < Chunk_Size; y++)
+                {
+                    switch (Scene.getInstance().Orientation)
+                    {
+                        case Orientation.SE:
+                            cores[x, y].checkCenter();
+                            break;
+                        case Orientation.SO:
+                            cores[(Chunk_Size - 1) - x, y].checkCenter();
+                            break;
+                        case Orientation.NE:
+                            cores[x, (Chunk_Size - 1) - y].checkCenter();
+                            break;
+                        case Orientation.NO:
+                            cores[(Chunk_Size - 1) - x, (Chunk_Size - 1) - y].checkCenter();
+                            break;
+                    }
+
+                }
+            }
         }
     }
 }
