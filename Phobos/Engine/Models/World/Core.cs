@@ -12,8 +12,8 @@ namespace Phobos.Engine.Models.World
     {
         private List<DrawableEntity>entities = new  List<DrawableEntity>() ;
 
-        public Core(Vector3 position, int width, int height, Vector2 center, Texture2D texture, Rectangle texturePosition) 
-            : base(position, width, height, center, texture, texturePosition) 
+        public Core(Vector3 position, int width, int height, Vector2 center, Texture2D texture, Rectangle texturePosition,Color color) 
+            : base(position, width, height, center, texture, texturePosition,color) 
         {
         }
        
@@ -33,6 +33,14 @@ namespace Phobos.Engine.Models.World
             }
             return count_sprite ;
 
+        }
+
+        public override void checkCenter()
+        {
+            base.checkCenter() ;
+            foreach(DrawableEntity ent in entities) {
+                ent.checkCenter() ;
+            }
         }
 
     }

@@ -22,10 +22,17 @@ namespace Phobos.Engine.View
             coefficient = coeff;
         }
 
+        public Camera(float X,float Y,int coeff = 1)
+        {
+            Position = new Vector2(X, Y);
+            cameraFillScreen();
+            coefficient = coeff;
+        }
+
         #region ascessor & mutator
         public Vector2 Position { get; set; }
-        public int Width { get; set; }
-        public int Height { get; set; } 
+        public int Width { get { return width; } set { width = value ;} }
+        public int Height { get { return height; } set { height = value; } } 
         #endregion
 
         public float Coefficient { 
@@ -43,7 +50,7 @@ namespace Phobos.Engine.View
                     /* redim sprites if coeff change */
                     if (prevCoefficient != coefficient)
                     {
-                        Scene.getInstance().calculRenderEntitiesHandler() ;
+                        Scene.getInstance().calculPositionsEntitiesHandler() ;
                     }
             } 
         }
@@ -54,90 +61,37 @@ namespace Phobos.Engine.View
             Height = GameEngine.Instance.DeviceManager.PreferredBackBufferHeight;
         }
 
+
         public override string ToString()
         {
-            return "Position:" + Position + " Width:" + Width + " Height:" + Height;        }
+            return "Position:" + Position + " Width:" + Width + " Height:" + Height;
+        }
+
+        public void move(Vector2 shift)
+        {
+            Position += shift;
+            Scene.getInstance().CalculCenterEntity(); ;
+        }
 
         public void turnCamera(Orientation orient)
         {
-            Console.WriteLine(this);
-            Vector2 old_position = Scene.getInstance().Camera.Position;
-            switch(Scene.getInstance().Orientation) {
-                case Orientation.SE :
-                    switch (orient)
-                    {
-                        case Orientation.SO:
-                            Scene.getInstance().Orientation = Orientation.SO;
-                            break;
-                        case Orientation.NE:
-                            Scene.getInstance().Orientation = Orientation.NE;
-                            break;
-                        case Orientation.NO:
-                            Scene.getInstance().Orientation = Orientation.NO;
-                            Scene.getInstance().Camera.Position -= 
-                                new Vector2(2 * old_position.X + Scene.getInstance().Camera.Width, 2 * old_position.Y + Scene.getInstance().Camera.Height);
-                            break;
-                        default:
-                            return;
-                    }
-                    break ;
-                case Orientation.SO :
-                    switch (orient)
-                    {
-                        case Orientation.SE:
-                            Scene.getInstance().Orientation = Orientation.SE;
-                            break;
-                        case Orientation.NE:
-                            Scene.getInstance().Orientation = Orientation.NE;
-                            Scene.getInstance().Camera.Position -= 
-                                new Vector2(2 * old_position.X + Scene.getInstance().Camera.Width, 2 * old_position.Y + Scene.getInstance().Camera.Height);
-                            break;
-                        case Orientation.NO:
-                            Scene.getInstance().Orientation = Orientation.NO;
-                            break;
-                        default:
-                            return;
-                    }
-                    break ;
-                case Orientation.NE :
-                    switch (orient)
-                    {
-                        case Orientation.SE:
-                            Scene.getInstance().Orientation = Orientation.SE;
-                            break;
-                        case Orientation.SO:
-                            Scene.getInstance().Orientation = Orientation.SO;
-                            Scene.getInstance().Camera.Position -= 
-                                new Vector2(2 * old_position.X + Scene.getInstance().Camera.Width, 2 * old_position.Y + Scene.getInstance().Camera.Height);
-                            break;
-                        case Orientation.NO:
-                            Scene.getInstance().Orientation = Orientation.NO;
-                            break;
-                        default:
-                            return;
-                    }
-                    break ;
-                case Orientation.NO :
-                    switch (orient)
-                    {
-                        case Orientation.SE:
-                            Scene.getInstance().Orientation = Orientation.SE;
-                            Scene.getInstance().Camera.Position -= 
-                                new Vector2(2 * old_position.X + Scene.getInstance().Camera.Width, 2 * old_position.Y + Scene.getInstance().Camera.Height);
-                            break;
-                        case Orientation.SO:
-                            Scene.getInstance().Orientation = Orientation.SO;
-                            break;
-                        case Orientation.NE:
-                            Scene.getInstance().Orientation = Orientation.NE;
-                            break;
-                        default:
-                            return;
-                    }
-                    break ;
-            }
-            Scene.getInstance().calculRenderEntitiesHandler();
-            Console.WriteLine(this);
+            //turn scene
+            Scene.getInstance().Orientation = orient;
+
+            //recalcule tiles position
+            Scene.getInstance().calculPositionsEntitiesHandler();
+
+            //calcule the vector to keep the same center
+            Vector2 shift_vector ;
+            shift_vector.X = Scene.getInstance().Camera.Width / 2 - (Scene.getInstance().CenterEntity.ScreenRect.X - Scene.getInstance().Camera.Position.X);
+            shift_vector.Y = Scene.getInstance().Camera.Height / 2 - (Scene.getInstance().CenterEntity.ScreenRect.Y - Scene.getInstance().Camera.Position.Y);
+
+            //apply vector
+            Scene.getInstance().Camera.Position -= shift_vector;
+            
+            //recalcul new center (normally the same one)
+            Scene.getInstance().CalculCenterEntity(); ;
+            
         }
 
     }
