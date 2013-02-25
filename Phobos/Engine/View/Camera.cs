@@ -87,7 +87,12 @@ namespace Phobos.Engine.View
             shift_vector.Y = Scene.getInstance().Camera.Height / 2 - (Scene.getInstance().CenterEntity.ScreenRect.Y - Scene.getInstance().Camera.Position.Y);
 
             //apply vector
+            Console.WriteLine("Center coord" + Scene.getInstance().CenterEntity.ScreenRect);
+            Console.WriteLine("Center " + Scene.getInstance().CenterEntity);
+            Console.WriteLine("Shift vector " + shift_vector);
+            Console.WriteLine("Camera Position Before " + Scene.getInstance().Camera.Position);
             Scene.getInstance().Camera.Position -= shift_vector;
+            Console.WriteLine("Camera Position After " + Scene.getInstance().Camera.Position);
             
             //recalcul new center (normally the same one)
             Scene.getInstance().CalculCenterEntity(); ;

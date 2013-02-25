@@ -5,16 +5,38 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Phobos.Engine.Models.Entities;
+using Phobos.Engine.View;
 
 namespace Phobos.Engine.Models.World
 {
     class Core : DrawableEntity
     {
-        private List<DrawableEntity>entities = new  List<DrawableEntity>() ;
+        private List<DrawableEntity>entities = new  List<DrawableEntity>() ;        
 
         public Core(Vector3 position, int width, int height, Vector2 center, Texture2D texture, Rectangle texturePosition,Color color) 
             : base(position, width, height, center, texture, texturePosition,color) 
         {
+        }
+
+        public int CliffN
+        {
+            get;
+            set;
+        }
+
+        public int CliffS{
+            get;
+            set;
+        }
+
+        public int CliffE {
+            get;
+            set;
+        }
+
+        public int CliffO{
+            get;
+            set;
         }
        
         public void addEntity(DrawableEntity ent) {
@@ -25,9 +47,33 @@ namespace Phobos.Engine.Models.World
         {
             entities.Remove(ent);
         }
-            
-        public override int Draw(SpriteBatch spriteBatch, GameTime gameTime) {
-            int count_sprite = base.Draw( spriteBatch,  gameTime) ;
+
+        public override int Draw(SpriteBatch spriteBatch, GameTime gameTime)
+        {
+            int count_sprite = 0 ;
+            //TODO : Do not show hidden part
+            for (int i = Math.Max(Math.Max(CliffS, CliffO), Math.Max(CliffE, CliffN)); i > 0; i--)
+            {
+                spriteBatch.Draw(
+                    SpriteSheet,
+                    new Rectangle(
+                        ScreenRect.X, 
+                        ScreenRect.Y + (int)(i * 16 * Scene.getInstance().Camera.Coefficient),
+                        (int)(32 * Scene.getInstance().Camera.Coefficient),
+                        (int)(32 * Scene.getInstance().Camera.Coefficient)
+                    ),
+                    new Rectangle(64,32, 32, 32),
+                    Color,
+                    0f,
+                    Scene.getInstance().Camera.Position,
+                    SpriteEffects.None,
+                    0.000001f
+                );
+                count_sprite++;
+            }
+
+            count_sprite += base.Draw( spriteBatch,  gameTime) ;
+
             foreach(DrawableEntity ent in entities) {
                 count_sprite += ent.Draw(spriteBatch, gameTime);
             }
@@ -43,5 +89,50 @@ namespace Phobos.Engine.Models.World
             }
         }
 
+        public void linkCliffs()
+        {
+        }
+
+        public void calculCliffs()
+        {
+            try
+            {
+                CliffN = (int)Math.Ceiling(Z - Scene.getInstance().getCore((int)X, (int)Y + 1).Z);
+            }
+            catch (IndexOutOfRangeException e)
+            {
+                Console.WriteLine("!!! ERROR : Core[" + X + "," + ((int)Y + 1) + "] is out of range ");
+            }
+
+            try
+            {
+                CliffS = (int)Math.Ceiling(Z - Scene.getInstance().getCore((int)X, (int)Y - 1).Z);
+            }
+            catch (IndexOutOfRangeException e)
+            {
+                Console.WriteLine("!!! ERROR : Core[" + X + "," + ((int)Y - 1) + "] is out of range ");
+            }
+
+            try
+            {
+                CliffE = (int)Math.Ceiling(Z - Scene.getInstance().getCore((int)X + 1, (int)Y).Z);
+            }
+            catch (IndexOutOfRangeException e)
+            {
+                Console.WriteLine("!!! ERROR : Core[" + ((int)X + 1) + "," + Y + "] is out of range ");
+            }
+
+            try
+            {
+                CliffO = (int)Math.Ceiling(Z - Scene.getInstance().getCore((int)X - 1, (int)Y).Z);
+            }
+            catch (IndexOutOfRangeException e)
+            {
+                Console.WriteLine("!!! ERROR : Core[" + ((int)X - 1) + "," + Y + "] is out of range ");
+            }
+            Console.WriteLine(this);
+            Console.WriteLine("Max : " + Math.Max(Math.Max(CliffS, CliffO), Math.Max(CliffE, CliffN)));
+            Console.WriteLine("N:" + CliffN + " S:" + CliffS + " E:" + CliffE + " O:" + CliffO);
+        }
     }
 }

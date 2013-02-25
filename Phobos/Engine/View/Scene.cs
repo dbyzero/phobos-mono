@@ -9,6 +9,7 @@ using Phobos.Engine.Models.Entities;
 using Microsoft.Xna.Framework.Input;
 
 public delegate void CalculEntitiesHandler() ;
+
 namespace Phobos.Engine.View
 {
     class Scene : DrawableGameComponent
@@ -32,6 +33,11 @@ namespace Phobos.Engine.View
         public Camera Camera { 
             get { return camera; } 
             set { camera = value; } 
+        }
+
+        List<Chunk> Chunks
+        {
+            get { return chunks; }
         }
 
         static public Scene getInstance()
@@ -109,6 +115,7 @@ namespace Phobos.Engine.View
                 j++;
             }
             chunks.Add(testChunk);
+            chunks[0].calculCliffs();
             #endregion
 
             calculPositionsEntitiesHandler() ;
@@ -162,8 +169,9 @@ namespace Phobos.Engine.View
                 int new_camera_height = this.Camera.Height;
                 Camera.move(
                     new Vector2(0.5f * (old_camera_width - new_camera_width),
-                                0.5f * (old_camera_height - new_camera_height))
-                    );
+                                0.5f * (old_camera_height - new_camera_height)
+                    )
+                );
             }
 
             prevMouseState = Mouse.GetState();
@@ -179,6 +187,29 @@ namespace Phobos.Engine.View
             {
                 chunk.CalculCenterEntity();
             }
+        }
+
+        public Chunk getChunk(int x, int y)
+        {
+            return Chunks[0];
+        }
+
+        public Core getCore(int x, int y) {
+
+            int chunk_x;
+            int chunk_y;
+            int core_x;
+            int core_y;
+
+            chunk_x = x / Chunk.Chunk_Size;
+            chunk_y = y / Chunk.Chunk_Size;
+            Chunk chunk = getChunk(chunk_x, chunk_y);
+
+            core_x = x % Chunk.Chunk_Size;
+            core_y = y % Chunk.Chunk_Size;
+
+            //Console.WriteLine("!!! ERROR : Core[" + core_x + "," + core_y + "] in Chunk[" + chunk_x + "," + chunk_y + "] is out of range");
+            return chunk.getCore(core_x, core_y);
         }
 
     }

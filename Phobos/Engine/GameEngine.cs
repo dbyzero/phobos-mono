@@ -123,7 +123,7 @@ namespace Phobos.Engine
 
             MouseHandler.Initialize();
             MouseHandler.HorizontalyShaked += delegate( MouseEvent e ) {
-                Console.WriteLine( "Dont shake it too much or it will hurt !" );
+                //Console.WriteLine( "Dont shake it too much or it will hurt !" );
             };
             #region GameStateManager
             GameStateManager.Initialize();

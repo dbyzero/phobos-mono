@@ -181,7 +181,8 @@ namespace Phobos.Engine.Models.Entities
          */
         public virtual int Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {  
-           spriteBatch.Draw(
+           if(this == Scene.getInstance().CenterEntity) this.color = Color.Yellow ;
+            spriteBatch.Draw(
                 SpriteSheet,
                 ScreenRect,
                 SpriteSheetRect,
@@ -223,7 +224,11 @@ namespace Phobos.Engine.Models.Entities
         
         }
 
-
         #endregion
+
+        public override string ToString()
+        {
+            return WorldPosition.ToString();
+        }
     }
 }
