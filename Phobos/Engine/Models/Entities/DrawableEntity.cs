@@ -180,8 +180,18 @@ namespace Phobos.Engine.Models.Entities
          * 
          */
         public virtual int Draw(SpriteBatch spriteBatch, GameTime gameTime)
-        {  
-           if(this == Scene.getInstance().CenterEntity) this.color = Color.Yellow ;
+        {
+            if (this == Scene.getInstance().CenterEntity)
+            {
+                this.color = Color.Yellow;
+            }
+            else
+            {
+                this.color = new Color(new Vector4(
+                                   0.8f, 0.8f, 0.8f, 1.0f
+                                   )
+                               );
+            }
             spriteBatch.Draw(
                 SpriteSheet,
                 ScreenRect,
@@ -206,7 +216,6 @@ namespace Phobos.Engine.Models.Entities
 
         public virtual void checkCenter()
         {
-            Color = new Color(0.5f, 0.5f, 0.5f);
             if (ScreenRect.X > (Scene.getInstance().Camera.Width / 2 + Scene.getInstance().Camera.Position.X - Width / 2) * Scene.getInstance().Camera.Coefficient)
             {
                 if (ScreenRect.X < (Scene.getInstance().Camera.Width / 2 + Scene.getInstance().Camera.Position.X + Width / 2) * Scene.getInstance().Camera.Coefficient)
@@ -216,7 +225,6 @@ namespace Phobos.Engine.Models.Entities
                         if (ScreenRect.Y < (Scene.getInstance().Camera.Height / 2 + Scene.getInstance().Camera.Position.Y + Height / 2) * Scene.getInstance().Camera.Coefficient)
                         {
                             Scene.getInstance().CenterEntity = this;
-                            color = new Color(1.0f, 0f, 0f);
                         }
                     }
                 }

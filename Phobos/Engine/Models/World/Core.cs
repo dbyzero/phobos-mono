@@ -16,6 +16,10 @@ namespace Phobos.Engine.Models.World
         public Core(Vector3 position, int width, int height, Vector2 center, Texture2D texture, Rectangle texturePosition,Color color) 
             : base(position, width, height, center, texture, texturePosition,color) 
         {
+            CliffN = 0;
+            CliffS = 0;
+            CliffE = 0;
+            CliffO = 0;
         }
 
         public int CliffN
@@ -52,17 +56,18 @@ namespace Phobos.Engine.Models.World
         {
             int count_sprite = 0 ;
             //TODO : Do not show hidden part
-            for (int i = Math.Max(Math.Max(CliffS, CliffO), Math.Max(CliffE, CliffN)); i > 0; i--)
+            int cliffToDraw = Math.Max(Math.Max(CliffS, CliffO), Math.Max(CliffE, CliffN)) ;
+            for (int i = cliffToDraw; i > 0; i--)
             {
                 spriteBatch.Draw(
                     SpriteSheet,
                     new Rectangle(
-                        ScreenRect.X, 
-                        ScreenRect.Y + (int)(i * 16 * Scene.getInstance().Camera.Coefficient),
+                        ScreenRect.X, //-1 because wall are 34 larges to keep black borders for cliff
+                        ScreenRect.Y + (int)((i-1) * 16 * Scene.getInstance().Camera.Coefficient),
                         (int)(32 * Scene.getInstance().Camera.Coefficient),
                         (int)(32 * Scene.getInstance().Camera.Coefficient)
                     ),
-                    new Rectangle(64,32, 32, 32),
+                    new Rectangle(192,64, 32, 32),
                     Color,
                     0f,
                     Scene.getInstance().Camera.Position,
@@ -97,20 +102,32 @@ namespace Phobos.Engine.Models.World
         {
             try
             {
-                CliffN = (int)Math.Ceiling(Z - Scene.getInstance().getCore((int)X, (int)Y + 1).Z);
+                CliffN = (int)Math.Ceiling(Z - Scene.getInstance().getCore((int)X, (int)Y - 1).Z);
             }
             catch (IndexOutOfRangeException e)
             {
-                Console.WriteLine("!!! ERROR : Core[" + X + "," + ((int)Y + 1) + "] is out of range ");
+                CliffN = (int)Math.Ceiling(Z - 0);
+                //Console.WriteLine("!!! ERROR : Core[" + X + "," + ((int)Y - 1) + "] is out of range ");
+            }
+            catch (KeyNotFoundException e)
+            {
+                CliffN = (int)Math.Ceiling(Z - 0);
+                //Console.WriteLine("!!! ERROR : Core[" + X + "," + ((int)Y + 1) + "] is out of range ");
             }
 
             try
             {
-                CliffS = (int)Math.Ceiling(Z - Scene.getInstance().getCore((int)X, (int)Y - 1).Z);
+                CliffS = (int)Math.Ceiling(Z - Scene.getInstance().getCore((int)X, (int)Y + 1).Z);
             }
             catch (IndexOutOfRangeException e)
             {
-                Console.WriteLine("!!! ERROR : Core[" + X + "," + ((int)Y - 1) + "] is out of range ");
+                CliffS = (int)Math.Ceiling(Z - 0);
+                //Console.WriteLine("!!! ERROR : Core[" + X + "," + ((int)Y + 1) + "] is out of range ");
+            }
+            catch (KeyNotFoundException e)
+            {
+                CliffS = (int)Math.Ceiling(Z - 0);
+                //Console.WriteLine("!!! ERROR : Core[" + X + "," + ((int)Y + 1) + "] is out of range ");
             }
 
             try
@@ -119,7 +136,13 @@ namespace Phobos.Engine.Models.World
             }
             catch (IndexOutOfRangeException e)
             {
-                Console.WriteLine("!!! ERROR : Core[" + ((int)X + 1) + "," + Y + "] is out of range ");
+                CliffE = (int)Math.Ceiling(Z - 0);
+                //Console.WriteLine("!!! ERROR : Core[" + ((int)X + 1) + "," + Y + "] is out of range ");
+            }
+            catch (KeyNotFoundException e)
+            {
+                CliffE = (int)Math.Ceiling(Z - 0);
+                //Console.WriteLine("!!! ERROR : Core[" + ((int)X + 1) + "," + Y + "] is out of range ");
             }
 
             try
@@ -128,11 +151,14 @@ namespace Phobos.Engine.Models.World
             }
             catch (IndexOutOfRangeException e)
             {
-                Console.WriteLine("!!! ERROR : Core[" + ((int)X - 1) + "," + Y + "] is out of range ");
+                CliffO = (int)Math.Ceiling(Z - 0);
+                //Console.WriteLine("!!! ERROR : Core[" + ((int)X - 1) + "," + Y + "] is out of range ");
             }
-            Console.WriteLine(this);
-            Console.WriteLine("Max : " + Math.Max(Math.Max(CliffS, CliffO), Math.Max(CliffE, CliffN)));
-            Console.WriteLine("N:" + CliffN + " S:" + CliffS + " E:" + CliffE + " O:" + CliffO);
+            catch (KeyNotFoundException e)
+            {
+                CliffO = (int)Math.Ceiling(Z - 0);
+                //Console.WriteLine("!!! ERROR : Core[" + ((int)X - 1) + "," + Y + "] is out of range ");
+            }
         }
     }
 }
