@@ -29,7 +29,7 @@ namespace Phobos.Engine.Models.Entities
         #region Constructors
 
         
-        private DrawableEntity() : base()
+        protected DrawableEntity() : base()
         {
         }
 

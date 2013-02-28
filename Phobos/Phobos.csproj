@@ -123,6 +123,7 @@
     <Compile Include="Engine\Gui\PWidgets\Events\SimpleValueChangedEvent.cs" />
     <Compile Include="Engine\Inputs\MouseInput\CursorType.cs" />
     <Compile Include="Engine\Models\Entities\AEntity.cs" />
+    <Compile Include="Engine\Models\Entities\AnimatedEntity.cs" />
     <Compile Include="Engine\Models\Entities\DrawableEntity.cs" />
     <Compile Include="Engine\Models\World\Core.cs" />
     <Compile Include="Engine\Services\ContentBundle.cs" />
