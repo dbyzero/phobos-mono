@@ -28,6 +28,11 @@ namespace Phobos.Engine.Models.World
             cores[x,y] = core ;
         }
 
+        public Core getCore(int x, int y)
+        {
+            return cores[x, y];
+        }
+
         public void Draw(SpriteBatch sb, GameTime gameTime)
         {
            for (int x = 0; x < Chunk_Size; x++)
@@ -80,6 +85,17 @@ namespace Phobos.Engine.Models.World
                             break;
                     }
 
+                }
+            }
+        }
+
+        public void calculCliffs()
+        {
+            for (int x = 0; x < Chunk_Size; x++)
+            {
+                for (int y = 0; y < Chunk_Size; y++)
+                {
+                    cores[x, y].calculCliffs();
                 }
             }
         }

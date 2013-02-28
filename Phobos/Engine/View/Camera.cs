@@ -11,10 +11,9 @@ namespace Phobos.Engine.View
     class Camera        
     {
         private Vector2 position = Vector2.Zero;
-        int width, height;
-        private float coefficient;
         private int minZoom = 1;
         private int maxZoom = 10;
+        private float coefficient;
 
         public Camera(int coeff = 1)
         {
@@ -31,8 +30,8 @@ namespace Phobos.Engine.View
 
         #region ascessor & mutator
         public Vector2 Position { get; set; }
-        public int Width { get { return width; } set { width = value ;} }
-        public int Height { get { return height; } set { height = value; } } 
+        public int Width { get ; set; }
+        public int Height { get ; set;  } 
         #endregion
 
         public float Coefficient { 
@@ -81,16 +80,17 @@ namespace Phobos.Engine.View
             //recalcule tiles position
             Scene.getInstance().calculPositionsEntitiesHandler();
 
-            //calcule the vector to keep the same center
+            //calcule the vector to keep the same center, la position est divisé par le coeff pour satisfaire la vierge marie des transformations.
             Vector2 shift_vector ;
-            shift_vector.X = Scene.getInstance().Camera.Width / 2 - (Scene.getInstance().CenterEntity.ScreenRect.X - Scene.getInstance().Camera.Position.X);
-            shift_vector.Y = Scene.getInstance().Camera.Height / 2 - (Scene.getInstance().CenterEntity.ScreenRect.Y - Scene.getInstance().Camera.Position.Y);
-
-            //apply vector
+            shift_vector.X = Scene.getInstance().Camera.Width / 2 - (Scene.getInstance().CenterEntity.ScreenRect.X / Scene.getInstance().Camera.Coefficient - Scene.getInstance().Camera.Position.X);
+            shift_vector.Y = Scene.getInstance().Camera.Height / 2 - (Scene.getInstance().CenterEntity.ScreenRect.Y / Scene.getInstance().Camera.Coefficient - Scene.getInstance().Camera.Position.Y);
+            
+            //move the sceEEEeeene
             Scene.getInstance().Camera.Position -= shift_vector;
             
             //recalcul new center (normally the same one)
-            Scene.getInstance().CalculCenterEntity(); ;
+            Scene.getInstance().CalculCenterEntity();
+            Console.WriteLine(this);
             
         }
 

@@ -180,8 +180,19 @@ namespace Phobos.Engine.Models.Entities
          * 
          */
         public virtual int Draw(SpriteBatch spriteBatch, GameTime gameTime)
-        {  
-           spriteBatch.Draw(
+        {
+            if (this == Scene.getInstance().CenterEntity)
+            {
+                this.color = Color.Yellow;
+            }
+            else
+            {
+                this.color = new Color(new Vector4(
+                                   0.8f, 0.8f, 0.8f, 1.0f
+                                   )
+                               );
+            }
+            spriteBatch.Draw(
                 SpriteSheet,
                 ScreenRect,
                 SpriteSheetRect,
@@ -205,10 +216,6 @@ namespace Phobos.Engine.Models.Entities
 
         public virtual void checkCenter()
         {
-            //For test purpose
-            Color = new Color(0.5f, 0.5f, 0.5f);
-            
-            //check collision with camera center, explode calcule in for step to speed up lot of check
             if (ScreenRect.X > (Scene.getInstance().Camera.Width / 2 + Scene.getInstance().Camera.Position.X - Width / 2) * Scene.getInstance().Camera.Coefficient)
             {
                 if (ScreenRect.X < (Scene.getInstance().Camera.Width / 2 + Scene.getInstance().Camera.Position.X + Width / 2) * Scene.getInstance().Camera.Coefficient)
@@ -218,8 +225,6 @@ namespace Phobos.Engine.Models.Entities
                         if (ScreenRect.Y < (Scene.getInstance().Camera.Height / 2 + Scene.getInstance().Camera.Position.Y + Height / 2) * Scene.getInstance().Camera.Coefficient)
                         {
                             Scene.getInstance().CenterEntity = this;
-                            //For test purpose
-                            color = new Color(1.0f, 0f, 0f);
                         }
                     }
                 }
@@ -227,7 +232,11 @@ namespace Phobos.Engine.Models.Entities
         
         }
 
-
         #endregion
+
+        public override string ToString()
+        {
+            return WorldPosition.ToString();
+        }
     }
 }
