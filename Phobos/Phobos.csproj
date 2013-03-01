@@ -157,8 +157,10 @@
     <Compile Include="Engine\Models\World\Generators\BasicGenerator.cs" />
     <Compile Include="Engine\Services\MathHelper.cs" />
     <Compile Include="Engine\Services\ServicesManager.cs" />
+    <Compile Include="Engine\View\Animation.cs" />
     <Compile Include="Engine\View\Camera.cs" />
     <Compile Include="Engine\Models\World\Chunk.cs" />
+    <Compile Include="Engine\View\Frame.cs" />
     <Compile Include="Engine\View\Orientation.cs" />
     <Compile Include="Engine\View\Scene.cs" />
     <Compile Include="Engine\View\SceneManager.cs" />

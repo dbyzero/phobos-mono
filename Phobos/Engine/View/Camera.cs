@@ -72,6 +72,70 @@ namespace Phobos.Engine.View
             Scene.getInstance().CalculCenterEntity(); ;
         }
 
+        /**
+         * <summary>
+         * This function return the Orientation to draw depending on scene orientation and entity orientation
+         * </summary>
+         */
+        public Orientation getLookDirectionFromOrientation(Orientation orient) {
+            switch (Scene.getInstance().Orientation) {
+                case Orientation.SE: 
+                    switch (Scene.getInstance().Orientation)
+                    {
+                        case Orientation.S:
+                            return Orientation.BL;
+                        case Orientation.O:
+                            return Orientation.TL;
+                        case Orientation.N:
+                            return Orientation.TR;
+                        case Orientation.E:
+                            return Orientation.BR;
+                    }
+                    break;
+                case Orientation.SO:
+                    switch (Scene.getInstance().Orientation)
+                    {
+                        case Orientation.S:
+                            return Orientation.BR;
+                        case Orientation.O:
+                            return Orientation.BL;
+                        case Orientation.N:
+                            return Orientation.TL;
+                        case Orientation.E:
+                            return Orientation.TR;
+                    }
+                    break;
+                case Orientation.NE:
+                    switch (Scene.getInstance().Orientation)
+                    {
+                        case Orientation.S:
+                            return Orientation.TL;
+                        case Orientation.O:
+                            return Orientation.TR;
+                        case Orientation.N:
+                            return Orientation.BR;
+                        case Orientation.E:
+                            return Orientation.BL;
+                    }
+                    break;
+                case Orientation.NO:
+                    switch (Scene.getInstance().Orientation)
+                    {
+                        case Orientation.S:
+                            return Orientation.TR;
+                        case Orientation.O:
+                            return Orientation.BR;
+                        case Orientation.N:
+                            return Orientation.BL;
+                        case Orientation.E:
+                            return Orientation.TL;
+                    }
+                    break;
+            }
+            //for unmanaged orientation, allow look to the south
+            return Orientation.S;
+        }
+
         public void turnCamera(Orientation orient)
         {
             //turn scene

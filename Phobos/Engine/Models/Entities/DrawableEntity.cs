@@ -31,6 +31,7 @@ namespace Phobos.Engine.Models.Entities
         
         protected DrawableEntity() : base()
         {
+            Orientation = Orientation.S;
         }
 
         /* Note : do not call mutator or it will make a lot of recaculate position on the screen */
@@ -48,6 +49,12 @@ namespace Phobos.Engine.Models.Entities
 
         #region Accessors and mutators
         //On surcharge les mutator de position pour recalculer la zone du sprite sur le screen
+
+        public Orientation Orientation { get; set; }
+
+        public float Rotation { get { return rotation; } set { rotation = value; } }
+
+        public float Layer { get { return layer; } set { layer = value; } }
 
         public override Vector3 WorldPosition
         {
