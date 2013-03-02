@@ -79,8 +79,8 @@ namespace Phobos.Engine.View
          */
         public Orientation getLookDirectionFromOrientation(Orientation orient) {
             switch (Scene.getInstance().Orientation) {
-                case Orientation.SE: 
-                    switch (Scene.getInstance().Orientation)
+                case Orientation.SE:
+                    switch (orient)
                     {
                         case Orientation.S:
                             return Orientation.BL;
@@ -93,7 +93,7 @@ namespace Phobos.Engine.View
                     }
                     break;
                 case Orientation.SO:
-                    switch (Scene.getInstance().Orientation)
+                    switch (orient)
                     {
                         case Orientation.S:
                             return Orientation.BR;
@@ -106,7 +106,7 @@ namespace Phobos.Engine.View
                     }
                     break;
                 case Orientation.NE:
-                    switch (Scene.getInstance().Orientation)
+                    switch (orient)
                     {
                         case Orientation.S:
                             return Orientation.TL;
@@ -119,7 +119,7 @@ namespace Phobos.Engine.View
                     }
                     break;
                 case Orientation.NO:
-                    switch (Scene.getInstance().Orientation)
+                    switch (orient)
                     {
                         case Orientation.S:
                             return Orientation.TR;
@@ -133,28 +133,30 @@ namespace Phobos.Engine.View
                     break;
             }
             //for unmanaged orientation, allow look to the south
-            return Orientation.S;
+            return Orientation.BL;
         }
 
         public void turnCamera(Orientation orient)
         {
-            //turn scene
-            Scene.getInstance().Orientation = orient;
+            if (Scene.getInstance().Orientation != orient)
+            {
+                //turn scene
+                Scene.getInstance().Orientation = orient;
 
-            //recalcule tiles position
-            Scene.getInstance().calculPositionsEntitiesHandler();
+                //recalcule tiles position
+                Scene.getInstance().calculPositionsEntitiesHandler();
 
-            //calcule the vector to keep the same center, la position est divisé par le coeff pour satisfaire la vierge marie des transformations.
-            Vector2 shift_vector ;
-            shift_vector.X = Scene.getInstance().Camera.Width / 2 - (Scene.getInstance().CenterEntity.ScreenRect.X / Scene.getInstance().Camera.Coefficient - Scene.getInstance().Camera.Position.X);
-            shift_vector.Y = Scene.getInstance().Camera.Height / 2 - (Scene.getInstance().CenterEntity.ScreenRect.Y / Scene.getInstance().Camera.Coefficient - Scene.getInstance().Camera.Position.Y);
-            
-            //move the sceEEEeeene
-            Scene.getInstance().Camera.Position -= shift_vector;
-            
-            //recalcul new center (normally the same one)
-            Scene.getInstance().CalculCenterEntity();
-            Console.WriteLine(this);
+                //calcule the vector to keep the same center, la position est divisé par le coeff pour satisfaire la vierge marie des transformations.
+                Vector2 shift_vector;
+                shift_vector.X = Scene.getInstance().Camera.Width / 2 - (Scene.getInstance().CenterEntity.ScreenRect.X / Scene.getInstance().Camera.Coefficient - Scene.getInstance().Camera.Position.X);
+                shift_vector.Y = Scene.getInstance().Camera.Height / 2 - (Scene.getInstance().CenterEntity.ScreenRect.Y / Scene.getInstance().Camera.Coefficient - Scene.getInstance().Camera.Position.Y);
+
+                //move the sceEEEeeene
+                Scene.getInstance().Camera.Position -= shift_vector;
+
+                //recalcul new center (normally the same one)
+                Scene.getInstance().CalculCenterEntity();
+            }
             
         }
 

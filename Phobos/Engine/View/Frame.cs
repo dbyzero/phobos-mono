@@ -9,14 +9,14 @@ namespace Phobos.Engine.View
     //cannot be a classe because StillDuration varying
     public class Frame
     {
-        public TimeSpan OriginDuration { get; set; }
-        public TimeSpan StillDuration { get; set; }
+        public int OriginDuration { get; set; }
+        public int StillDuration { get; set; }
         public Rectangle Zone { get; set; }
 
-        public Frame(Rectangle z, TimeSpan ts)
+        public Frame(Rectangle z, int duration_ms)
         {
-            OriginDuration = ts;
-            StillDuration = ts;
+            OriginDuration = duration_ms;
+            StillDuration = duration_ms;
             Zone = z;
         }
     }

@@ -13,8 +13,8 @@ namespace Phobos.Engine.Models.World
     {
         private List<DrawableEntity>entities = new  List<DrawableEntity>() ;        
 
-        public Core(Vector3 position, int width, int height, Vector2 center, Texture2D texture, Rectangle texturePosition,Color color) 
-            : base(position, width, height, center, texture, texturePosition,color) 
+        public Core(Vector3 position, int width, int height, Vector2 center, Texture2D texture, Color color) 
+            : base(position, width, height, center, texture, color,Orientation.S)
         {
             CliffN = 0;
             CliffS = 0;
@@ -22,26 +22,10 @@ namespace Phobos.Engine.Models.World
             CliffO = 0;
         }
 
-        public int CliffN
-        {
-            get;
-            set;
-        }
-
-        public int CliffS{
-            get;
-            set;
-        }
-
-        public int CliffE {
-            get;
-            set;
-        }
-
-        public int CliffO{
-            get;
-            set;
-        }
+        public int CliffN { get; set; }
+        public int CliffS { get; set; }
+        public int CliffE { get; set; }
+        public int CliffO { get; set; }
        
         public void addEntity(DrawableEntity ent) {
             entities.Add(ent) ;
@@ -55,14 +39,14 @@ namespace Phobos.Engine.Models.World
         public override int Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             int count_sprite = 0 ;
-            //TODO : Do not show hidden part
+            //TODO ? : Do not show hidden part
             int cliffToDraw = Math.Max(Math.Max(CliffS, CliffO), Math.Max(CliffE, CliffN)) ;
             for (int i = cliffToDraw; i > 0; i--)
             {
                 spriteBatch.Draw(
                     SpriteSheet,
                     new Rectangle(
-                        ScreenRect.X, //-1 because wall are 34 larges to keep black borders for cliff
+                        ScreenRect.X,
                         ScreenRect.Y + (int)((i-1) * 16 * Scene.getInstance().Camera.Coefficient),
                         (int)(32 * Scene.getInstance().Camera.Coefficient),
                         (int)(32 * Scene.getInstance().Camera.Coefficient)

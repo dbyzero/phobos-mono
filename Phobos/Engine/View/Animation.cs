@@ -5,30 +5,33 @@ using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Phobos.Engine.Models.Entities;
+using System.Collections;
 
 namespace Phobos.Engine.View
 {
     class Animation
     {
-        private Texture2D spriteSheet { get; set; }
-        private SortedSet<Frame> frames;
-        private IEnumerator<Frame> frameEnumerator = null;
+        Texture2D spriteSheet { get; set; }
+        SortedList<int,Frame> frames = new SortedList<int,Frame>();
+        IEnumerator<KeyValuePair<int, Frame>> frameEnumerator = null;
+        SpriteEffects spriteEffect = SpriteEffects.None;
 
-        public Animation(Texture2D ss)
+        public Animation(Texture2D ss, SpriteEffects se = SpriteEffects.None)
         {
             spriteSheet = ss;
+            spriteEffect = se ;
         }
 
-        public void addFrame(Rectangle z, TimeSpan ts)
+        public void addFrame(Rectangle z, int ts)
         {
-            frames.Add(new Frame(z,ts)) ;
+            frames.Add(frames.Count,new Frame(z,ts)) ;
             frameEnumerator = frames.GetEnumerator();
         }
 
         public int Draw(SpriteBatch spriteBatch, GameTime gameTime, DrawableEntity ent)
         {
-
             Frame frame = getCurrentFrame(gameTime);
+
             spriteBatch.Draw(
                 spriteSheet,
                 ent.ScreenRect,
@@ -36,7 +39,7 @@ namespace Phobos.Engine.View
                 ent.Color,
                 ent.Rotation,
                 Scene.getInstance().Camera.Position,
-                SpriteEffects.None,
+                spriteEffect,
                 ent.Layer
                 );
 
@@ -46,22 +49,24 @@ namespace Phobos.Engine.View
         //can loop to the first animation
         private Frame goToNextFrame()
         {
-            if (!frameEnumerator.MoveNext())
+            if (!frameEnumerator.MoveNext()){
                 frameEnumerator.Reset();
-
-            return frameEnumerator.Current;
+                frameEnumerator.MoveNext();
+            }
+            return frames[frameEnumerator.Current.Key];
         }
 
         //get current frame depending on update time
         //can be improved to jump through more than 1 animation
         private Frame getCurrentFrame(GameTime gameTime)
         {
-            frameEnumerator.Current.StillDuration -= gameTime.ElapsedGameTime;
-            if (frameEnumerator.Current.StillDuration.TotalMilliseconds < 0)
+            frames[frameEnumerator.Current.Key].StillDuration -= gameTime.ElapsedGameTime.Milliseconds;
+            if (frames[frameEnumerator.Current.Key].StillDuration < 0)
             {
+                frames[frameEnumerator.Current.Key].StillDuration = frames[frameEnumerator.Current.Key].OriginDuration;
                 goToNextFrame();
             }
-            return frameEnumerator.Current;
+            return frames[frameEnumerator.Current.Key] ;
         }
     }
 }

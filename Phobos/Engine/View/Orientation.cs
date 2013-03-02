@@ -6,7 +6,7 @@ using System.Text;
 namespace Phobos.Engine.View
 {
     enum Orientation { 
-        SE, SO, NE, NO, 
+        SO, SE, NE, NO, 
         N , E, O, S, 
 
         BL, BR, TL, TR, 

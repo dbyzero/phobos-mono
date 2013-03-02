@@ -164,6 +164,7 @@
     <Compile Include="Engine\View\Orientation.cs" />
     <Compile Include="Engine\View\Scene.cs" />
     <Compile Include="Engine\View\SceneManager.cs" />
+    <Compile Include="Engine\View\Sprite.cs" />
     <Compile Include="lib\Nini\Config\AliasText.cs" />
     <Compile Include="lib\Nini\Config\ConfigBase.cs" />
     <Compile Include="lib\Nini\Config\ConfigCollection.cs" />
