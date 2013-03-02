@@ -84,62 +84,30 @@ namespace Phobos.Engine.Models.World
 
         public void calculCliffs()
         {
-            try
-            {
+            if(Scene.getInstance().IsLoadedCore((int)X, (int)Y - 1)) {
                 CliffN = (int)Math.Ceiling(Z - Scene.getInstance().getCore((int)X, (int)Y - 1).Z);
-            }
-            catch (IndexOutOfRangeException e)
-            {
+            } else {
                 CliffN = (int)Math.Ceiling(Z - 0);
                 //Console.WriteLine("!!! ERROR : Core[" + X + "," + ((int)Y - 1) + "] is out of range ");
             }
-            catch (KeyNotFoundException e)
-            {
-                CliffN = (int)Math.Ceiling(Z - 0);
-                //Console.WriteLine("!!! ERROR : Core[" + X + "," + ((int)Y + 1) + "] is out of range ");
-            }
 
-            try
-            {
+            if(Scene.getInstance().IsLoadedCore((int)X, (int)Y + 1)) {
                 CliffS = (int)Math.Ceiling(Z - Scene.getInstance().getCore((int)X, (int)Y + 1).Z);
-            }
-            catch (IndexOutOfRangeException e)
-            {
-                CliffS = (int)Math.Ceiling(Z - 0);
-                //Console.WriteLine("!!! ERROR : Core[" + X + "," + ((int)Y + 1) + "] is out of range ");
-            }
-            catch (KeyNotFoundException e)
-            {
+            } else {
                 CliffS = (int)Math.Ceiling(Z - 0);
                 //Console.WriteLine("!!! ERROR : Core[" + X + "," + ((int)Y + 1) + "] is out of range ");
             }
 
-            try
-            {
+            if(Scene.getInstance().IsLoadedCore((int)X + 1, (int)Y)) {
                 CliffE = (int)Math.Ceiling(Z - Scene.getInstance().getCore((int)X + 1, (int)Y).Z);
-            }
-            catch (IndexOutOfRangeException e)
-            {
-                CliffE = (int)Math.Ceiling(Z - 0);
-                //Console.WriteLine("!!! ERROR : Core[" + ((int)X + 1) + "," + Y + "] is out of range ");
-            }
-            catch (KeyNotFoundException e)
-            {
+            } else {
                 CliffE = (int)Math.Ceiling(Z - 0);
                 //Console.WriteLine("!!! ERROR : Core[" + ((int)X + 1) + "," + Y + "] is out of range ");
             }
 
-            try
-            {
+            if(Scene.getInstance().IsLoadedCore((int)X - 1, (int)Y)) {
                 CliffO = (int)Math.Ceiling(Z - Scene.getInstance().getCore((int)X - 1, (int)Y).Z);
-            }
-            catch (IndexOutOfRangeException e)
-            {
-                CliffO = (int)Math.Ceiling(Z - 0);
-                //Console.WriteLine("!!! ERROR : Core[" + ((int)X - 1) + "," + Y + "] is out of range ");
-            }
-            catch (KeyNotFoundException e)
-            {
+            } else {
                 CliffO = (int)Math.Ceiling(Z - 0);
                 //Console.WriteLine("!!! ERROR : Core[" + ((int)X - 1) + "," + Y + "] is out of range ");
             }

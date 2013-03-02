@@ -87,9 +87,9 @@ namespace Phobos.Engine.View
                                )
                     );
                     core[Orientation.BL] = new Sprite(new Rectangle(96, 32, 32, 16),SpriteEffects.None);
-                    core[Orientation.BR] = new Sprite(new Rectangle(160, 32, 32, 16), SpriteEffects.FlipHorizontally);
+                    core[Orientation.BR] = new Sprite(new Rectangle(96, 32, 32, 16), SpriteEffects.FlipHorizontally);
                     core[Orientation.TR] = new Sprite(new Rectangle(96, 32, 32, 16), SpriteEffects.None);
-                    core[Orientation.TL] = new Sprite(new Rectangle(160, 32, 32, 16), SpriteEffects.FlipHorizontally);
+                    core[Orientation.TL] = new Sprite(new Rectangle(96, 32, 32, 16), SpriteEffects.FlipHorizontally);
 
                     testChunk.addCore(i, j, core);
                     calculPositionsEntitiesHandler += core.calculateScreenRect;
@@ -558,32 +558,50 @@ namespace Phobos.Engine.View
             
         }
 
-        public Chunk getChunk(int x, int y)
-        {
-            return Chunks[x][y];
+        public bool IsLoadedCore(int x, int y) {
+
+            Chunk chunk;
+            int chunk_x = x / Chunk.Chunk_Size;
+            int chunk_y = y / Chunk.Chunk_Size; 
+            
+            //if negatif, need to substract 1 to get the good one
+            if (x < 0) chunk_x--;
+            if (y < 0) chunk_y--;
+
+            SortedList<int, Chunk> chunks_x;
+            if (!Chunks.TryGetValue(chunk_x, out chunks_x))
+            {
+                return false;
+            }
+            if (!chunks_x.TryGetValue(chunk_y, out chunk))
+            {
+                return false;
+            }
+
+            //if chunk exists core exisist too
+            //int core_x = x % Chunk.Chunk_Size;
+            //int core_y = y % Chunk.Chunk_Size;
+
+            return true ;
         }
 
         public Core getCore(int x, int y) {
 
-            int chunk_x;
-            int chunk_y;
-            int core_x;
-            int core_y;
+            int chunk_x = x / Chunk.Chunk_Size;
+            int chunk_y = y / Chunk.Chunk_Size;
 
-            Chunk chunk;
-            chunk_x = x / Chunk.Chunk_Size;
-            chunk_y = y / Chunk.Chunk_Size;
-            try
-            {
-                chunk = getChunk(chunk_x, chunk_y);
-            }
-            catch (KeyNotFoundException e)
-            {
-                throw e;
-            }
+            //if negatif, need to substract 1 to get the good one
+            if (x < 0) chunk_x--;
+            if (y < 0) chunk_y--;
 
-            core_x = x % Chunk.Chunk_Size;
-            core_y = y % Chunk.Chunk_Size;
+            Chunk chunk = Chunks[chunk_x][chunk_y];
+            
+            int core_x = x % Chunk.Chunk_Size;
+            int core_y = y % Chunk.Chunk_Size;
+
+            //if negatif, coords are inversed
+            if (core_x < 0) core_x = Chunk.Chunk_Size + core_x;
+            if (core_y < 0) core_y = Chunk.Chunk_Size + core_y;
 
             return chunk.getCore(core_x, core_y);
         }

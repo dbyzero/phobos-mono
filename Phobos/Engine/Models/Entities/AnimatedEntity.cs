@@ -29,7 +29,7 @@ namespace Phobos.Engine.Models.Entities
             ) { }
 
         //set animations by index
-        public Animation this[Orientation orientation]
+        public new Animation this[Orientation orientation]
         {
             get { return anims[orientation]; }
             set { anims[orientation] = value; }
