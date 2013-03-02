@@ -6,7 +6,9 @@ using Microsoft.Xna.Framework;
 
 namespace Phobos.Engine.View
 {
-    //cannot be a classe because StillDuration varying
+    /**
+     * <summary>Ne peut etre une classe car StillDuration evolut avec le temps</summary>
+     */
     public class Frame
     {
         public int OriginDuration { get; set; }

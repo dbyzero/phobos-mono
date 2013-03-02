@@ -15,25 +15,10 @@ namespace Phobos.Engine.View
         private int maxZoom = 10;
         private float coefficient;
 
-        public Camera(int coeff = 1)
-        {
-            cameraFillScreen();
-            coefficient = coeff;
-        }
-
-        public Camera(float X,float Y,int coeff = 1)
-        {
-            Position = new Vector2(X, Y);
-            cameraFillScreen();
-            coefficient = coeff;
-        }
-
         #region ascessor & mutator
         public Vector2 Position { get; set; }
         public int Width { get ; set; }
         public int Height { get ; set;  } 
-        #endregion
-
         public float Coefficient { 
             get { return coefficient; }
             set {
@@ -51,16 +36,32 @@ namespace Phobos.Engine.View
                     {
                         Scene.getInstance().calculPositionsEntitiesHandler() ;
                     }
-            } 
+            }
+        }
+        #endregion
+
+        public Camera(int coeff = 1)
+        {
+            cameraFillScreen();
+            coefficient = coeff;
         }
 
+        public Camera(float X, float Y, int coeff = 1) : this(coeff)
+        {
+            Position = new Vector2(X, Y);
+        }
+
+        /**
+         * <summary>
+         * Redimmentionne la camera pour remplir la fenetre
+         * </summary>
+         */
         public void cameraFillScreen()
         {
             Width = GameEngine.Instance.DeviceManager.PreferredBackBufferWidth;
             Height = GameEngine.Instance.DeviceManager.PreferredBackBufferHeight;
         }
-
-
+        
         public override string ToString()
         {
             return "Position:" + Position + " Width:" + Width + " Height:" + Height;
@@ -74,7 +75,7 @@ namespace Phobos.Engine.View
 
         /**
          * <summary>
-         * This function return the Orientation to draw depending on scene orientation and entity orientation
+         * Retourne la direction regandant une entité en fonction de son orientation et de celle du monde
          * </summary>
          */
         public Orientation getLookDirectionFromOrientation(Orientation orient) {
@@ -132,7 +133,7 @@ namespace Phobos.Engine.View
                     }
                     break;
             }
-            //for unmanaged orientation, allow look to the south
+            //Si on sait pas, toujours regarder en bas a gauche
             return Orientation.BL;
         }
 

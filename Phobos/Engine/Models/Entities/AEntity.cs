@@ -7,17 +7,16 @@
         {
             protected Vector3 worldPosition;
 
-            #region method
-            public AEntity()
+            private AEntity()
             {
-                worldPosition = Vector3.Zero;
             }
+
             public AEntity(Vector3 wp)
             {
                 worldPosition = wp;
             }
 
-            #region Accessors and mutators
+            #region Accessors and Mutators
             public virtual Vector3 WorldPosition {
                 get { return worldPosition; }
                 set
@@ -26,6 +25,7 @@
                 }
             }
 
+            //wrapper for worldPosition.X
             public virtual float X
             {
                 get { return worldPosition.X; }
@@ -35,6 +35,7 @@
                 }
             }
 
+            //wrapper for worldPosition.Y
             public virtual float Y
             {
                 get { return worldPosition.Y; }
@@ -44,6 +45,7 @@
                 }
             }
 
+            //wrapper for worldPosition.Z
             public virtual float Z
             {
                 get { return worldPosition.Z; }
@@ -55,11 +57,13 @@
 
             #endregion 
 
+            /**
+             * <summary>Move entity in the world</summary>
+             * 
+             */
             public virtual void move(Vector3 v)
             {
                 worldPosition += v;
             }
-
-            #endregion
         }
     }

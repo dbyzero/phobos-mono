@@ -67,7 +67,6 @@ namespace Phobos.Engine.Models.World
                 count_sprite += ent.Draw(spriteBatch, gameTime);
             }
             return count_sprite ;
-
         }
 
         public override void checkCenter()
@@ -88,28 +87,24 @@ namespace Phobos.Engine.Models.World
                 CliffN = (int)Math.Ceiling(Z - Scene.getInstance().getCore((int)X, (int)Y - 1).Z);
             } else {
                 CliffN = (int)Math.Ceiling(Z - 0);
-                //Console.WriteLine("!!! ERROR : Core[" + X + "," + ((int)Y - 1) + "] is out of range ");
             }
 
             if(Scene.getInstance().IsLoadedCore((int)X, (int)Y + 1)) {
                 CliffS = (int)Math.Ceiling(Z - Scene.getInstance().getCore((int)X, (int)Y + 1).Z);
             } else {
                 CliffS = (int)Math.Ceiling(Z - 0);
-                //Console.WriteLine("!!! ERROR : Core[" + X + "," + ((int)Y + 1) + "] is out of range ");
             }
 
             if(Scene.getInstance().IsLoadedCore((int)X + 1, (int)Y)) {
                 CliffE = (int)Math.Ceiling(Z - Scene.getInstance().getCore((int)X + 1, (int)Y).Z);
             } else {
                 CliffE = (int)Math.Ceiling(Z - 0);
-                //Console.WriteLine("!!! ERROR : Core[" + ((int)X + 1) + "," + Y + "] is out of range ");
             }
 
             if(Scene.getInstance().IsLoadedCore((int)X - 1, (int)Y)) {
                 CliffO = (int)Math.Ceiling(Z - Scene.getInstance().getCore((int)X - 1, (int)Y).Z);
             } else {
                 CliffO = (int)Math.Ceiling(Z - 0);
-                //Console.WriteLine("!!! ERROR : Core[" + ((int)X - 1) + "," + Y + "] is out of range ");
             }
         }
     }

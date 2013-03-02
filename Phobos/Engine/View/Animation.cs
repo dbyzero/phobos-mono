@@ -11,10 +11,10 @@ namespace Phobos.Engine.View
 {
     class Animation
     {
-        Texture2D spriteSheet { get; set; }
-        SortedList<int,Frame> frames = new SortedList<int,Frame>();
-        IEnumerator<KeyValuePair<int, Frame>> frameEnumerator = null;
-        SpriteEffects spriteEffect = SpriteEffects.None;
+        private Texture2D spriteSheet { get; set; }
+        private SortedList<int, Frame> frames = new SortedList<int, Frame>();
+        private IEnumerator<KeyValuePair<int, Frame>> frameEnumerator = null;
+        private SpriteEffects spriteEffect = SpriteEffects.None;
 
         public Animation(Texture2D ss, SpriteEffects se = SpriteEffects.None)
         {
@@ -46,7 +46,11 @@ namespace Phobos.Engine.View
             return 1;
         }
 
-        //can loop to the first animation
+        /**
+         * <summary>
+         * Saute de frame, si on arrive au bout du dictionnaire on recommence au debut
+         * </summary>
+         */
         private Frame goToNextFrame()
         {
             if (!frameEnumerator.MoveNext()){
@@ -56,8 +60,11 @@ namespace Phobos.Engine.View
             return frames[frameEnumerator.Current.Key];
         }
 
-        //get current frame depending on update time
-        //can be improved to jump through more than 1 animation
+        /**
+         * <summary>
+         * Recupere la frame courante a l'instant T (peut passer a une frame suivante)
+         * </summary>
+         */
         private Frame getCurrentFrame(GameTime gameTime)
         {
             frames[frameEnumerator.Current.Key].StillDuration -= gameTime.ElapsedGameTime.Milliseconds;

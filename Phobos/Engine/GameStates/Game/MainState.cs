@@ -18,10 +18,10 @@ namespace Phobos.Engine.GameStates.Game {
 
         PSButton returnButton;
         PSButton exitButton;
-        PSButton cameraSO;
-        PSButton cameraSE;
-        PSButton cameraNO;
-        PSButton cameraNE;
+        PSButton btnCameraSO;
+        PSButton btnCameraSE;
+        PSButton btnCameraNO;
+        PSButton brnCameraNE;
         Scene scene ;
 
         public MainState()
@@ -49,25 +49,23 @@ namespace Phobos.Engine.GameStates.Game {
                 GameEngine.Instance.Exit();
 
             };
-            cameraSE = new PSButton(64, 200, "Camera SE");
-            cameraSE.Action += delegate(APButton sender, ActionEvent e)
+            btnCameraSE = new PSButton(64, 200, "Camera SE");
+            btnCameraSE.Action += delegate(APButton sender, ActionEvent e)
             {
-                //Console.WriteLine(scene.Camera);
                 Scene.getInstance().Camera.turnCamera(Orientation.SE);
-                //Console.WriteLine(scene.Camera);
             };
-            cameraSO = new PSButton(64, 240, "Camera SO");
-            cameraSO.Action += delegate(APButton sender, ActionEvent e)
+            btnCameraSO = new PSButton(64, 240, "Camera SO");
+            btnCameraSO.Action += delegate(APButton sender, ActionEvent e)
             {
                 Scene.getInstance().Camera.turnCamera(Orientation.SO);
             };
-            cameraNO = new PSButton(64, 280, "Camera NO");
-            cameraNO.Action += delegate(APButton sender, ActionEvent e)
+            btnCameraNO = new PSButton(64, 280, "Camera NO");
+            btnCameraNO.Action += delegate(APButton sender, ActionEvent e)
             {
                 Scene.getInstance().Camera.turnCamera(Orientation.NO);
             };
-            cameraNE = new PSButton(64, 320, "Camera NE");
-            cameraNE.Action += delegate(APButton sender, ActionEvent e)
+            brnCameraNE = new PSButton(64, 320, "Camera NE");
+            brnCameraNE.Action += delegate(APButton sender, ActionEvent e)
             {
                 Scene.getInstance().Camera.turnCamera(Orientation.NE);
             };
@@ -85,10 +83,10 @@ namespace Phobos.Engine.GameStates.Game {
             GameEngine.spriteBatch.Begin();
             returnButton.Draw(gameTime);
             exitButton.Draw(gameTime);
-            cameraSE.Draw(gameTime);
-            cameraSO.Draw(gameTime);
-            cameraNE.Draw(gameTime);
-            cameraNO.Draw(gameTime);
+            btnCameraSE.Draw(gameTime);
+            btnCameraSO.Draw(gameTime);
+            brnCameraNE.Draw(gameTime);
+            btnCameraNO.Draw(gameTime);
             GameEngine.spriteBatch.End(); 
             #endregion
 
@@ -106,10 +104,10 @@ namespace Phobos.Engine.GameStates.Game {
             returnButton.Update(gameTime);
             exitButton.Update(gameTime);
             scene.Update(gameTime);
-            cameraSE.Update(gameTime);
-            cameraSO.Update(gameTime);
-            cameraNE.Update(gameTime);
-            cameraNO.Update(gameTime);
+            btnCameraSE.Update(gameTime);
+            btnCameraSO.Update(gameTime);
+            brnCameraNE.Update(gameTime);
+            btnCameraNO.Update(gameTime);
         }
         #endregion
     }

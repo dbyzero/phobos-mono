@@ -11,41 +11,33 @@ namespace Phobos.Engine.Models.Entities
     class DrawableEntity : AEntity
     {
         private Texture2D spriteSheet;
-
         private Rectangle screenRect; //zone du sprite sur le screen
-
         private Vector2 centerSprite ; //point central du sprit
-        private Orientation orientation = Orientation.S;
-
-        Dictionary<Orientation, Sprite> sprites = new Dictionary<Orientation, Sprite>();
-
+        private Orientation orientation = Orientation.S; //La direction vers laquelle le sprite regarde
+        private Dictionary<Orientation, Sprite> sprites = new Dictionary<Orientation, Sprite>();
         private int width;
         private int height;
-
-        protected Color color ;
+        protected Color color ; //Filtre de couleur appliquer au sprite lors du draw
         private float layer = 0.000001f;
         private float rotation = 0.0f;
 
-        #region Methods
-
         #region Constructors
-
         
-        private DrawableEntity() : base()
-        {
-        }
-
-        //set sprite as index
+        /**
+         * <summary>
+         * L'orientation est TL TR BL BR, il est independant de la camera on parle en pur rendu ecran
+         * </summary>
+         */
         public Sprite this[Orientation orientation]
         {
             get { return sprites[orientation]; }
             set { sprites[orientation] = value; }
         }
 
-        /* Note : do not call mutator or it will make a lot of recaculate position on the screen */
-        public DrawableEntity(Vector3 position, int width, int height, Vector2 center, Texture2D texture, Color color,Orientation orientation)
+        //constructeur
+        //note : ne pas appeler les mutator ou ca peux stackoverflow
+        public DrawableEntity(Vector3 position, int width, int height, Vector2 center, Texture2D texture, Color color,Orientation orientation) : base(position)
         {
-            this.worldPosition = position;
             this.width = width;
             this.height = height;
             this.centerSprite = center;
@@ -147,6 +139,12 @@ namespace Phobos.Engine.Models.Entities
         }
         #endregion 
 
+        /**
+         * <summary>
+         * Calcul la position du Tile a l'écran en fonction de l'orientation. 
+         * Note : la camera s'applique lors du rendu
+         * </summary>
+         */
         public void calculateScreenRect()
         {
             switch (Scene.getInstance().Orientation)
@@ -183,33 +181,25 @@ namespace Phobos.Engine.Models.Entities
         }
 
         /*
-         * return number of sprite drawed
-         * params : SpriteBatch owning the draw call
+         * Retourne le nombre de sprite dessiné
          * 
          */
         public virtual int Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
+            #region code de colorqtion te,porqire du centre
             if (this == Scene.getInstance().CenterEntity) {
                 this.color = Color.Yellow;
             } else {
                 this.color = new Color(new Vector4(0.8f, 0.8f, 0.8f, 1.0f));
             }
+            #endregion
 
             Sprite sprite_to_draw;
-           /*
-            Console.WriteLine(
-                "Tile look at " + Scene.getInstance().Camera.getLookDirectionFromOrientation(Orientation)
-                + " for a scene orientated from " + Scene.getInstance().Orientation
-                + " and an entiry look at " + orientation
-                + " end orientation setted is " + sprites.TryGetValue(Scene.getInstance().Camera.getLookDirectionFromOrientation(Orientation), out sprite_to_draw)
-            );
-            */
             //if cannot get the animation for the orientation, get the first one
             if (!sprites.TryGetValue(Scene.getInstance().Camera.getLookDirectionFromOrientation(Orientation), out sprite_to_draw))
             {
                 sprite_to_draw = sprites.Values.First();
             }
-
 
             spriteBatch.Draw(
                 SpriteSheet,
@@ -233,6 +223,11 @@ namespace Phobos.Engine.Models.Entities
             base.move(v);
         }
 
+        /**
+         * <summary>
+         * Verifie si le DrawEntity est au centre de l'écran, si oui le stock dans Scene.getInstance().CenterEntity
+         * </summary>
+         */
         public virtual void checkCenter()
         {
             if (ScreenRect.X > (Scene.getInstance().Camera.Width / 2 + Scene.getInstance().Camera.Position.X - Width / 2) * Scene.getInstance().Camera.Coefficient)
@@ -250,8 +245,6 @@ namespace Phobos.Engine.Models.Entities
             }
         
         }
-
-        #endregion
 
         public override string ToString()
         {

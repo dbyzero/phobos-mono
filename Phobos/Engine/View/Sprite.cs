@@ -13,13 +13,13 @@ namespace Phobos.Engine.View
         SpriteEffects spriteEffect ;
 
         public Rectangle Rectangle {
-            set { rectangle = value; }
+            private set { rectangle = value; }
             get { return rectangle ;}
         }
 
         public SpriteEffects SpriteEffect
         {
-            set { spriteEffect = value; }
+            private set { spriteEffect = value; }
             get { return spriteEffect; }
         }
 

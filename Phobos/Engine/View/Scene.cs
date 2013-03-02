@@ -12,17 +12,33 @@ public delegate void CalculEntitiesHandler() ;
 
 namespace Phobos.Engine.View
 {
+    /**
+     * <summary> Une scene, utilisation de singleton </summary>
+     */
     class Scene : DrawableGameComponent
     {
+        //delegate utiliser pour recalculer toute les positions des entities, appeler en zoom et rotation de camera
         public CalculEntitiesHandler calculPositionsEntitiesHandler;
-        static Scene scene = null;
-        Camera camera = new Camera(-656,-251);
-        Orientation orientation = Orientation.SE;
-        SpriteBatch spriteBatch;
-        MouseState prevMouseState;
-        Vector2 mouveMovement;
-        DrawableEntity centerEntity;
 
+        //la scene static, utilisation du simgleton
+        static Scene scene = null;
+        static public Scene getInstance()
+        {
+            if (scene == null)
+            {
+                scene = new Scene();
+            }
+            return scene;
+        }
+
+        private Camera camera = new Camera(-656,-251);
+        private Orientation orientation = Orientation.SE;
+        private SpriteBatch spriteBatch;
+        private MouseState prevMouseState;
+        private Vector2 mouveMovement;
+        private DrawableEntity centerEntity; //utiliser lors de la rotation de la camera
+
+        #region mutator et gettor
         public Orientation Orientation {
             get { return orientation ; }
             set { orientation = value ; }
@@ -38,15 +54,7 @@ namespace Phobos.Engine.View
             set;
             get;
         }
-
-        static public Scene getInstance()
-        {
-            if (scene == null)
-            {
-                scene = new Scene();
-            }
-            return scene;
-        }
+        #endregion
 
         private Scene()
             : base(GameEngine.Instance)
@@ -385,6 +393,8 @@ namespace Phobos.Engine.View
 
         public override void Draw(GameTime gameTime)
         {
+            int count_sprite = 0;
+
             spriteBatch.Begin(SpriteSortMode.Deferred,BlendState.AlphaBlend,SamplerState.PointWrap,DepthStencilState.Default,RasterizerState.CullNone);
             /** Browse layer throw camera depth **/
             switch (Scene.getInstance().Orientation)
@@ -395,7 +405,7 @@ namespace Phobos.Engine.View
                     {
                         foreach (var chunk in chunks_row.Values)
                         {
-                            chunk.Draw(spriteBatch, gameTime);
+                            count_sprite += chunk.Draw(spriteBatch, gameTime);
                         }
                     }
                     break;
@@ -405,7 +415,7 @@ namespace Phobos.Engine.View
                     {
                         foreach (var chunk in chunks_row.Values)
                         {
-                            chunk.Draw(spriteBatch, gameTime);
+                            count_sprite += chunk.Draw(spriteBatch, gameTime);
                         }
                     }
                     break;
@@ -415,7 +425,7 @@ namespace Phobos.Engine.View
                     {
                         foreach (var chunk in chunks_row.Values.Reverse())
                         {
-                            chunk.Draw(spriteBatch, gameTime);
+                            count_sprite += chunk.Draw(spriteBatch, gameTime);
                         }
                     }
                     break;
@@ -425,15 +435,14 @@ namespace Phobos.Engine.View
                     {
                         foreach (var chunk in chunks_row.Values.Reverse())
                         {
-                            chunk.Draw(spriteBatch, gameTime);
+                            count_sprite += chunk.Draw(spriteBatch, gameTime);
                         }
                     }
                     break;
             }
-            
-
 
             spriteBatch.End();
+            //return count_sprite;
         }
         
         public override void Update(GameTime gameTime)
@@ -498,7 +507,6 @@ namespace Phobos.Engine.View
             }
 
             prevMouseState = Mouse.GetState();
-
 
             foreach (var chunks_row in Chunks.Values)
             {
