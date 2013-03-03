@@ -38,6 +38,10 @@ namespace Phobos.Engine.View
         private Vector2 mouveMovement;
         private DrawableEntity centerEntity; //utiliser lors de la rotation de la camera
 
+        #region test area
+        Effect shader_effect;
+        #endregion
+
         #region mutator et gettor
         public Orientation Orientation {
             get { return orientation ; }
@@ -79,6 +83,7 @@ namespace Phobos.Engine.View
             Chunk testChunk = new Chunk(0, 0);
             Texture2D text = GameEngine.Instance.Content.Load<Texture2D>(@"spriteSheets\temp_sprite");
             Texture2D text2 = GameEngine.Instance.Content.Load<Texture2D>(@"spriteSheets\test_rpg");
+            shader_effect = GameEngine.Instance.Content.Load<Effect>(@"shaders\test");
             int j = 0;
             Random rand = new Random();
             while (j < Chunk.Chunk_Size)
@@ -395,7 +400,7 @@ namespace Phobos.Engine.View
         {
             int count_sprite = 0;
 
-            spriteBatch.Begin(SpriteSortMode.Deferred,BlendState.AlphaBlend,SamplerState.PointWrap,DepthStencilState.Default,RasterizerState.CullNone);
+            spriteBatch.Begin(SpriteSortMode.Deferred,BlendState.AlphaBlend,SamplerState.PointWrap,DepthStencilState.Default,RasterizerState.CullNone,shader_effect);
             /** Browse layer throw camera depth **/
             switch (Scene.getInstance().Orientation)
             {
