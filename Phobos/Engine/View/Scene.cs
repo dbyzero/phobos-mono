@@ -103,7 +103,7 @@ namespace Phobos.Engine.View
             Chunk testChunk = new Chunk(0, 0);
             Texture2D text = GameEngine.Instance.Content.Load<Texture2D>(@"spriteSheets\temp_sprite");
             Texture2D text2 = GameEngine.Instance.Content.Load<Texture2D>(@"spriteSheets\test_rpg");
-            ShaderEffect = GameEngine.Instance.Content.Load<Effect>(@"shaders\test");
+            ShaderEffect = GameEngine.Instance.Content.Load<Effect>(@"shaders\lights_and_coloration");
             int j = 0;
             Random rand = new Random();
             while (j < Chunk.Chunk_Size)
