@@ -31,18 +31,18 @@ namespace Phobos.Engine.View
             return scene;
         }
 
-        private Camera camera = new Camera(-656,-251);
-        private Orientation orientation = Orientation.SE;
+        private Camera camera = new Camera(-200,-500);
+        private Orientation orientation = Orientation.SO;
         private SpriteBatch spriteBatch;
         private MouseState prevMouseState;
         private Vector2 mouveMovement;
         private DrawableEntity centerEntity; //utiliser lors de la rotation de la camera
 
-        #region test area
-        Effect shader_effect;
-        #endregion
-
+        
         #region mutator et gettor
+
+        public Effect ShaderEffect { set; get; }
+
         public Orientation Orientation {
             get { return orientation ; }
             set { orientation = value ; }
@@ -52,6 +52,19 @@ namespace Phobos.Engine.View
             get { return camera; } 
             set { camera = value; } 
         }
+
+
+        public Vector4 AmbiantColor { set; get; }
+        public Vector4 ConvergeColor { set; get; }
+
+        /**
+         * <summary>Parametre set dans la scene pour limiter le bindage dans au shader</summary>
+         */
+        public EffectParameter ParameterToReplaceMagentoColor { set; get; }
+        public Vector4 SunriseColor { set; get; }
+        public Vector4 NoonColor { set; get; }
+        public Vector4 NightColor { set; get; }
+        public Vector4 EveningColor { set; get; }
 
         public SortedList<int, SortedList<int, Chunk>> Chunks
         {
@@ -77,13 +90,20 @@ namespace Phobos.Engine.View
             base.Initialize();
 
             spriteBatch = new SpriteBatch(GameEngine.Instance.GraphicsDevice);
+            SunriseColor = new Vector4(0.74f, 0.53f, 0.36f, 1.0f);
+            NoonColor = new Vector4(1.0f, 1.0f, 0.95f, 1.0f);
+            NightColor = new Vector4(0.2557f, 0.29f, 0.42f, 1.0f);
+            EveningColor = new Vector4(0.75f, 0.49f, 0.36f, 1.0f);
+
+            ConvergeColor = AmbiantColor = NoonColor;
+
 
             #region Test
             /* TEST */
             Chunk testChunk = new Chunk(0, 0);
             Texture2D text = GameEngine.Instance.Content.Load<Texture2D>(@"spriteSheets\temp_sprite");
             Texture2D text2 = GameEngine.Instance.Content.Load<Texture2D>(@"spriteSheets\test_rpg");
-            shader_effect = GameEngine.Instance.Content.Load<Effect>(@"shaders\test");
+            ShaderEffect = GameEngine.Instance.Content.Load<Effect>(@"shaders\test");
             int j = 0;
             Random rand = new Random();
             while (j < Chunk.Chunk_Size)
@@ -94,10 +114,7 @@ namespace Phobos.Engine.View
 
                     Core core = new Core(new Vector3(i, j, (float)(i/2f + j/3f)), 32, 16,
                                new Vector2(16, 8), text,
-                               new Color(new Vector4(
-                                   0.8f, 0.8f, 0.8f, 1.0f
-                                   )
-                               )
+                               Color.White
                     );
                     core[Orientation.BL] = new Sprite(new Rectangle(96, 32, 32, 16),SpriteEffects.None);
                     core[Orientation.BR] = new Sprite(new Rectangle(96, 32, 32, 16), SpriteEffects.FlipHorizontally);
@@ -140,28 +157,51 @@ namespace Phobos.Engine.View
                         core.addEntity(animated_entity);
                         calculPositionsEntitiesHandler += animated_entity.calculateScreenRect;
                     }
-
-                    if ((i == 0) && (j == 0))
+                    else if ((i == 0) && (j == 0))
                     {
-
                         DrawableEntity testFontain = new DrawableEntity(
                             new Vector3(i, j, (float)(i / 2f + j / 3f)), 27, 34,
                             new Vector2(13, 31), text2,
                             Color.White, Orientation.S
                         );
                         testFontain[Orientation.BL] = new Sprite(new Rectangle(344, 714, 27, 34), SpriteEffects.None);
-                    
+
                         core.addEntity(testFontain);
                         calculPositionsEntitiesHandler += testFontain.calculateScreenRect;
 
                         DrawableEntity testContainable = new DrawableEntity(
                             new Vector3(i, j, (float)(i / 2f + j / 3f + 2.2f)), 32, 32,
-                            new Vector2(16, 24), text2, 
+                            new Vector2(16, 24), text2,
                             Color.White, Orientation.S
                         );
-                        testContainable[Orientation.BL] = new Sprite(new Rectangle(205, 136, 32, 32),SpriteEffects.None);
+                        testContainable[Orientation.BL] = new Sprite(new Rectangle(205, 136, 32, 32), SpriteEffects.None);
                         core.addEntity(testContainable);
                         calculPositionsEntitiesHandler += testContainable.calculateScreenRect;
+                    }
+                    else if(((i % 4) == 0) && ((j % 5) == 0))
+                    {
+                        DrawableEntity testGuys = new DrawableEntity(
+                          new Vector3(i, j, (float)(i / 2f + j / 3f)), 32, 32,
+                          new Vector2(16, 27), text,
+                          Color.White, Orientation.S
+                        );
+
+                        testGuys.ReplaceMagentaColor = new Vector4(
+                            (float) rand.Next(20, 80) / 100f,
+                            (float) rand.Next(20, 80) / 100f,
+                            (float) rand.Next(20, 80) / 100f,
+                            1f);
+
+                        testGuys.ReplaceCyanColor = new Vector4(
+                            (float)rand.Next(20, 80) / 100f,
+                            (float)rand.Next(20, 80) / 100f,
+                            (float)rand.Next(20, 80) / 100f,
+                            1f);
+                        
+                        testGuys[Orientation.BL] = new Sprite(new Rectangle(128, 32, 32, 32), SpriteEffects.None);
+                        testGuys[Orientation.BR] = new Sprite(new Rectangle(128, 32, 32, 32), SpriteEffects.FlipHorizontally);
+                        core.addEntity(testGuys);
+                        calculPositionsEntitiesHandler += testGuys.calculateScreenRect;
                     }
                     i++;
                 }
@@ -180,10 +220,7 @@ namespace Phobos.Engine.View
                 {
                     Core core = new Core(new Vector3(i, j + Chunk.Chunk_Size, 0), 32, 16,
                                 new Vector2(16, 8), text,
-                                new Color(new Vector4(
-                                    0.8f, 0.8f, 0.8f, 1.0f
-                                    )
-                                )
+                                Color.White
                     );
                     core[Orientation.BL] = new Sprite(new Rectangle(96, 64, 32, 16), SpriteEffects.None);
                     testChunk2.addCore(i, j, core);
@@ -205,10 +242,7 @@ namespace Phobos.Engine.View
                 {
                     Core core = new Core(new Vector3(i + Chunk.Chunk_Size, j, 0), 32, 16,
                                 new Vector2(16, 8), text,
-                                new Color(new Vector4(
-                                    0.8f, 0.8f, 0.8f, 1.0f
-                                    )
-                                )
+                                Color.White
                     );
                     core[Orientation.BL] = new Sprite(new Rectangle(96, 64, 32, 16), SpriteEffects.None);
                     testChunk3.addCore(i, j, core);
@@ -234,10 +268,7 @@ namespace Phobos.Engine.View
                 {
                     Core core = new Core(new Vector3(i, j - Chunk.Chunk_Size, 0), 32, 16,
                                 new Vector2(16, 8), text,
-                                new Color(new Vector4(
-                                    0.8f, 0.8f, 0.8f, 1.0f
-                                    )
-                                )
+                                Color.White
                     );
                     core[Orientation.BL] = new Sprite(new Rectangle(96, 64, 32, 16), SpriteEffects.None);
                     testChunk4.addCore(i, j, core);
@@ -258,10 +289,7 @@ namespace Phobos.Engine.View
                 {
                     Core core = new Core(new Vector3(i - Chunk.Chunk_Size, j, 0), 32, 16,
                                 new Vector2(16, 8), text,
-                                new Color(new Vector4(
-                                    0.8f, 0.8f, 0.8f, 1.0f
-                                    )
-                                )
+                                Color.White
                     );
                     core[Orientation.BL] = new Sprite(new Rectangle(96, 64, 32, 16), SpriteEffects.None);
                     testChunk5.addCore(i, j, core);
@@ -284,10 +312,7 @@ namespace Phobos.Engine.View
                 {
                     Core core = new Core(new Vector3(i - Chunk.Chunk_Size, j - Chunk.Chunk_Size, 0), 32, 16,
                                 new Vector2(16, 8), text,
-                                new Color(new Vector4(
-                                    0.8f, 0.8f, 0.8f, 1.0f
-                                    )
-                                )
+                                Color.White
                     );
                     if (((i % 4) == 0) && ((j % 5) == 0))
                     {
@@ -324,10 +349,7 @@ namespace Phobos.Engine.View
                 {
                     Core core = new Core(new Vector3(i + Chunk.Chunk_Size, j - Chunk.Chunk_Size, 0), 32, 16,
                                 new Vector2(16, 8), text,
-                                new Color(new Vector4(
-                                    0.8f, 0.8f, 0.8f, 1.0f
-                                    )
-                                )
+                                Color.White
                     );
                     core[Orientation.BL] = new Sprite(new Rectangle(96, 64, 32, 16),SpriteEffects.None);
                     testChunk7.addCore(i, j, core);
@@ -349,10 +371,7 @@ namespace Phobos.Engine.View
                 {
                     Core core = new Core(new Vector3(i - Chunk.Chunk_Size, j + Chunk.Chunk_Size, 0), 32, 16,
                                 new Vector2(16, 8), text,
-                                new Color(new Vector4(
-                                    0.8f, 0.8f, 0.8f, 1.0f
-                                    )
-                                )
+                                Color.White
                     );
                     core[Orientation.BL] = new Sprite(new Rectangle(96, 64, 32, 16), SpriteEffects.None);
                     testChunk8.addCore(i, j, core);
@@ -374,10 +393,7 @@ namespace Phobos.Engine.View
                 {
                     Core core = new Core(new Vector3(i + Chunk.Chunk_Size, j+ Chunk.Chunk_Size, 0), 32, 16,
                                 new Vector2(16, 8), text,
-                                new Color(new Vector4(
-                                    0.8f, 0.8f, 0.8f, 1.0f
-                                    )
-                                )
+                                Color.White
                     );
                     core[Orientation.BL] = new Sprite(new Rectangle(96, 64, 32, 16), SpriteEffects.None);
                     testChunk9.addCore(i, j, core);
@@ -400,7 +416,11 @@ namespace Phobos.Engine.View
         {
             int count_sprite = 0;
 
-            spriteBatch.Begin(SpriteSortMode.Deferred,BlendState.AlphaBlend,SamplerState.PointWrap,DepthStencilState.Default,RasterizerState.CullNone,shader_effect);
+            ShaderEffect.Parameters["AmbiantColor"].SetValue(AmbiantColor);
+            ParameterToReplaceMagentoColor = ShaderEffect.Parameters["ShiftColorMagenta"];
+            
+            
+            spriteBatch.Begin(SpriteSortMode.Deferred,BlendState.AlphaBlend,SamplerState.PointWrap,DepthStencilState.Default,RasterizerState.CullNone,ShaderEffect);
             /** Browse layer throw camera depth **/
             switch (Scene.getInstance().Orientation)
             {
@@ -454,6 +474,7 @@ namespace Phobos.Engine.View
         {
             base.Update(gameTime);
 
+            //Move camera
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
                 mouveMovement = Vector2.Zero;
@@ -472,26 +493,31 @@ namespace Phobos.Engine.View
                 Camera.move(mouveMovement);
             }
 
+            //F1 = Camera SE
             if (Keyboard.GetState().IsKeyDown(Keys.F1))
             {
                 Scene.getInstance().Camera.turnCamera(Orientation.SE);
             }
 
+            //F2 = Camera SW
             if (Keyboard.GetState().IsKeyDown(Keys.F2))
             {
                 Scene.getInstance().Camera.turnCamera(Orientation.SO);
             }
 
+            //F3 = Camera NO
             if (Keyboard.GetState().IsKeyDown(Keys.F3))
             {
                 Scene.getInstance().Camera.turnCamera(Orientation.NO);
             }
 
+            //F4 = Camera NO
             if (Keyboard.GetState().IsKeyDown(Keys.F4))
             {
                 Scene.getInstance().Camera.turnCamera(Orientation.NE);
             }
 
+            //Zoom a la molette
             if (Mouse.GetState().ScrollWheelValue != prevMouseState.ScrollWheelValue)
             {
                 //old cam
@@ -511,14 +537,24 @@ namespace Phobos.Engine.View
                 );
             }
 
+            //utiliser pour comparer a l ancien statut des la souris
             prevMouseState = Mouse.GetState();
 
+            //Update des chunks
             foreach (var chunks_row in Chunks.Values)
             {
                 foreach (var chunk in chunks_row.Values)
                 {
                     chunk.Update(gameTime);
                 }
+            }
+
+            //Converge color to target
+
+            if (AmbiantColor != ConvergeColor)
+            {
+                Vector4 shiftColor = Vector4.Multiply(AmbiantColor - ConvergeColor, 0.025f);
+                AmbiantColor -= shiftColor;
             }
         }
         

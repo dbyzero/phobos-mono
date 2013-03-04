@@ -46,14 +46,6 @@ namespace Phobos.Engine.Models.Entities
                 anim_to_draw = anims.Values.First();
             }
 
-            #region code temporaire de coloration de l'animation si elle est au centre
-            if (this == Scene.getInstance().CenterEntity) {
-                this.color = Color.Yellow;
-            } else {
-                this.color = new Color(new Vector4(0.8f, 0.8f, 0.8f, 1.0f));
-            }
-            #endregion
-
             //affiche l'animation
             return anim_to_draw.Draw(spriteBatch, gameTime, this);
         }

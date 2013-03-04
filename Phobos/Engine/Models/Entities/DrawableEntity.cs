@@ -17,35 +17,9 @@ namespace Phobos.Engine.Models.Entities
         private Dictionary<Orientation, Sprite> sprites = new Dictionary<Orientation, Sprite>();
         private int width;
         private int height;
-        protected Color color ; //Filtre de couleur appliquer au sprite lors du draw
+        protected Color color ;
         private float layer = 0.000001f;
         private float rotation = 0.0f;
-
-        #region Constructors
-        
-        /**
-         * <summary>
-         * L'orientation est TL TR BL BR, il est independant de la camera on parle en pur rendu ecran
-         * </summary>
-         */
-        public Sprite this[Orientation orientation]
-        {
-            get { return sprites[orientation]; }
-            set { sprites[orientation] = value; }
-        }
-
-        //constructeur
-        //note : ne pas appeler les mutator ou ca peux stackoverflow
-        public DrawableEntity(Vector3 position, int width, int height, Vector2 center, Texture2D texture, Color color,Orientation orientation) : base(position)
-        {
-            this.width = width;
-            this.height = height;
-            this.centerSprite = center;
-            this.spriteSheet = texture;
-            this.color = color;
-            this.orientation = orientation;
-        }
-        #endregion
 
         #region Accessors and mutators
         //On surcharge les mutator de position pour recalculer la zone du sprite sur le screen
@@ -134,10 +108,57 @@ namespace Phobos.Engine.Models.Entities
 
         public Color Color
         {
-            get{return color;}
-            set { color = value ;}
+            get { return color; }
+            set { color = value; }
+        }
+
+        /**
+         * <summary>Couleur utiliser pour le remplacement de couleur sur > {0.5f,0f,0.5f)</summary>
+         */
+        public Vector4 ReplaceMagentaColor
+        {
+            get;
+            set;
+        }
+
+        /**
+         * <summary>Couleur utiliser pour le remplacement de couleur sur > {0.5f,0f,0.5f)</summary>
+         */
+        public Vector4 ReplaceCyanColor
+        {
+            get;
+            set;
         }
         #endregion 
+        
+        #region Constructors
+
+        /**
+         * <summary>
+         * L'orientation est TL TR BL BR, il est independant de la camera on parle en pur rendu ecran
+         * </summary>
+         */
+        public Sprite this[Orientation orientation]
+        {
+            get { return sprites[orientation]; }
+            set { sprites[orientation] = value; }
+        }
+
+        //constructeur
+        //note : ne pas appeler les mutator ou ca peux stackoverflow
+        public DrawableEntity(Vector3 position, int width, int height, Vector2 center, Texture2D texture, Color color, Orientation orientation)
+            : base(position)
+        {
+            this.width = width;
+            this.height = height;
+            this.centerSprite = center;
+            this.spriteSheet = texture;
+            this.color = color;
+            this.orientation = orientation;
+            //ReplaceMagentaColor = new Vector4(1f, 0f, 1f, 1f);
+            //ReplaceCyanColor = new Vector4(0f, 1f, 1f, 1f);
+        }
+        #endregion
 
         /**
          * <summary>
@@ -186,14 +207,6 @@ namespace Phobos.Engine.Models.Entities
          */
         public virtual int Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            #region code de colorqtion te,porqire du centre
-            if (this == Scene.getInstance().CenterEntity) {
-                this.color = Color.Yellow;
-            } else {
-                this.color = new Color(new Vector4(0.8f, 0.8f, 0.8f, 1.0f));
-            }
-            #endregion
-
             Sprite sprite_to_draw;
             //if cannot get the animation for the orientation, get the first one
             if (!sprites.TryGetValue(Scene.getInstance().Camera.getLookDirectionFromOrientation(Orientation), out sprite_to_draw))
@@ -201,6 +214,19 @@ namespace Phobos.Engine.Models.Entities
                 sprite_to_draw = sprites.Values.First();
             }
 
+            if (ReplaceMagentaColor != Vector4.Zero || ReplaceCyanColor != Vector4.Zero)
+            {
+                //TO OPTIMIZE : restart spriteBatch render to reset change color params
+                spriteBatch.End(); 
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, Scene.getInstance().ShaderEffect);
+
+                Scene.getInstance().ParameterToReplaceMagentoColor.SetValue(ReplaceMagentaColor);
+                Scene.getInstance().ShaderEffect.Parameters["ShiftColorCyan"].SetValue(ReplaceCyanColor);
+            
+            } 
+
+            
+            
             spriteBatch.Draw(
                 SpriteSheet,
                 ScreenRect,

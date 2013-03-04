@@ -22,6 +22,10 @@ namespace Phobos.Engine.GameStates.Game {
         PSButton btnCameraSE;
         PSButton btnCameraNO;
         PSButton brnCameraNE;
+        PSButton btnColorSunrise;
+        PSButton btnColorNoon;
+        PSButton btnColorNight;
+        PSButton btnColorEvening;
         Scene scene ;
 
         public MainState()
@@ -38,7 +42,7 @@ namespace Phobos.Engine.GameStates.Game {
 
         protected override void LoadContent() {
 
-            returnButton = new PSButton(64, 64, "Retour");
+            returnButton = new PSButton(64, 64, "Options");
             returnButton.Action += delegate( APButton sender, ActionEvent e ) {
                 GameStateManager.GetGameState( GameStateList.MENU ).Status = GameStateStatus.Active;
                 Status = GameStateStatus.Inactive;
@@ -54,12 +58,12 @@ namespace Phobos.Engine.GameStates.Game {
             {
                 Scene.getInstance().Camera.turnCamera(Orientation.SE);
             };
-            btnCameraSO = new PSButton(64, 240, "Camera SO");
+            btnCameraSO = new PSButton(64, 240, "Camera SW");
             btnCameraSO.Action += delegate(APButton sender, ActionEvent e)
             {
                 Scene.getInstance().Camera.turnCamera(Orientation.SO);
             };
-            btnCameraNO = new PSButton(64, 280, "Camera NO");
+            btnCameraNO = new PSButton(64, 280, "Camera NW");
             btnCameraNO.Action += delegate(APButton sender, ActionEvent e)
             {
                 Scene.getInstance().Camera.turnCamera(Orientation.NO);
@@ -68,6 +72,26 @@ namespace Phobos.Engine.GameStates.Game {
             brnCameraNE.Action += delegate(APButton sender, ActionEvent e)
             {
                 Scene.getInstance().Camera.turnCamera(Orientation.NE);
+            };
+            btnColorSunrise = new PSButton(64, 380, "Color Sunrise");
+            btnColorSunrise.Action += delegate(APButton sender, ActionEvent e)
+            {
+                Scene.getInstance().ConvergeColor = Scene.getInstance().SunriseColor;
+            };
+            btnColorNoon = new PSButton(64, 420, "Color Noon");
+            btnColorNoon.Action += delegate(APButton sender, ActionEvent e)
+            {
+                Scene.getInstance().ConvergeColor = Scene.getInstance().NoonColor;
+            };
+            btnColorEvening = new PSButton(64, 460, "Color Evening");
+            btnColorEvening.Action += delegate(APButton sender, ActionEvent e)
+            {
+                Scene.getInstance().ConvergeColor = Scene.getInstance().EveningColor;
+            };
+            btnColorNight = new PSButton(64, 500, "Color Night");
+            btnColorNight.Action += delegate(APButton sender, ActionEvent e)
+            {
+                Scene.getInstance().ConvergeColor = Scene.getInstance().NightColor;
             };
             base.LoadContent();
         }
@@ -87,6 +111,10 @@ namespace Phobos.Engine.GameStates.Game {
             btnCameraSO.Draw(gameTime);
             brnCameraNE.Draw(gameTime);
             btnCameraNO.Draw(gameTime);
+            btnColorNight.Draw(gameTime);
+            btnColorEvening.Draw(gameTime);
+            btnColorSunrise.Draw(gameTime);
+            btnColorNoon.Draw(gameTime);
             GameEngine.spriteBatch.End(); 
             #endregion
 
@@ -108,6 +136,10 @@ namespace Phobos.Engine.GameStates.Game {
             btnCameraSO.Update(gameTime);
             brnCameraNE.Update(gameTime);
             btnCameraNO.Update(gameTime);
+            btnColorNight.Update(gameTime);
+            btnColorEvening.Update(gameTime);
+            btnColorSunrise.Update(gameTime);
+            btnColorNoon.Update(gameTime);
         }
         #endregion
     }
