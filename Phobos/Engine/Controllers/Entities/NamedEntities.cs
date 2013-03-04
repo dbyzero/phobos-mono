@@ -1,4 +1,5 @@
-﻿using Phobos.Engine.Models.World;
+﻿using Phobos.Engine.Models.Entities;
+using Phobos.Engine.Models.World;
 using System;
 using System.Collections.Generic;
 using System.Linq;
