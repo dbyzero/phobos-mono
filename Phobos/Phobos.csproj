@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ProjectGuid>{B3F5AFD9-D41D-4B33-AB39-9CF87AA62DF9}</ProjectGuid>
+    <ProjectGuid>{AC43F2C7-4AAD-4AF0-9261-9B6FD3FFD13B}</ProjectGuid>
     <ProjectTypeGuids>{6D335F3A-9D43-41b4-9D22-F6F17C4BE596};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Phobos</RootNamespace>
     <AssemblyName>Phobos</AssemblyName>
@@ -61,6 +61,9 @@
     <PlatformTarget>x86</PlatformTarget>
     <XnaCompressContent>true</XnaCompressContent>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
       <Private>False</Private>
@@ -111,6 +114,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Engine\Controllers\Entities\NamedEntities.cs" />
+    <Compile Include="Engine\Controllers\Motion\Model\ACollisionBoundary.cs" />
+    <Compile Include="Engine\Controllers\Motion\Model\AImpulse.cs" />
+    <Compile Include="Engine\Controllers\Motion\Model\PhysicsProperties.cs" />
+    <Compile Include="Engine\Controllers\Motion\MotionController.cs" />
     <Compile Include="Engine\Gui\ALayerManager.cs" />
     <Compile Include="Engine\Configurations\Keyboard\AKeyboardLayoutExtractor.cs" />
     <Compile Include="Engine\Configurations\Keyboard\KeyboardConfiguration.cs" />
@@ -123,9 +131,13 @@
     <Compile Include="Engine\Gui\PWidgets\Events\SimpleValueChangedEvent.cs" />
     <Compile Include="Engine\Inputs\MouseInput\CursorType.cs" />
     <Compile Include="Engine\Models\Entities\AEntity.cs" />
-    <Compile Include="Engine\Models\Entities\AnimatedEntity.cs" />
-    <Compile Include="Engine\Models\Entities\DrawableEntity.cs" />
+    <Compile Include="Engine\Models\Entities\ALocalizedEntity.cs" />
+    <Compile Include="Engine\Models\Entities\AMobileEntity.cs" />
+    <Compile Include="Engine\Models\World\Chunk.cs" />
+    <Compile Include="Engine\Models\World\Map.cs" />
     <Compile Include="Engine\Models\World\Core.cs" />
+    <Compile Include="Engine\Models\World\Layer.cs" />
+    <Compile Include="Engine\View\Proxies\World\CoreProxy.cs" />
     <Compile Include="Engine\Services\ContentBundle.cs" />
     <Compile Include="Engine\Services\ContentHelper.cs" />
     <Compile Include="Engine\GameEngine.cs" />
@@ -159,7 +171,10 @@
     <Compile Include="Engine\Services\ServicesManager.cs" />
     <Compile Include="Engine\View\Animation.cs" />
     <Compile Include="Engine\View\Camera.cs" />
-    <Compile Include="Engine\Models\World\Chunk.cs" />
+    <Compile Include="Engine\View\Proxies\World\ChunkProxy.cs" />
+    <Compile Include="Engine\View\Proxies\Entities\AProxyEntities.cs" />
+    <Compile Include="Engine\View\Proxies\Entities\AnimatedEntity.cs" />
+    <Compile Include="Engine\View\Proxies\Entities\DrawableEntity.cs" />
     <Compile Include="Engine\View\Frame.cs" />
     <Compile Include="Engine\View\Orientation.cs" />
     <Compile Include="Engine\View\Scene.cs" />

@@ -1,111 +1,62 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Phobos.Engine.Models.Entities;
-using Phobos.Engine.View;
 
-namespace Phobos.Engine.Models.World
-{
-    class Core : DrawableEntity
-    {
-        private List<DrawableEntity>entities = new  List<DrawableEntity>() ;        
+namespace Phobos.Engine.Models.World {
+    class Core {
+        #region Fields & Properties
+        public static float CORE_SIZE = 16f;
+        public Vector2 location;
+        public Chunk refChunk;
+        public Dictionary<float, Layer> layerList;
+        public List<AEntity> entities;
 
-        public Core(Vector3 position, int width, int height, Vector2 center, Texture2D texture, Color color) 
-            : base(position, width, height, center, texture, color,Orientation.S)
-        {
-            CliffN = 0;
-            CliffS = 0;
-            CliffE = 0;
-            CliffO = 0;
+        #endregion
+
+        #region Constructors, Builder & Indexer
+        private Core( Vector2 location) {
+            layerList = new Dictionary<float,Layer>();
+            entities = new List<AEntity>();
+        } 
+
+        /// <summary>
+        /// This method is used to access to the core located at the location. This method should only be called after map generation 
+        /// so no concrete Core are created, they are only read from other source (save file or db).
+        /// 
+        /// </summary>
+        /// <param name="mapLocation"></param>
+        /// <returns></returns>
+        public static Core BuildCore( Vector2 location ) {
+            return new Core( location );
         }
 
-        public int CliffN { get; set; }
-        public int CliffS { get; set; }
-        public int CliffE { get; set; }
-        public int CliffO { get; set; }
-       
-        public void addEntity(DrawableEntity ent) {
-            entities.Add(ent) ;
+
+        /// <summary>
+        /// This test method just create a simple core with a single layer of dirt starting at height 0.
+        /// </summary>
+        /// <param name="location"></param>
+        /// <param name="height"></param>
+        /// <returns></returns>
+        public static Core BuildSimpleCore( Vector2 location, float height ) {
+            Core core = new Core( location );
+            core.layerList.Add( height, Layer.DIRT );
+
+            return core;
         }
 
-        public void removeEntity(DrawableEntity ent)
-        {
-            entities.Remove(ent);
+        #endregion
+
+        #region tests
+        public float GetHeight() {
+            float max = float.MinValue;
+            foreach( float h in layerList.Keys ) {
+                max = ( h > max ) ? h : max;
+            }
+
+            return max;
         }
-
-        public override int Draw(SpriteBatch spriteBatch, GameTime gameTime)
-        {
-            int count_sprite = 0 ;
-            //TODO ? : Do not show hidden part
-            int cliffToDraw = Math.Max(Math.Max(CliffS, CliffO), Math.Max(CliffE, CliffN)) ;
-            for (int i = cliffToDraw; i > 0; i--)
-            {
-                spriteBatch.Draw(
-                    SpriteSheet,
-                    new Rectangle(
-                        ScreenRect.X,
-                        ScreenRect.Y + (int)((i-1) * 16 * Scene.getInstance().Camera.Coefficient),
-                        (int)(32 * Scene.getInstance().Camera.Coefficient),
-                        (int)(32 * Scene.getInstance().Camera.Coefficient)
-                    ),
-                    new Rectangle(192,64, 32, 32),
-                    Color,
-                    0f,
-                    Scene.getInstance().Camera.Position,
-                    SpriteEffects.None,
-                    0.000001f
-                );
-                count_sprite++;
-            }
-
-            count_sprite += base.Draw( spriteBatch,  gameTime) ;
-
-            foreach(DrawableEntity ent in entities) {
-                count_sprite += ent.Draw(spriteBatch, gameTime);
-            }
-            return count_sprite ;
-        }
-
-        public override void checkCenter()
-        {
-            base.checkCenter() ;
-            foreach(DrawableEntity ent in entities) {
-                ent.checkCenter() ;
-            }
-        }
-
-        public void linkCliffs()
-        {
-        }
-
-        public void calculCliffs()
-        {
-            if(Scene.getInstance().IsLoadedCore((int)X, (int)Y - 1)) {
-                CliffN = (int)Math.Ceiling(Z - Scene.getInstance().getCore((int)X, (int)Y - 1).Z);
-            } else {
-                CliffN = (int)Math.Ceiling(Z - 0);
-            }
-
-            if(Scene.getInstance().IsLoadedCore((int)X, (int)Y + 1)) {
-                CliffS = (int)Math.Ceiling(Z - Scene.getInstance().getCore((int)X, (int)Y + 1).Z);
-            } else {
-                CliffS = (int)Math.Ceiling(Z - 0);
-            }
-
-            if(Scene.getInstance().IsLoadedCore((int)X + 1, (int)Y)) {
-                CliffE = (int)Math.Ceiling(Z - Scene.getInstance().getCore((int)X + 1, (int)Y).Z);
-            } else {
-                CliffE = (int)Math.Ceiling(Z - 0);
-            }
-
-            if(Scene.getInstance().IsLoadedCore((int)X - 1, (int)Y)) {
-                CliffO = (int)Math.Ceiling(Z - Scene.getInstance().getCore((int)X - 1, (int)Y).Z);
-            } else {
-                CliffO = (int)Math.Ceiling(Z - 0);
-            }
-        }
+        #endregion
     }
 }

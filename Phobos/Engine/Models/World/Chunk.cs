@@ -1,120 +1,69 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Phobos.Engine.Models.Entities;
-using Phobos.Engine.View;
 
-namespace Phobos.Engine.Models.World
-{
-    class Chunk
-    {
-        public static int Chunk_Size = 30 ;
+namespace Phobos.Engine.Models.World {
+    class Chunk {
+        #region Fields & Properties
+        public const int CHUNKS_SIZE = 8;
+        public Map refMap;
+        public Core[,] cores;
+        public Vector2 location;
 
-        private Core[,] cores = new Core[Chunk_Size, Chunk_Size];
-        private double x, y;
+        #endregion
+        #region Constructors, Builders & Indexer
+        /// <summary>
+        /// The chunks constructor should not be called after the map generation, so use BuildChunk to access to the Chunks;
+        /// </summary>
+        /// <param name="size"></param>
+        private Chunk( int size = CHUNKS_SIZE ) {
+            cores = new Core[ size, size ];
+        }
 
-        #region mutator et acsessor
-        public double X { get; set; }
-        public double Y { get; set; }
+        /// <summary>
+        /// This method create an instance of the Chunk using data from other source (save file or db).
+        /// </summary>
+        /// <param name="location"></param>
+        /// <returns></returns>
+        public static Chunk BuildChunk( Vector2 location ) {
+            return new Chunk();
+        }
+
+
+        /// <summary>
+        /// This method create a flat chunk for testing purpose. The first layer of childs core is set to 0 and DIRT.
+        /// </summary>
+        /// <param name="location"></param>
+        /// <returns></returns>
+        public static Chunk BuildFlatChunk( Vector2 location ) {
+            Chunk chunk = new Chunk();
+            chunk.location = location;
+            for( int i = 0 ; i < CHUNKS_SIZE ; i++ ) {
+                for( int j = 0 ; j < CHUNKS_SIZE ; j++ ) {
+                    chunk[ i, j ] = Core.BuildSimpleCore( new Vector2( location.X + i, location.Y + j), 0f );
+                    chunk[ i, j ].refChunk = chunk;
+                }
+            }
+
+            return chunk;
+        }
+
+        public Core this[ int x, int y ] {
+            get {
+                return cores[ x, y ];
+            }
+            set {
+                cores[ x, y ] = value;
+            }
+        }
+
+
+        #endregion
+        #region
+
         #endregion
 
-        public Chunk(double x, double y) {
-            this.x = x;
-            this.y = y;
-        }
-
-        public void addCore(int x, int y , Core core) {
-            cores[x,y] = core ;
-        }
-
-        public Core getCore(int x, int y)
-        {
-            return cores[x, y];
-        }
-
-        /**
-         * <summary>Ordre d'affichage en fonction de l'orientation de la scene</summary>
-         */
-        public int Draw(SpriteBatch sb, GameTime gameTime)
-        {
-            int count_sprite = 0;
-            for (int x = 0; x < Chunk_Size; x++)
-            {
-                for (int y = 0; y < Chunk_Size; y++)
-                {
-                    switch (Scene.getInstance().Orientation)
-                    {
-                        case Orientation.SE:
-                            count_sprite += cores[x, y].Draw(sb, gameTime);
-                            break;
-                        case Orientation.SO :
-                            count_sprite += cores[(Chunk_Size - 1) - x, y].Draw(sb, gameTime);
-                            break;
-                        case Orientation.NE:
-                            count_sprite += cores[x, (Chunk_Size - 1) - y].Draw(sb, gameTime);
-                            break;
-                        case Orientation.NO:
-                            count_sprite += cores[(Chunk_Size - 1) - x, (Chunk_Size - 1) - y].Draw(sb, gameTime);
-                            break;
-                    }
-                }
-            }
-            return count_sprite;
-        }
-
-        public void Update(GameTime gameTime)
-        {
-        }
-
-        /**
-         * <summary>
-         * Verifie si parmis tout ses tiles, certains sont au centre de la camera
-         * Ordre de calcul en fonction de l'orientation de la scene pour que le plus proche element de la camera soit selectionné
-         * </summary>
-         */
-        public void CalculCenterEntity()
-        {
-            for (int x = 0; x < Chunk_Size; x++)
-            {
-                for (int y = 0; y < Chunk_Size; y++)
-                {
-                    switch (Scene.getInstance().Orientation)
-                    {
-                        case Orientation.SE:
-                            cores[x, y].checkCenter();
-                            break;
-                        case Orientation.SO:
-                            cores[(Chunk_Size - 1) - x, y].checkCenter();
-                            break;
-                        case Orientation.NE:
-                            cores[x, (Chunk_Size - 1) - y].checkCenter();
-                            break;
-                        case Orientation.NO:
-                            cores[(Chunk_Size - 1) - x, (Chunk_Size - 1) - y].checkCenter();
-                            break;
-                    }
-
-                }
-            }
-        }
-
-        /**
-         * <summary>
-         * Calcul le cliff a afficher pour tous les tiles
-         * </summary>
-         */
-        public void calculCliffs()
-        {
-            for (int x = 0; x < Chunk_Size; x++)
-            {
-                for (int y = 0; y < Chunk_Size; y++)
-                {
-                    cores[x, y].calculCliffs();
-                }
-            }
-        }
     }
 }

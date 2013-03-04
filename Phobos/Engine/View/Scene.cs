@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Phobos.Engine.Models.World;
-using Phobos.Engine.Models.Entities;
+using Phobos.Engine.View.Proxies.World;
+using Phobos.Engine.View.Proxies.Entities;
 using Microsoft.Xna.Framework.Input;
+using Phobos.Engine.Models.World;
+using Phobos.Models.World.Generators;
 
 public delegate void CalculEntitiesHandler() ;
 
@@ -49,7 +51,7 @@ namespace Phobos.Engine.View
             set { camera = value; } 
         }
 
-        public SortedList<int, SortedList<int, Chunk>> Chunks
+        public SortedList<int, SortedList<int, ChunkProxy>> Chunks
         {
             set;
             get;
@@ -59,7 +61,7 @@ namespace Phobos.Engine.View
         private Scene()
             : base(GameEngine.Instance)
         {
-            Chunks = new SortedList<int, SortedList<int, Chunk>>();
+            Chunks = new SortedList<int, SortedList<int, ChunkProxy>>();
         }
 
         public DrawableEntity CenterEntity
@@ -75,19 +77,24 @@ namespace Phobos.Engine.View
             spriteBatch = new SpriteBatch(GameEngine.Instance.GraphicsDevice);
 
             #region Test
-            /* TEST */
-            Chunk testChunk = new Chunk(0, 0);
+            //Test Map creation
+            BasicGenerator generator = new BasicGenerator();
+            Map map = generator.BuildSimpleMap();
+
+
+            //End Test Map creation
+            ChunkProxy testChunk = new ChunkProxy( 0, 0 );
             Texture2D text = GameEngine.Instance.Content.Load<Texture2D>(@"spriteSheets\temp_sprite");
             Texture2D text2 = GameEngine.Instance.Content.Load<Texture2D>(@"spriteSheets\test_rpg");
             int j = 0;
             Random rand = new Random();
-            while (j < Chunk.Chunk_Size)
+            while( j < ChunkProxy.Chunk_Size )
             {
                 int i = 0;
-                while (i < Chunk.Chunk_Size)
+                while( i < ChunkProxy.Chunk_Size )
                 {
 
-                    Core core = new Core(new Vector3(i, j, (float)(i/2f + j/3f)), 32, 16,
+                    CoreProxy core = new CoreProxy(new Vector3(i, j, (float)(i/2f + j/3f)), 32, 16,
                                new Vector2(16, 8), text,
                                new Color(new Vector4(
                                    0.8f, 0.8f, 0.8f, 1.0f
@@ -101,8 +108,8 @@ namespace Phobos.Engine.View
 
                     testChunk.addCore(i, j, core);
                     calculPositionsEntitiesHandler += core.calculateScreenRect;
-                    
-                    if ((i == Chunk.Chunk_Size - 1) && (j == Chunk.Chunk_Size - 1)) {
+
+                    if( ( i == ChunkProxy.Chunk_Size - 1 ) && ( j == ChunkProxy.Chunk_Size - 1 ) ) {
                         AnimatedEntity animated_entity = new AnimatedEntity(
                             new Vector3(i, j, (float)(i / 2f + j / 3f)),
                             32, 32, new Vector2(16, 27),
@@ -162,18 +169,18 @@ namespace Phobos.Engine.View
                 }
                 j++;
             }
-            Chunks[0] = new SortedList<int,Chunk>() ;
+            Chunks[ 0 ] = new SortedList<int, ChunkProxy>();
             Chunks[0][0] = testChunk ;
 
             //eau 0,1
             j = 0;
-            Chunk testChunk2 = new Chunk(0, 1);
-            while (j < Chunk.Chunk_Size)
+            ChunkProxy testChunk2 = new ChunkProxy( 0, 1 );
+            while( j < ChunkProxy.Chunk_Size )
             {
                 int i = 0;
-                while (i < Chunk.Chunk_Size)
+                while( i < ChunkProxy.Chunk_Size )
                 {
-                    Core core = new Core(new Vector3(i, j + Chunk.Chunk_Size, 0), 32, 16,
+                    CoreProxy core = new CoreProxy( new Vector3( i, j + ChunkProxy.Chunk_Size, 0 ), 32, 16,
                                 new Vector2(16, 8), text,
                                 new Color(new Vector4(
                                     0.8f, 0.8f, 0.8f, 1.0f
@@ -192,13 +199,13 @@ namespace Phobos.Engine.View
 
             //eau 1,0
             j = 0;
-            Chunk testChunk3 = new Chunk(1, 0);
-            while (j < Chunk.Chunk_Size)
+            ChunkProxy testChunk3 = new ChunkProxy( 1, 0 );
+            while( j < ChunkProxy.Chunk_Size )
             {
                 int i = 0;
-                while (i < Chunk.Chunk_Size)
+                while( i < ChunkProxy.Chunk_Size )
                 {
-                    Core core = new Core(new Vector3(i + Chunk.Chunk_Size, j, 0), 32, 16,
+                    CoreProxy core = new CoreProxy( new Vector3( i + ChunkProxy.Chunk_Size, j, 0 ), 32, 16,
                                 new Vector2(16, 8), text,
                                 new Color(new Vector4(
                                     0.8f, 0.8f, 0.8f, 1.0f
@@ -212,7 +219,7 @@ namespace Phobos.Engine.View
                 }
                 j++;
             }
-            Chunks[1] = new SortedList<int, Chunk>();
+            Chunks[ 1 ] = new SortedList<int, ChunkProxy>();
             Chunks[1][0] = testChunk3;
 
             //calcul position and center
@@ -221,13 +228,13 @@ namespace Phobos.Engine.View
 
             //eau 0,-1
             j = 0;
-            Chunk testChunk4 = new Chunk(0, -1);
-            while (j < Chunk.Chunk_Size)
+            ChunkProxy testChunk4 = new ChunkProxy( 0, -1 );
+            while( j < ChunkProxy.Chunk_Size )
             {
                 int i = 0;
-                while (i < Chunk.Chunk_Size)
+                while( i < ChunkProxy.Chunk_Size )
                 {
-                    Core core = new Core(new Vector3(i, j - Chunk.Chunk_Size, 0), 32, 16,
+                    CoreProxy core = new CoreProxy( new Vector3( i, j - ChunkProxy.Chunk_Size, 0 ), 32, 16,
                                 new Vector2(16, 8), text,
                                 new Color(new Vector4(
                                     0.8f, 0.8f, 0.8f, 1.0f
@@ -245,13 +252,13 @@ namespace Phobos.Engine.View
 
             //eau -1, 0
             j = 0;
-            Chunk testChunk5 = new Chunk(-1, 0);
-            while (j < Chunk.Chunk_Size)
+            ChunkProxy testChunk5 = new ChunkProxy( -1, 0 );
+            while( j < ChunkProxy.Chunk_Size )
             {
                 int i = 0;
-                while (i < Chunk.Chunk_Size)
+                while( i < ChunkProxy.Chunk_Size )
                 {
-                    Core core = new Core(new Vector3(i - Chunk.Chunk_Size, j, 0), 32, 16,
+                    CoreProxy core = new CoreProxy( new Vector3( i - ChunkProxy.Chunk_Size, j, 0 ), 32, 16,
                                 new Vector2(16, 8), text,
                                 new Color(new Vector4(
                                     0.8f, 0.8f, 0.8f, 1.0f
@@ -265,19 +272,19 @@ namespace Phobos.Engine.View
                 }
                 j++;
             }
-            Chunks[-1] = new SortedList<int, Chunk>();
+            Chunks[ -1 ] = new SortedList<int, ChunkProxy>();
            Chunks[-1][0] = testChunk5;
 
 
             //eau -1, -1
             j = 0;
-            Chunk testChunk6 = new Chunk(-1, -1);
-            while (j < Chunk.Chunk_Size)
+            ChunkProxy testChunk6 = new ChunkProxy( -1, -1 );
+            while( j < ChunkProxy.Chunk_Size )
             {
                 int i = 0;
-                while (i < Chunk.Chunk_Size)
+                while( i < ChunkProxy.Chunk_Size )
                 {
-                    Core core = new Core(new Vector3(i - Chunk.Chunk_Size, j - Chunk.Chunk_Size, 0), 32, 16,
+                    CoreProxy core = new CoreProxy( new Vector3( i - ChunkProxy.Chunk_Size, j - ChunkProxy.Chunk_Size, 0 ), 32, 16,
                                 new Vector2(16, 8), text,
                                 new Color(new Vector4(
                                     0.8f, 0.8f, 0.8f, 1.0f
@@ -288,7 +295,7 @@ namespace Phobos.Engine.View
                     {
 
                         DrawableEntity water = new DrawableEntity(
-                            new Vector3(i - Chunk.Chunk_Size, j - Chunk.Chunk_Size, 0), 34, 21,
+                            new Vector3( i - ChunkProxy.Chunk_Size, j - ChunkProxy.Chunk_Size, 0 ), 34, 21,
                             new Vector2(17, 20), text2,
                             Color.White, Orientation.S
                         );
@@ -311,13 +318,13 @@ namespace Phobos.Engine.View
 
             //eau 1,-1
             j = 0;
-            Chunk testChunk7 = new Chunk(1, -1);
-            while (j < Chunk.Chunk_Size)
+            ChunkProxy testChunk7 = new ChunkProxy( 1, -1 );
+            while( j < ChunkProxy.Chunk_Size )
             {
                 int i = 0;
-                while (i < Chunk.Chunk_Size)
+                while( i < ChunkProxy.Chunk_Size )
                 {
-                    Core core = new Core(new Vector3(i + Chunk.Chunk_Size, j - Chunk.Chunk_Size, 0), 32, 16,
+                    CoreProxy core = new CoreProxy( new Vector3( i + ChunkProxy.Chunk_Size, j - ChunkProxy.Chunk_Size, 0 ), 32, 16,
                                 new Vector2(16, 8), text,
                                 new Color(new Vector4(
                                     0.8f, 0.8f, 0.8f, 1.0f
@@ -336,13 +343,13 @@ namespace Phobos.Engine.View
 
             //eau -1, 1
             j = 0;
-            Chunk testChunk8 = new Chunk(-1, 1);
-            while (j < Chunk.Chunk_Size)
+            ChunkProxy testChunk8 = new ChunkProxy( -1, 1 );
+            while( j < ChunkProxy.Chunk_Size )
             {
                 int i = 0;
-                while (i < Chunk.Chunk_Size)
+                while( i < ChunkProxy.Chunk_Size )
                 {
-                    Core core = new Core(new Vector3(i - Chunk.Chunk_Size, j + Chunk.Chunk_Size, 0), 32, 16,
+                    CoreProxy core = new CoreProxy( new Vector3( i - ChunkProxy.Chunk_Size, j + ChunkProxy.Chunk_Size, 0 ), 32, 16,
                                 new Vector2(16, 8), text,
                                 new Color(new Vector4(
                                     0.8f, 0.8f, 0.8f, 1.0f
@@ -361,13 +368,13 @@ namespace Phobos.Engine.View
 
             //eau 1, 1
              j = 0;
-            Chunk testChunk9 = new Chunk(1, 0);
-            while (j < Chunk.Chunk_Size)
+             ChunkProxy testChunk9 = new ChunkProxy( 1, 0 );
+             while( j < ChunkProxy.Chunk_Size )
             {
                 int i = 0;
-                while (i < Chunk.Chunk_Size)
+                while( i < ChunkProxy.Chunk_Size )
                 {
-                    Core core = new Core(new Vector3(i + Chunk.Chunk_Size, j+ Chunk.Chunk_Size, 0), 32, 16,
+                    CoreProxy core = new CoreProxy( new Vector3( i + ChunkProxy.Chunk_Size, j + ChunkProxy.Chunk_Size, 0 ), 32, 16,
                                 new Vector2(16, 8), text,
                                 new Color(new Vector4(
                                     0.8f, 0.8f, 0.8f, 1.0f
@@ -568,15 +575,15 @@ namespace Phobos.Engine.View
 
         public bool IsLoadedCore(int x, int y) {
 
-            Chunk chunk;
-            int chunk_x = x / Chunk.Chunk_Size;
-            int chunk_y = y / Chunk.Chunk_Size; 
+            ChunkProxy chunk;
+            int chunk_x = x / ChunkProxy.Chunk_Size;
+            int chunk_y = y / ChunkProxy.Chunk_Size; 
             
             //if negatif, need to substract 1 to get the good one
             if (x < 0) chunk_x--;
             if (y < 0) chunk_y--;
 
-            SortedList<int, Chunk> chunks_x;
+            SortedList<int, ChunkProxy> chunks_x;
             if (!Chunks.TryGetValue(chunk_x, out chunks_x))
             {
                 return false;
@@ -593,23 +600,23 @@ namespace Phobos.Engine.View
             return true ;
         }
 
-        public Core getCore(int x, int y) {
+        public CoreProxy getCore(int x, int y) {
 
-            int chunk_x = x / Chunk.Chunk_Size;
-            int chunk_y = y / Chunk.Chunk_Size;
+            int chunk_x = x / ChunkProxy.Chunk_Size;
+            int chunk_y = y / ChunkProxy.Chunk_Size;
 
             //if negatif, need to substract 1 to get the good one
             if (x < 0) chunk_x--;
             if (y < 0) chunk_y--;
 
-            Chunk chunk = Chunks[chunk_x][chunk_y];
-            
-            int core_x = x % Chunk.Chunk_Size;
-            int core_y = y % Chunk.Chunk_Size;
+            ChunkProxy chunk = Chunks[ chunk_x ][ chunk_y ];
+
+            int core_x = x % ChunkProxy.Chunk_Size;
+            int core_y = y % ChunkProxy.Chunk_Size;
 
             //if negatif, coords are inversed
-            if (core_x < 0) core_x = Chunk.Chunk_Size + core_x;
-            if (core_y < 0) core_y = Chunk.Chunk_Size + core_y;
+            if( core_x < 0 ) core_x = ChunkProxy.Chunk_Size + core_x;
+            if( core_y < 0 ) core_y = ChunkProxy.Chunk_Size + core_y;
 
             return chunk.getCore(core_x, core_y);
         }
