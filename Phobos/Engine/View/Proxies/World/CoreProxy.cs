@@ -11,7 +11,7 @@ using Phobos.Engine.Models.World;
 namespace Phobos.Engine.View.Proxies.World {
     class CoreProxy : DrawableEntity {
         private List<DrawableEntity>entities = new List<DrawableEntity>();
-        protected Core refCore;
+        public Core refCore;
 
         public CoreProxy( Vector3 position, int width, int height, Vector2 center, Texture2D texture, Color color )
             : base( position, width, height, center, texture, color, Orientation.S ) {

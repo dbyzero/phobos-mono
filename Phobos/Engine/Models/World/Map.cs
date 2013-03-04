@@ -9,6 +9,11 @@ namespace Phobos.Engine.Models.World {
         #region Fields & Properties
         public const int MAP_SIZE = 3;
         protected Dictionary<int, Dictionary<int, Chunk>> chunks;
+        public int Size{
+            get{
+                return chunks.Count();
+            }
+        } 
 
         #endregion
         #region Constructors, Builders & Indexer
@@ -18,7 +23,7 @@ namespace Phobos.Engine.Models.World {
 
         public static Map BuildFlatMap( int size = MAP_SIZE ){
             Map map = new Map();
-
+    
             for( int i = 0 ; i < MAP_SIZE ; i++ ) {
                 for( int j = 0 ; j < MAP_SIZE ; j++ ) {
                     map[ i, j ] = Chunk.BuildFlatChunk( new Vector2( i * Chunk.CHUNKS_SIZE, j * Chunk.CHUNKS_SIZE) );

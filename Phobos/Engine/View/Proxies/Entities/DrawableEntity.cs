@@ -14,7 +14,7 @@ namespace Phobos.Engine.View.Proxies.Entities
         private Rectangle screenRect; //zone du sprite sur le screen
         private Vector2 centerSprite ; //point central du sprit
         private Orientation orientation = Orientation.S; //La direction vers laquelle le sprite regarde
-        private Dictionary<Orientation, Sprite> sprites = new Dictionary<Orientation, Sprite>();
+        private Dictionary<Orientation, SpriteArea> sprites = new Dictionary<Orientation, SpriteArea>();
         private int width;
         private int height;
         protected Color color ; //Filtre de couleur appliquer au sprite lors du draw
@@ -28,7 +28,7 @@ namespace Phobos.Engine.View.Proxies.Entities
          * L'orientation est TL TR BL BR, il est independant de la camera on parle en pur rendu ecran
          * </summary>
          */
-        public Sprite this[Orientation orientation]
+        public SpriteArea this[Orientation orientation]
         {
             get { return sprites[orientation]; }
             set { sprites[orientation] = value; }
@@ -194,7 +194,7 @@ namespace Phobos.Engine.View.Proxies.Entities
             }
             #endregion
 
-            Sprite sprite_to_draw;
+            SpriteArea sprite_to_draw;
             //if cannot get the animation for the orientation, get the first one
             if (!sprites.TryGetValue(Scene.getInstance().Camera.getLookDirectionFromOrientation(Orientation), out sprite_to_draw))
             {

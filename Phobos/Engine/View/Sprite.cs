@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Phobos.Engine.View
 {
-    struct Sprite
+    struct SpriteArea
     {
         Rectangle rectangle ;
         SpriteEffects spriteEffect ;
@@ -23,7 +23,7 @@ namespace Phobos.Engine.View
             get { return spriteEffect; }
         }
 
-        public Sprite(Rectangle r, SpriteEffects se)
+        public SpriteArea(Rectangle r, SpriteEffects se)
         {
             rectangle = r ;
             spriteEffect = se ;

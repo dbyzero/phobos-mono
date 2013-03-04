@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Phobos.Engine.Models.Entities;
+using Phobos.Engine.View.Proxies.World;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,5 +61,14 @@ namespace Phobos.Engine.Models.World {
             return max;
         }
         #endregion
+
+        public CoreProxy BuildProxy() {
+            Texture2D text = GameEngine.Instance.Content.Load<Texture2D>( @"spriteSheets\temp_sprite" );
+            CoreProxy proxy = new CoreProxy(new Vector3(location.X, location.Y, this.GetHeight()),32,16, new Vector2(16, 8),
+                text, new Color(new Vector4(0.8f, 0.8f, 0.8f, 1.0f)));
+            proxy.refCore = this;
+
+            return proxy;
+        }
     }
 }

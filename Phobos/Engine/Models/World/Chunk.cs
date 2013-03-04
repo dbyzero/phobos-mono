@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Phobos.Engine.View.Proxies.World;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,7 +62,17 @@ namespace Phobos.Engine.Models.World {
 
 
         #endregion
-        #region
+        #region Proxy
+        public ChunkProxy BuildProxy(){
+            ChunkProxy builded = new ChunkProxy(location.X, location.Y);
+            builded.refChunk = this;
+            for(int i = 0 ; i < cores.GetLength(0) ; i++){
+                for( int j = 0 ; j < cores.GetLength(1) ; j++ ) {
+                    builded.cores[i,j] = cores[i,j].BuildProxy();
+                }
+            }
+            return builded;
+        }           
 
         #endregion
 
