@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 
 namespace Phobos.Engine.Models.Entities {
-    class ALocalizedEntity : AEntity {
+    abstract class ALocalizedEntity : AEntity {
         #region Fields & Properties
         protected Vector3 location;
         protected List<ACollisionBoundary> collisions;

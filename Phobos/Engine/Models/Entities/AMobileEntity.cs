@@ -6,7 +6,7 @@ using Phobos.Engine.Controllers.Motion.Model;
 using Microsoft.Xna.Framework;
 
 namespace Phobos.Engine.Models.Entities {
-    class AMobileEntity : ALocalizedEntity {
+    abstract class AMobileEntity : ALocalizedEntity {
         #region Fields & Properties
         protected Vector3 velocity;
         protected List<AImpulse> impulses;
