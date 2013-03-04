@@ -63,8 +63,7 @@ float4 ApplyAmbiantColor(float2 Tex: TEXCOORD0) : COLOR0
 	
 	//do not touch transparent pixels
 	if(a > 0) {
-	    Color *= AmbiantColor ;
-
+	    
 		//replace color magenta
 		if(r > 0.5 && g == 0 && b > 0.5) {
 			Color.g = r ;
@@ -74,6 +73,9 @@ float4 ApplyAmbiantColor(float2 Tex: TEXCOORD0) : COLOR0
 			Color.r = g ;
 			Color *= ShiftColorCyan ;
 		}
+
+		Color *= AmbiantColor ;
+
 	}
 
 
