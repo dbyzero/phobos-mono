@@ -178,7 +178,7 @@ namespace Phobos.Engine.View {
                         core.addEntity(testContainable);
                         calculPositionsEntitiesHandler += testContainable.calculateScreenRect;
                     }
-                    else if (((chunk_x % 1) == 0) && ((chunk_y % 1) == 0))
+                    else if (((chunk_x % 4) == 0) && ((chunk_y % 5) == 0))
                     {
 
                         /***
@@ -218,19 +218,6 @@ namespace Phobos.Engine.View {
                                 new Vector2(16, 8), text,
                                 Color.White
                     );
-                    Color hijack_color = new Color(rand.Next(5, 13), rand.Next(0, 4), 255, 255);
-
-                    DrawableEntity testGuys = new DrawableEntity(
-                        new Vector3(i, j + Chunk.CHUNKS_SIZE, 0), 32, 32,
-                        new Vector2(16, 27), text,
-                        hijack_color, Orientation.S
-                    );
-
-                    testGuys[Orientation.BL] = new SpriteArea(new Rectangle(128, 32, 32, 32), SpriteEffects.None);
-                    testGuys[Orientation.BR] = new SpriteArea(new Rectangle(128, 32, 32, 32), SpriteEffects.FlipHorizontally);
-                    core.addEntity(testGuys);
-                    calculPositionsEntitiesHandler += testGuys.calculateScreenRect;
-                    
                     core[Orientation.BL] = new SpriteArea(new Rectangle(96, 64, 32, 16), SpriteEffects.None);
                     testChunk2[i, j] = core;
                     calculPositionsEntitiesHandler += core.calculateScreenRect;
@@ -254,20 +241,6 @@ namespace Phobos.Engine.View {
                                 Color.White
                     );
                     core[Orientation.BL] = new SpriteArea(new Rectangle(96, 64, 32, 16), SpriteEffects.None);
-                    
-                    Color hijack_color = new Color(rand.Next(5, 13), rand.Next(0, 4), 255, 255);
-
-                    DrawableEntity testGuys = new DrawableEntity(
-                        new Vector3(i + Chunk.CHUNKS_SIZE,j, 0), 32, 32,
-                        new Vector2(16, 27), text,
-                        hijack_color, Orientation.S
-                    );
-
-                    testGuys[Orientation.BL] = new SpriteArea(new Rectangle(128, 32, 32, 32), SpriteEffects.None);
-                    testGuys[Orientation.BR] = new SpriteArea(new Rectangle(128, 32, 32, 32), SpriteEffects.FlipHorizontally);
-                    core.addEntity(testGuys);
-                    calculPositionsEntitiesHandler += testGuys.calculateScreenRect;
-                    
                     testChunk3[i, j] = core;
                     calculPositionsEntitiesHandler += core.calculateScreenRect;
                     i++;
@@ -295,20 +268,6 @@ namespace Phobos.Engine.View {
                     );
                     core[Orientation.BL] = new SpriteArea(new Rectangle(96, 64, 32, 16), SpriteEffects.None);
                     testChunk4[i, j] = core ;
-
-                    Color hijack_color = new Color(rand.Next(5, 13), rand.Next(0, 4), 255, 255);
-
-                    DrawableEntity testGuys = new DrawableEntity(
-                        new Vector3(i, j - Chunk.CHUNKS_SIZE, 0), 32, 32,
-                        new Vector2(16, 27), text,
-                        hijack_color, Orientation.S
-                    );
-
-                    testGuys[Orientation.BL] = new SpriteArea(new Rectangle(128, 32, 32, 32), SpriteEffects.None);
-                    testGuys[Orientation.BR] = new SpriteArea(new Rectangle(128, 32, 32, 32), SpriteEffects.FlipHorizontally);
-                    core.addEntity(testGuys);
-                    calculPositionsEntitiesHandler += testGuys.calculateScreenRect;
-
                     calculPositionsEntitiesHandler += core.calculateScreenRect;
                     i++;
                 }
@@ -330,20 +289,6 @@ namespace Phobos.Engine.View {
                     );
                     core[Orientation.BL] = new SpriteArea(new Rectangle(96, 64, 32, 16), SpriteEffects.None);
                     testChunk5[i, j] =  core;
-
-                    Color hijack_color = new Color(rand.Next(5, 13), rand.Next(0, 4), 255, 255);
-
-                    DrawableEntity testGuys = new DrawableEntity(
-                        new Vector3(i - Chunk.CHUNKS_SIZE,j, 0), 32, 32,
-                        new Vector2(16, 27), text,
-                        hijack_color, Orientation.S
-                    );
-
-                    testGuys[Orientation.BL] = new SpriteArea(new Rectangle(128, 32, 32, 32), SpriteEffects.None);
-                    testGuys[Orientation.BR] = new SpriteArea(new Rectangle(128, 32, 32, 32), SpriteEffects.FlipHorizontally);
-                    core.addEntity(testGuys);
-                    calculPositionsEntitiesHandler += testGuys.calculateScreenRect;
-
                     calculPositionsEntitiesHandler += core.calculateScreenRect;
                     i++;
                 }
@@ -382,20 +327,6 @@ namespace Phobos.Engine.View {
                     }
                     core[Orientation.BL] = new SpriteArea(new Rectangle(96, 64, 32, 16), SpriteEffects.None);
                     testChunk6[i, j] = core;
-
-                    Color hijack_color = new Color(rand.Next(5, 13), rand.Next(0, 4), 255, 255);
-
-                    DrawableEntity testGuys = new DrawableEntity(
-                        new Vector3(i - Chunk.CHUNKS_SIZE, j - Chunk.CHUNKS_SIZE, 0), 32, 32,
-                        new Vector2(16, 27), text,
-                        hijack_color, Orientation.S
-                    );
-
-                    testGuys[Orientation.BL] = new SpriteArea(new Rectangle(128, 32, 32, 32), SpriteEffects.None);
-                    testGuys[Orientation.BR] = new SpriteArea(new Rectangle(128, 32, 32, 32), SpriteEffects.FlipHorizontally);
-                    core.addEntity(testGuys);
-                    calculPositionsEntitiesHandler += testGuys.calculateScreenRect;
-
                     calculPositionsEntitiesHandler += core.calculateScreenRect;
                     i++;
                 }
@@ -418,21 +349,6 @@ namespace Phobos.Engine.View {
                     );
                     core[Orientation.BL] = new SpriteArea(new Rectangle(96, 64, 32, 16), SpriteEffects.None);
                     testChunk7[i, j] = core;
-
-                    Color hijack_color = new Color(rand.Next(5, 13), rand.Next(0, 4), 255, 255);
-
-                    DrawableEntity testGuys = new DrawableEntity(
-                        new Vector3(i + Chunk.CHUNKS_SIZE, j - Chunk.CHUNKS_SIZE, 0), 32, 32,
-                        new Vector2(16, 27), text,
-                        hijack_color, Orientation.S
-                    );
-
-                    testGuys[Orientation.BL] = new SpriteArea(new Rectangle(128, 32, 32, 32), SpriteEffects.None);
-                    testGuys[Orientation.BR] = new SpriteArea(new Rectangle(128, 32, 32, 32), SpriteEffects.FlipHorizontally);
-                    core.addEntity(testGuys);
-                    calculPositionsEntitiesHandler += testGuys.calculateScreenRect;
-
-
                     calculPositionsEntitiesHandler += core.calculateScreenRect;
                     i++;
                 }
@@ -455,21 +371,6 @@ namespace Phobos.Engine.View {
                     );
                     core[Orientation.BL] = new SpriteArea(new Rectangle(96, 64, 32, 16), SpriteEffects.None);
                     testChunk8[i, j] =  core;
-
-                    Color hijack_color = new Color(rand.Next(5, 13), rand.Next(0, 4), 255, 255);
-
-                    DrawableEntity testGuys = new DrawableEntity(
-                        new Vector3(i - Chunk.CHUNKS_SIZE, j + Chunk.CHUNKS_SIZE, 0), 32, 32,
-                        new Vector2(16, 27), text,
-                        hijack_color, Orientation.S
-                    );
-
-                    testGuys[Orientation.BL] = new SpriteArea(new Rectangle(128, 32, 32, 32), SpriteEffects.None);
-                    testGuys[Orientation.BR] = new SpriteArea(new Rectangle(128, 32, 32, 32), SpriteEffects.FlipHorizontally);
-                    core.addEntity(testGuys);
-                    calculPositionsEntitiesHandler += testGuys.calculateScreenRect;
-
-
                     calculPositionsEntitiesHandler += core.calculateScreenRect;
                     i++;
                 }
@@ -492,19 +393,6 @@ namespace Phobos.Engine.View {
                     );
                     core[Orientation.BL] = new SpriteArea(new Rectangle(96, 64, 32, 16), SpriteEffects.None);
                     testChunk9[i, j] =  core;
-                    Color hijack_color = new Color(rand.Next(5, 13), rand.Next(0, 4), 255, 255);
-
-                    DrawableEntity testGuys = new DrawableEntity(
-                        new Vector3(i + Chunk.CHUNKS_SIZE, j + Chunk.CHUNKS_SIZE, 0), 32, 32,
-                        new Vector2(16, 27), text,
-                        hijack_color, Orientation.S
-                    );
-
-                    testGuys[Orientation.BL] = new SpriteArea(new Rectangle(128, 32, 32, 32), SpriteEffects.None);
-                    testGuys[Orientation.BR] = new SpriteArea(new Rectangle(128, 32, 32, 32), SpriteEffects.FlipHorizontally);
-                    core.addEntity(testGuys);
-                    calculPositionsEntitiesHandler += testGuys.calculateScreenRect;
-
                     calculPositionsEntitiesHandler += core.calculateScreenRect;
                     i++;
                 }

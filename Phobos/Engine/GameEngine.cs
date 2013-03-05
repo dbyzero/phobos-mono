@@ -100,11 +100,14 @@ namespace Phobos.Engine
             //set windows to 1280x768
             deviceManager.PreferredBackBufferWidth = 1280;
             deviceManager.PreferredBackBufferHeight = 640;
-            deviceManager.ApplyChanges();
 
             //Limitation des refresh a 60 par seconde
+            //deviceManager.SynchronizeWithVerticalRetrace = false; //uncomment to got real FPS
             IsFixedTimeStep = true;
-            TargetElapsedTime = new TimeSpan(0,0,0,0,13);
+            TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 13);
+
+            deviceManager.ApplyChanges();
+
             #endregion
 
             #region Initialisation du clavier
