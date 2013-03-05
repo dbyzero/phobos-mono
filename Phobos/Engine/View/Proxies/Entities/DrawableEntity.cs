@@ -194,7 +194,7 @@ namespace Phobos.Engine.View.Proxies.Entities
             {
                 sprite_to_draw = sprites.Values.First();
             }
-
+            
             spriteBatch.Draw(
                 SpriteSheet,
                 ScreenRect,

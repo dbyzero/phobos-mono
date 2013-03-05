@@ -70,7 +70,7 @@ namespace Phobos.Engine.View
         public void move(Vector2 shift)
         {
             Position += shift;
-            Scene.getInstance().CalculCenterEntity(); ;
+           // Scene.getInstance().CalculCenterEntity(); ;
         }
 
         /**
