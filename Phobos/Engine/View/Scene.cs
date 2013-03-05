@@ -29,14 +29,16 @@ namespace Phobos.Engine.View {
             return scene;
         }
 
-        private Camera camera = new Camera( -656, -251 );
-        private Orientation orientation = Orientation.SE;
+        
+ 	    private Camera camera = new Camera(-200,-500);
+ 	    private Orientation orientation = Orientation.SO;
         private SpriteBatch spriteBatch;
         private MouseState prevMouseState;
         private Vector2 mouveMovement;
         private DrawableEntity centerEntity; //utiliser lors de la rotation de la camera
 
         #region mutator et gettor
+        public Effect ShaderEffect { set; get; }
         public Orientation Orientation {
             get { return orientation; }
             set { orientation = value; }
@@ -46,6 +48,12 @@ namespace Phobos.Engine.View {
             get { return camera; }
             set { camera = value; }
         }
+        public Vector4 AmbiantColor { set; get; } //actual ambiant color
+ 	    public Vector4 ConvergeColor { set; get; } //color to converge to for ambiant color
+ 	    public Vector4 SunriseColor { set; get; } //matin
+        public Vector4 NoonColor { set; get; } //midi
+        public Vector4 EveningColor { set; get; } //soir
+ 	    public Vector4 NightColor { set; get; } //nuit
 
         public SortedList<int, SortedList<int, ChunkProxy>> Chunks {
             set;
@@ -69,6 +77,14 @@ namespace Phobos.Engine.View {
             spriteBatch = new SpriteBatch( GameEngine.Instance.GraphicsDevice );
             Texture2D text = GameEngine.Instance.Content.Load<Texture2D>( @"spriteSheets\temp_sprite" );
             Texture2D text2 = GameEngine.Instance.Content.Load<Texture2D>( @"spriteSheets\test_rpg" );
+            ShaderEffect = GameEngine.Instance.Content.Load<Effect>(@"shaders\coloration");
+            
+            SunriseColor = new Vector4(0.74f, 0.53f, 0.36f, 1.0f);
+            NoonColor = new Vector4(1.0f, 1.0f, 0.95f, 1.0f);
+            NightColor = new Vector4(0.2557f, 0.29f, 0.42f, 1.0f);
+            EveningColor = new Vector4(0.75f, 0.49f, 0.36f, 1.0f);
+            
+            ConvergeColor = AmbiantColor = NoonColor;
 
             #region Test
             //Test Map creation
@@ -76,323 +92,315 @@ namespace Phobos.Engine.View {
             Map map = generator.BuildSimpleMap();
             
             //Proxies creation
-            for( int i = 0 ; i < map.Size ; i++ ) {
-                Chunks[i] = new SortedList<int,ChunkProxy>();
-                for( int j = 0 ; j < map.Size ; j++ ) {
-                    Chunks[i].Add(j, map[i,j].BuildProxy());
-                }
-            }
+            //for( int i = 0 ; i < map.Size ; i++ ) {
+            //    Chunks[i] = new SortedList<int,ChunkProxy>();
+            //    for( int j = 0 ; j < map.Size ; j++ ) {
+            //        Chunks[i].Add(j, map[i,j].BuildProxy());
+            //    }
+            //}
             //End Test Map creation
 
+            ChunkProxy testChunk = new ChunkProxy(0, 0);
+            int chunk_y = 0;
+            Random rand = new Random();
+            while (chunk_y < Chunk.CHUNKS_SIZE)
+            {
+                int chunk_x = 0;
+                while (chunk_x < Chunk.CHUNKS_SIZE)
+                {
 
-            //  ChunkProxy testChunk = new ChunkProxy( 0, 0 );
-            //  Texture2D text = GameEngine.Instance.Content.Load<Texture2D>(@"spriteSheets\temp_sprite");
-            //  Texture2D text2 = GameEngine.Instance.Content.Load<Texture2D>(@"spriteSheets\test_rpg");
-            //  int j = 0;
-            //  Random rand = new Random();
-            //  while( j < ChunkProxy.Chunk_Size )
-            //  {
-            //      int i = 0;
-            //      while( i < ChunkProxy.Chunk_Size )
-            //      {
+                    CoreProxy core = new CoreProxy(new Vector3(chunk_x, chunk_y, (float)(chunk_x / 2f + chunk_y / 3f)), 32, 16,
+                               new Vector2(16, 8), text,
+                                Color.White
+                    );
+                    core[Orientation.BL] = new SpriteArea(new Rectangle(96, 32, 32, 16), SpriteEffects.None);
+                    core[Orientation.BR] = new SpriteArea(new Rectangle(96, 32, 32, 16), SpriteEffects.FlipHorizontally);
+                    core[Orientation.TR] = new SpriteArea(new Rectangle(96, 32, 32, 16), SpriteEffects.None);
+                    core[Orientation.TL] = new SpriteArea(new Rectangle(96, 32, 32, 16), SpriteEffects.FlipHorizontally);
 
-            //          CoreProxy core = new CoreProxy(new Vector3(i, j, (float)(i/2f + j/3f)), 32, 16,
-            //                     new Vector2(16, 8), text,
-            //                     new Color(new Vector4(
-            //                         0.8f, 0.8f, 0.8f, 1.0f
-            //                         )
-            //                     )
-            //          );
-            //          core[Orientation.BL] = new Sprite(new Rectangle(96, 32, 32, 16),SpriteEffects.None);
-            //          core[Orientation.BR] = new Sprite(new Rectangle(96, 32, 32, 16), SpriteEffects.FlipHorizontally);
-            //          core[Orientation.TR] = new Sprite(new Rectangle(96, 32, 32, 16), SpriteEffects.None);
-            //          core[Orientation.TL] = new Sprite(new Rectangle(96, 32, 32, 16), SpriteEffects.FlipHorizontally);
+                    testChunk[chunk_x, chunk_y] = core ;
+                    calculPositionsEntitiesHandler += core.calculateScreenRect;
 
-            //          testChunk.addCore(i, j, core);
-            //          calculPositionsEntitiesHandler += core.calculateScreenRect;
+                    if ((chunk_x == Chunk.CHUNKS_SIZE - 1) && (chunk_y == Chunk.CHUNKS_SIZE - 1))
+                    {
+                        AnimatedEntity animated_entity = new AnimatedEntity(
+                            new Vector3(chunk_x, chunk_y, (float)(chunk_x / 2f + chunk_y / 3f)),
+                            32, 32, new Vector2(16, 27),
+                            text, Color.White, Orientation.S);
 
-            //          if( ( i == ChunkProxy.Chunk_Size - 1 ) && ( j == ChunkProxy.Chunk_Size - 1 ) ) {
-            //              AnimatedEntity animated_entity = new AnimatedEntity(
-            //                  new Vector3(i, j, (float)(i / 2f + j / 3f)),
-            //                  32, 32, new Vector2(16, 27),
-            //                  text, Color.White, Orientation.S);
+                        animated_entity[Orientation.BR] = new Animation(text, SpriteEffects.FlipHorizontally);
+                        animated_entity[Orientation.BR].addFrame(new Rectangle(32, 0, 32, 32), 500);
+                        animated_entity[Orientation.BR].addFrame(new Rectangle(96, 0, 32, 32), 500);
+                        animated_entity[Orientation.BR].addFrame(new Rectangle(32, 0, 32, 32), 500);
+                        animated_entity[Orientation.BR].addFrame(new Rectangle(64, 0, 32, 32), 500);
 
-            //              animated_entity[Orientation.BR] = new Animation(text,SpriteEffects.FlipHorizontally);
-            //              animated_entity[Orientation.BR].addFrame(new Rectangle(32, 0, 32, 32), 500);
-            //              animated_entity[Orientation.BR].addFrame(new Rectangle(96, 0, 32, 32), 500);
-            //              animated_entity[Orientation.BR].addFrame(new Rectangle(32, 0, 32, 32), 500);
-            //              animated_entity[Orientation.BR].addFrame(new Rectangle(64, 0, 32, 32), 500);
+                        animated_entity[Orientation.BL] = new Animation(text);
+                        animated_entity[Orientation.BL].addFrame(new Rectangle(32, 0, 32, 32), 500);
+                        animated_entity[Orientation.BL].addFrame(new Rectangle(96, 0, 32, 32), 500);
+                        animated_entity[Orientation.BL].addFrame(new Rectangle(32, 0, 32, 32), 500);
+                        animated_entity[Orientation.BL].addFrame(new Rectangle(64, 0, 32, 32), 500)
+                            ;
+                        animated_entity[Orientation.TR] = new Animation(text);
+                        animated_entity[Orientation.TR].addFrame(new Rectangle(128, 0, 32, 32), 500);
+                        animated_entity[Orientation.TR].addFrame(new Rectangle(192, 0, 32, 32), 500);
+                        animated_entity[Orientation.TR].addFrame(new Rectangle(128, 0, 32, 32), 500);
+                        animated_entity[Orientation.TR].addFrame(new Rectangle(160, 0, 32, 32), 500);
 
-            //              animated_entity[Orientation.BL] = new Animation(text);
-            //              animated_entity[Orientation.BL].addFrame(new Rectangle(32, 0, 32, 32), 500);
-            //              animated_entity[Orientation.BL].addFrame(new Rectangle(96, 0, 32, 32), 500);
-            //              animated_entity[Orientation.BL].addFrame(new Rectangle(32, 0, 32, 32), 500);
-            //              animated_entity[Orientation.BL].addFrame(new Rectangle(64, 0, 32, 32), 500)
-            //                  ;
-            //              animated_entity[Orientation.TR] = new Animation(text);
-            //              animated_entity[Orientation.TR].addFrame(new Rectangle(128, 0, 32, 32), 500);
-            //              animated_entity[Orientation.TR].addFrame(new Rectangle(192, 0, 32, 32), 500);
-            //              animated_entity[Orientation.TR].addFrame(new Rectangle(128, 0, 32, 32), 500);
-            //              animated_entity[Orientation.TR].addFrame(new Rectangle(160, 0, 32, 32), 500);
+                        animated_entity[Orientation.TL] = new Animation(text, SpriteEffects.FlipHorizontally);
+                        animated_entity[Orientation.TL].addFrame(new Rectangle(128, 0, 32, 32), 500);
+                        animated_entity[Orientation.TL].addFrame(new Rectangle(192, 0, 32, 32), 500);
+                        animated_entity[Orientation.TL].addFrame(new Rectangle(128, 0, 32, 32), 500);
+                        animated_entity[Orientation.TL].addFrame(new Rectangle(160, 0, 32, 32), 500);
 
-            //              animated_entity[Orientation.TL] = new Animation(text, SpriteEffects.FlipHorizontally);
-            //              animated_entity[Orientation.TL].addFrame(new Rectangle(128, 0, 32, 32), 500);
-            //              animated_entity[Orientation.TL].addFrame(new Rectangle(192, 0, 32, 32), 500);
-            //              animated_entity[Orientation.TL].addFrame(new Rectangle(128, 0, 32, 32), 500);
-            //              animated_entity[Orientation.TL].addFrame(new Rectangle(160, 0, 32, 32), 500);
+                        core.addEntity(animated_entity);
+                        calculPositionsEntitiesHandler += animated_entity.calculateScreenRect;
+                    }
 
-            //              core.addEntity(animated_entity);
-            //              calculPositionsEntitiesHandler += animated_entity.calculateScreenRect;
-            //          }
+                    if ((chunk_x == 0) && (chunk_y == 0))
+                    {
 
-            //          if ((i == 0) && (j == 0))
-            //          {
+                        DrawableEntity testFontain = new DrawableEntity(
+                            new Vector3(chunk_x, chunk_y, (float)(chunk_x / 2f + chunk_y / 3f)), 27, 34,
+                            new Vector2(13, 31), text2,
+                            Color.White, Orientation.S
+                        );
+                        testFontain[Orientation.BL] = new SpriteArea(new Rectangle(344, 714, 27, 34), SpriteEffects.None);
 
-            //              DrawableEntity testFontain = new DrawableEntity(
-            //                  new Vector3(i, j, (float)(i / 2f + j / 3f)), 27, 34,
-            //                  new Vector2(13, 31), text2,
-            //                  Color.White, Orientation.S
-            //              );
-            //              testFontain[Orientation.BL] = new Sprite(new Rectangle(344, 714, 27, 34), SpriteEffects.None);
+                        core.addEntity(testFontain);
+                        calculPositionsEntitiesHandler += testFontain.calculateScreenRect;
 
-            //              core.addEntity(testFontain);
-            //              calculPositionsEntitiesHandler += testFontain.calculateScreenRect;
+                        DrawableEntity testContainable = new DrawableEntity(
+                            new Vector3(chunk_x, chunk_y, (float)(chunk_x / 2f + chunk_y / 3f + 2.2f)), 32, 32,
+                            new Vector2(16, 24), text2,
+                            Color.White, Orientation.S
+                        );
+                        testContainable[Orientation.BL] = new SpriteArea(new Rectangle(205, 136, 32, 32), SpriteEffects.None);
+                        core.addEntity(testContainable);
+                        calculPositionsEntitiesHandler += testContainable.calculateScreenRect;
+                    }
+                    else if (((chunk_x % 4) == 0) && ((chunk_y % 5) == 0))
+                    {
 
-            //              DrawableEntity testContainable = new DrawableEntity(
-            //                  new Vector3(i, j, (float)(i / 2f + j / 3f + 2.2f)), 32, 32,
-            //                  new Vector2(16, 24), text2, 
-            //                  Color.White, Orientation.S
-            //              );
-            //              testContainable[Orientation.BL] = new Sprite(new Rectangle(205, 136, 32, 32),SpriteEffects.None);
-            //              core.addEntity(testContainable);
-            //              calculPositionsEntitiesHandler += testContainable.calculateScreenRect;
-            //          }
-            //          i++;
-            //      }
-            //      j++;
-            //  }
-            //  Chunks[ 0 ] = new SortedList<int, ChunkProxy>();
-            //  Chunks[0][0] = testChunk ;
+                        /***
+                         * color is hijack, it contain refill color (magenta and cyan) + light and light intensity
+                         * offset colors are listed in shader (0-4 : hair, 5-14 : clothes, 15-255 free)
+                         * */
+                        Color hijack_color = new Color(rand.Next(5, 13), rand.Next(0, 4), 255, 255);
 
-            //  //eau 0,1
-            //  j = 0;
-            //  ChunkProxy testChunk2 = new ChunkProxy( 0, 1 );
-            //  while( j < ChunkProxy.Chunk_Size )
-            //  {
-            //      int i = 0;
-            //      while( i < ChunkProxy.Chunk_Size )
-            //      {
-            //          CoreProxy core = new CoreProxy( new Vector3( i, j + ChunkProxy.Chunk_Size, 0 ), 32, 16,
-            //                      new Vector2(16, 8), text,
-            //                      new Color(new Vector4(
-            //                          0.8f, 0.8f, 0.8f, 1.0f
-            //                          )
-            //                      )
-            //          );
-            //          core[Orientation.BL] = new Sprite(new Rectangle(96, 64, 32, 16), SpriteEffects.None);
-            //          testChunk2.addCore(i, j, core);
-            //          calculPositionsEntitiesHandler += core.calculateScreenRect;
-            //          i++;
-            //      }
-            //      j++;
-            //  }
-            //  Chunks[0][1] = testChunk2;
+                        DrawableEntity testGuys = new DrawableEntity(
+                          new Vector3(chunk_x, chunk_y, (float)(chunk_x / 2f + chunk_y / 3f)), 32, 32,
+                          new Vector2(16, 27), text,
+                          hijack_color, Orientation.S
+                        );
 
-
-            //  //eau 1,0
-            //  j = 0;
-            //  ChunkProxy testChunk3 = new ChunkProxy( 1, 0 );
-            //  while( j < ChunkProxy.Chunk_Size )
-            //  {
-            //      int i = 0;
-            //      while( i < ChunkProxy.Chunk_Size )
-            //      {
-            //          CoreProxy core = new CoreProxy( new Vector3( i + ChunkProxy.Chunk_Size, j, 0 ), 32, 16,
-            //                      new Vector2(16, 8), text,
-            //                      new Color(new Vector4(
-            //                          0.8f, 0.8f, 0.8f, 1.0f
-            //                          )
-            //                      )
-            //          );
-            //          core[Orientation.BL] = new Sprite(new Rectangle(96, 64, 32, 16), SpriteEffects.None);
-            //          testChunk3.addCore(i, j, core);
-            //          calculPositionsEntitiesHandler += core.calculateScreenRect;
-            //          i++;
-            //      }
-            //      j++;
-            //  }
-            //  Chunks[ 1 ] = new SortedList<int, ChunkProxy>();
-            //  Chunks[1][0] = testChunk3;
-
-            //  //calcul position and center
-            //  calculPositionsEntitiesHandler() ;
-            //  CalculCenterEntity();
-
-            //  //eau 0,-1
-            //  j = 0;
-            //  ChunkProxy testChunk4 = new ChunkProxy( 0, -1 );
-            //  while( j < ChunkProxy.Chunk_Size )
-            //  {
-            //      int i = 0;
-            //      while( i < ChunkProxy.Chunk_Size )
-            //      {
-            //          CoreProxy core = new CoreProxy( new Vector3( i, j - ChunkProxy.Chunk_Size, 0 ), 32, 16,
-            //                      new Vector2(16, 8), text,
-            //                      new Color(new Vector4(
-            //                          0.8f, 0.8f, 0.8f, 1.0f
-            //                          )
-            //                      )
-            //          );
-            //          core[Orientation.BL] = new Sprite(new Rectangle(96, 64, 32, 16), SpriteEffects.None);
-            //          testChunk4.addCore(i, j, core);
-            //          calculPositionsEntitiesHandler += core.calculateScreenRect;
-            //          i++;
-            //      }
-            //      j++;
-            //  }
-            //  Chunks[0][-1] = testChunk4;
-
-            //  //eau -1, 0
-            //  j = 0;
-            //  ChunkProxy testChunk5 = new ChunkProxy( -1, 0 );
-            //  while( j < ChunkProxy.Chunk_Size )
-            //  {
-            //      int i = 0;
-            //      while( i < ChunkProxy.Chunk_Size )
-            //      {
-            //          CoreProxy core = new CoreProxy( new Vector3( i - ChunkProxy.Chunk_Size, j, 0 ), 32, 16,
-            //                      new Vector2(16, 8), text,
-            //                      new Color(new Vector4(
-            //                          0.8f, 0.8f, 0.8f, 1.0f
-            //                          )
-            //                      )
-            //          );
-            //          core[Orientation.BL] = new Sprite(new Rectangle(96, 64, 32, 16), SpriteEffects.None);
-            //          testChunk5.addCore(i, j, core);
-            //          calculPositionsEntitiesHandler += core.calculateScreenRect;
-            //          i++;
-            //      }
-            //      j++;
-            //  }
-            //  Chunks[ -1 ] = new SortedList<int, ChunkProxy>();
-            // Chunks[-1][0] = testChunk5;
+                        testGuys[Orientation.BL] = new SpriteArea(new Rectangle(128, 32, 32, 32), SpriteEffects.None);
+                        testGuys[Orientation.BR] = new SpriteArea(new Rectangle(128, 32, 32, 32), SpriteEffects.FlipHorizontally);
+                        core.addEntity(testGuys);
+                        calculPositionsEntitiesHandler += testGuys.calculateScreenRect;
+                    }
+                    chunk_x++;
+                }
+                chunk_y++;
+            }
+            Chunks[0] = new SortedList<int, ChunkProxy>();
+            Chunks[0][0] = testChunk;
+            
+            int j;
+            //eau 0,1
+            j = 0;
+            ChunkProxy testChunk2 = new ChunkProxy(0, 1);
+            while (j < Chunk.CHUNKS_SIZE)
+            {
+                int i = 0;
+                while (i < Chunk.CHUNKS_SIZE)
+                {
+                    CoreProxy core = new CoreProxy(new Vector3(i, j + Chunk.CHUNKS_SIZE, 0), 32, 16,
+                                new Vector2(16, 8), text,
+                                Color.White
+                    );
+                    core[Orientation.BL] = new SpriteArea(new Rectangle(96, 64, 32, 16), SpriteEffects.None);
+                    testChunk2[i, j] = core;
+                    calculPositionsEntitiesHandler += core.calculateScreenRect;
+                    i++;
+                }
+                j++;
+            }
+            Chunks[0][1] = testChunk2;
 
 
-            //  //eau -1, -1
-            //  j = 0;
-            //  ChunkProxy testChunk6 = new ChunkProxy( -1, -1 );
-            //  while( j < ChunkProxy.Chunk_Size )
-            //  {
-            //      int i = 0;
-            //      while( i < ChunkProxy.Chunk_Size )
-            //      {
-            //          CoreProxy core = new CoreProxy( new Vector3( i - ChunkProxy.Chunk_Size, j - ChunkProxy.Chunk_Size, 0 ), 32, 16,
-            //                      new Vector2(16, 8), text,
-            //                      new Color(new Vector4(
-            //                          0.8f, 0.8f, 0.8f, 1.0f
-            //                          )
-            //                      )
-            //          );
-            //          if (((i % 4) == 0) && ((j % 5) == 0))
-            //          {
+            //eau 1,0
+            j = 0;
+            ChunkProxy testChunk3 = new ChunkProxy(1, 0);
+            while (j < Chunk.CHUNKS_SIZE)
+            {
+                int i = 0;
+                while (i < Chunk.CHUNKS_SIZE)
+                {
+                    CoreProxy core = new CoreProxy(new Vector3(i + Chunk.CHUNKS_SIZE, j, 0), 32, 16,
+                                new Vector2(16, 8), text,
+                                Color.White
+                    );
+                    core[Orientation.BL] = new SpriteArea(new Rectangle(96, 64, 32, 16), SpriteEffects.None);
+                    testChunk3[i, j] = core;
+                    calculPositionsEntitiesHandler += core.calculateScreenRect;
+                    i++;
+                }
+                j++;
+            }
+            Chunks[1] = new SortedList<int, ChunkProxy>();
+            Chunks[1][0] = testChunk3;
 
-            //              DrawableEntity water = new DrawableEntity(
-            //                  new Vector3( i - ChunkProxy.Chunk_Size, j - ChunkProxy.Chunk_Size, 0 ), 34, 21,
-            //                  new Vector2(17, 20), text2,
-            //                  Color.White, Orientation.S
-            //              );
-            //              water[Orientation.BL] = new Sprite(new Rectangle(307, 726, 34, 21), SpriteEffects.None);
-            //              water[Orientation.BR] = new Sprite(new Rectangle(307, 726, 34, 21), SpriteEffects.FlipHorizontally);
-            //              water[Orientation.TL] = new Sprite(new Rectangle(307, 726, 34, 21), SpriteEffects.None);
-            //              water[Orientation.TR] = new Sprite(new Rectangle(307, 726, 34, 21), SpriteEffects.FlipHorizontally);
-            //              core.addEntity(water);
-            //              calculPositionsEntitiesHandler += water.calculateScreenRect;
-            //          }
-            //          core[Orientation.BL] = new Sprite(new Rectangle(96, 64, 32, 16), SpriteEffects.None);
-            //          testChunk6.addCore(i, j, core);
-            //          calculPositionsEntitiesHandler += core.calculateScreenRect;
-            //          i++;
-            //      }
-            //      j++;
-            //  }
-            // Chunks[-1][-1] = testChunk6;
+            //calcul position and center
+            calculPositionsEntitiesHandler();
+            CalculCenterEntity();
 
+            //eau 0,-1
+            j = 0;
+            ChunkProxy testChunk4 = new ChunkProxy(0, -1);
+            while (j < Chunk.CHUNKS_SIZE)
+            {
+                int i = 0;
+                while (i < Chunk.CHUNKS_SIZE)
+                {
+                    CoreProxy core = new CoreProxy(new Vector3(i, j - Chunk.CHUNKS_SIZE, 0), 32, 16,
+                                new Vector2(16, 8), text,
+                                Color.White
+                    );
+                    core[Orientation.BL] = new SpriteArea(new Rectangle(96, 64, 32, 16), SpriteEffects.None);
+                    testChunk4[i, j] = core ;
+                    calculPositionsEntitiesHandler += core.calculateScreenRect;
+                    i++;
+                }
+                j++;
+            }
+            Chunks[0][-1] = testChunk4;
 
-            //  //eau 1,-1
-            //  j = 0;
-            //  ChunkProxy testChunk7 = new ChunkProxy( 1, -1 );
-            //  while( j < ChunkProxy.Chunk_Size )
-            //  {
-            //      int i = 0;
-            //      while( i < ChunkProxy.Chunk_Size )
-            //      {
-            //          CoreProxy core = new CoreProxy( new Vector3( i + ChunkProxy.Chunk_Size, j - ChunkProxy.Chunk_Size, 0 ), 32, 16,
-            //                      new Vector2(16, 8), text,
-            //                      new Color(new Vector4(
-            //                          0.8f, 0.8f, 0.8f, 1.0f
-            //                          )
-            //                      )
-            //          );
-            //          core[Orientation.BL] = new Sprite(new Rectangle(96, 64, 32, 16),SpriteEffects.None);
-            //          testChunk7.addCore(i, j, core);
-            //          calculPositionsEntitiesHandler += core.calculateScreenRect;
-            //          i++;
-            //      }
-            //      j++;
-            //  }
-            // Chunks[1][-1] = testChunk7;
-
-
-            //  //eau -1, 1
-            //  j = 0;
-            //  ChunkProxy testChunk8 = new ChunkProxy( -1, 1 );
-            //  while( j < ChunkProxy.Chunk_Size )
-            //  {
-            //      int i = 0;
-            //      while( i < ChunkProxy.Chunk_Size )
-            //      {
-            //          CoreProxy core = new CoreProxy( new Vector3( i - ChunkProxy.Chunk_Size, j + ChunkProxy.Chunk_Size, 0 ), 32, 16,
-            //                      new Vector2(16, 8), text,
-            //                      new Color(new Vector4(
-            //                          0.8f, 0.8f, 0.8f, 1.0f
-            //                          )
-            //                      )
-            //          );
-            //          core[Orientation.BL] = new Sprite(new Rectangle(96, 64, 32, 16), SpriteEffects.None);
-            //          testChunk8.addCore(i, j, core);
-            //          calculPositionsEntitiesHandler += core.calculateScreenRect;
-            //          i++;
-            //      }
-            //      j++;
-            //  }
-            //Chunks[-1][1] = testChunk8;
+            //eau -1, 0
+            j = 0;
+            ChunkProxy testChunk5 = new ChunkProxy(-1, 0);
+            while (j < Chunk.CHUNKS_SIZE)
+            {
+                int i = 0;
+                while (i < Chunk.CHUNKS_SIZE)
+                {
+                    CoreProxy core = new CoreProxy(new Vector3(i - Chunk.CHUNKS_SIZE, j, 0), 32, 16,
+                                new Vector2(16, 8), text,
+                                Color.White
+                    );
+                    core[Orientation.BL] = new SpriteArea(new Rectangle(96, 64, 32, 16), SpriteEffects.None);
+                    testChunk5[i, j] =  core;
+                    calculPositionsEntitiesHandler += core.calculateScreenRect;
+                    i++;
+                }
+                j++;
+            }
+            Chunks[-1] = new SortedList<int, ChunkProxy>();
+            Chunks[-1][0] = testChunk5;
 
 
-            //  //eau 1, 1
-            //   j = 0;
-            //   ChunkProxy testChunk9 = new ChunkProxy( 1, 0 );
-            //   while( j < ChunkProxy.Chunk_Size )
-            //  {
-            //      int i = 0;
-            //      while( i < ChunkProxy.Chunk_Size )
-            //      {
-            //          CoreProxy core = new CoreProxy( new Vector3( i + ChunkProxy.Chunk_Size, j + ChunkProxy.Chunk_Size, 0 ), 32, 16,
-            //                      new Vector2(16, 8), text,
-            //                      new Color(new Vector4(
-            //                          0.8f, 0.8f, 0.8f, 1.0f
-            //                          )
-            //                      )
-            //          );
-            //          core[Orientation.BL] = new Sprite(new Rectangle(96, 64, 32, 16), SpriteEffects.None);
-            //          testChunk9.addCore(i, j, core);
-            //          calculPositionsEntitiesHandler += core.calculateScreenRect;
-            //          i++;
-            //      }
-            //      j++;
-            //  }
-            //  Chunks[1][1] = testChunk9;
+            //eau -1, -1
+            j = 0;
+            ChunkProxy testChunk6 = new ChunkProxy(-1, -1);
+            while (j < Chunk.CHUNKS_SIZE)
+            {
+                int i = 0;
+                while (i < Chunk.CHUNKS_SIZE)
+                {
+                    CoreProxy core = new CoreProxy(new Vector3(i - Chunk.CHUNKS_SIZE, j - Chunk.CHUNKS_SIZE, 0), 32, 16,
+                                new Vector2(16, 8), text,
+                                Color.White
+                    );
+                    if (((i % 4) == 0) && ((j % 5) == 0))
+                    {
 
-            //  Chunks[0][0].calculCliffs();
+                        DrawableEntity water = new DrawableEntity(
+                            new Vector3(i - Chunk.CHUNKS_SIZE, j - Chunk.CHUNKS_SIZE, 0), 34, 21,
+                            new Vector2(17, 20), text2,
+                            Color.White, Orientation.S
+                        );
+                        water[Orientation.BL] = new SpriteArea(new Rectangle(307, 726, 34, 21), SpriteEffects.None);
+                        water[Orientation.BR] = new SpriteArea(new Rectangle(307, 726, 34, 21), SpriteEffects.FlipHorizontally);
+                        water[Orientation.TL] = new SpriteArea(new Rectangle(307, 726, 34, 21), SpriteEffects.None);
+                        water[Orientation.TR] = new SpriteArea(new Rectangle(307, 726, 34, 21), SpriteEffects.FlipHorizontally);
+                        core.addEntity(water);
+                        calculPositionsEntitiesHandler += water.calculateScreenRect;
+                    }
+                    core[Orientation.BL] = new SpriteArea(new Rectangle(96, 64, 32, 16), SpriteEffects.None);
+                    testChunk6[i, j] = core;
+                    calculPositionsEntitiesHandler += core.calculateScreenRect;
+                    i++;
+                }
+                j++;
+            }
+            Chunks[-1][-1] = testChunk6;
+
+
+            //eau 1,-1
+            j = 0;
+            ChunkProxy testChunk7 = new ChunkProxy(1, -1);
+            while (j < Chunk.CHUNKS_SIZE)
+            {
+                int i = 0;
+                while (i < Chunk.CHUNKS_SIZE)
+                {
+                    CoreProxy core = new CoreProxy(new Vector3(i + Chunk.CHUNKS_SIZE, j - Chunk.CHUNKS_SIZE, 0), 32, 16,
+                                new Vector2(16, 8), text,
+                                Color.White
+                    );
+                    core[Orientation.BL] = new SpriteArea(new Rectangle(96, 64, 32, 16), SpriteEffects.None);
+                    testChunk7[i, j] = core;
+                    calculPositionsEntitiesHandler += core.calculateScreenRect;
+                    i++;
+                }
+                j++;
+            }
+            Chunks[1][-1] = testChunk7;
+
+
+            //eau -1, 1
+            j = 0;
+            ChunkProxy testChunk8 = new ChunkProxy(-1, 1);
+            while (j < Chunk.CHUNKS_SIZE)
+            {
+                int i = 0;
+                while (i < Chunk.CHUNKS_SIZE)
+                {
+                    CoreProxy core = new CoreProxy(new Vector3(i - Chunk.CHUNKS_SIZE, j + Chunk.CHUNKS_SIZE, 0), 32, 16,
+                                new Vector2(16, 8), text,
+                                Color.White
+                    );
+                    core[Orientation.BL] = new SpriteArea(new Rectangle(96, 64, 32, 16), SpriteEffects.None);
+                    testChunk8[i, j] =  core;
+                    calculPositionsEntitiesHandler += core.calculateScreenRect;
+                    i++;
+                }
+                j++;
+            }
+            Chunks[-1][1] = testChunk8;
+
+
+            //eau 1, 1
+            j = 0;
+            ChunkProxy testChunk9 = new ChunkProxy(1, 0);
+            while (j < Chunk.CHUNKS_SIZE)
+            {
+                int i = 0;
+                while (i < Chunk.CHUNKS_SIZE)
+                {
+                    CoreProxy core = new CoreProxy(new Vector3(i + Chunk.CHUNKS_SIZE, j + Chunk.CHUNKS_SIZE, 0), 32, 16,
+                                new Vector2(16, 8), text,
+                                Color.White
+                    );
+                    core[Orientation.BL] = new SpriteArea(new Rectangle(96, 64, 32, 16), SpriteEffects.None);
+                    testChunk9[i, j] =  core;
+                    calculPositionsEntitiesHandler += core.calculateScreenRect;
+                    i++;
+                }
+                j++;
+            }
+            Chunks[1][1] = testChunk9;
+
+            Chunks[0][0].calculCliffs();
             #endregion
 
             //calcul position and center
@@ -403,7 +411,8 @@ namespace Phobos.Engine.View {
         public override void Draw( GameTime gameTime ) {
             int count_sprite = 0;
 
-            spriteBatch.Begin( SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone );
+            ShaderEffect.Parameters["AmbiantColor"].SetValue(AmbiantColor);
+            spriteBatch.Begin( SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, ShaderEffect );
             /** Browse layer throw camera depth **/
             switch( Scene.getInstance().Orientation ) {
                 //Calcul pour SE
@@ -503,6 +512,13 @@ namespace Phobos.Engine.View {
                     chunk.Update( gameTime );
                 }
             }
+
+            //Converge color to target
+            if (AmbiantColor != ConvergeColor)
+            {
+                Vector4 shiftColor = Vector4.Multiply(AmbiantColor - ConvergeColor, 0.025f);
+                AmbiantColor -= shiftColor;
+            }
         }
 
         public void CalculCenterEntity() {
@@ -548,8 +564,8 @@ namespace Phobos.Engine.View {
         public bool IsLoadedCore( int x, int y ) {
 
             ChunkProxy chunk;
-            int chunk_x = x / ChunkProxy.Chunk_Size;
-            int chunk_y = y / ChunkProxy.Chunk_Size;
+            int chunk_x = x / Chunk.CHUNKS_SIZE;
+            int chunk_y = y / Chunk.CHUNKS_SIZE;
 
             //if negatif, need to substract 1 to get the good one
             if( x < 0 ) chunk_x--;
@@ -572,8 +588,8 @@ namespace Phobos.Engine.View {
 
         public CoreProxy getCore( int x, int y ) {
 
-            int chunk_x = x / ChunkProxy.Chunk_Size;
-            int chunk_y = y / ChunkProxy.Chunk_Size;
+            int chunk_x = x / Chunk.CHUNKS_SIZE;
+            int chunk_y = y / Chunk.CHUNKS_SIZE;
 
             //if negatif, need to substract 1 to get the good one
             if( x < 0 ) chunk_x--;
@@ -581,12 +597,12 @@ namespace Phobos.Engine.View {
 
             ChunkProxy chunk = Chunks[ chunk_x ][ chunk_y ];
 
-            int core_x = x % ChunkProxy.Chunk_Size;
-            int core_y = y % ChunkProxy.Chunk_Size;
+            int core_x = x % Chunk.CHUNKS_SIZE;
+            int core_y = y % Chunk.CHUNKS_SIZE;
 
             //if negatif, coords are inversed
-            if( core_x < 0 ) core_x = ChunkProxy.Chunk_Size + core_x;
-            if( core_y < 0 ) core_y = ChunkProxy.Chunk_Size + core_y;
+            if (core_x < 0) core_x = Chunk.CHUNKS_SIZE + core_x;
+            if (core_y < 0) core_y = Chunk.CHUNKS_SIZE + core_y;
 
             return chunk[ core_x, core_y ];
         }

@@ -136,7 +136,7 @@ namespace Phobos.Engine.View.Proxies.Entities
         {
             get{return color;}
             set { color = value ;}
-        }
+        }  
         #endregion 
 
         /**
@@ -186,13 +186,7 @@ namespace Phobos.Engine.View.Proxies.Entities
          */
         public virtual int Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            #region code de colorqtion te,porqire du centre
-            if (this == Scene.getInstance().CenterEntity) {
-                this.color = Color.Yellow;
-            } else {
-                this.color = new Color(new Vector4(0.8f, 0.8f, 0.8f, 1.0f));
-            }
-            #endregion
+            if (sprites.Count == 0) return 0;
 
             SpriteArea sprite_to_draw;
             //if cannot get the animation for the orientation, get the first one

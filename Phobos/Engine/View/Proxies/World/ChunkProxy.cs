@@ -8,12 +8,13 @@ using Phobos.Engine.View;
 using Phobos.Engine.View.Proxies;
 using Phobos.Engine.Models.World;
 
-namespace Phobos.Engine.View.Proxies.World {
-    class ChunkProxy {
+namespace Phobos.Engine.View.Proxies.World
+{
+    class ChunkProxy
+    {
         public Chunk refChunk;
-        public static int Chunk_Size = 30;
 
-        public CoreProxy[,] cores = new CoreProxy[ Chunk_Size, Chunk_Size ];
+        public CoreProxy[,] cores = new CoreProxy[Chunk.CHUNKS_SIZE, Chunk.CHUNKS_SIZE];
         private float x, y;
 
         #region mutator et acsessor
@@ -21,40 +22,48 @@ namespace Phobos.Engine.View.Proxies.World {
         public double Y { get; set; }
         #endregion
 
-        public ChunkProxy( float x, float y ) {
+        public ChunkProxy(float x, float y)
+        {
             this.x = x;
             this.y = y;
         }
 
         //le dit indexer
-        public CoreProxy this[ int x, int y ] {
-            get {
-                return cores[ x, y ];
+        public CoreProxy this[int x, int y]
+        {
+            get
+            {
+                return cores[x, y];
             }
-            set {
-                cores[ x, y ] = value;
+            set
+            {
+                cores[x, y] = value;
             }
         }
 
         /**
          * <summary>Ordre d'affichage en fonction de l'orientation de la scene</summary>
          */
-        public int Draw( SpriteBatch sb, GameTime gameTime ) {
+        public int Draw(SpriteBatch sb, GameTime gameTime)
+        {
             int count_sprite = 0;
-            for( int x = 0 ; x < Chunk_Size ; x++ ) {
-                for( int y = 0 ; y < Chunk_Size ; y++ ) {
-                    switch( Scene.getInstance().Orientation ) {
+            for (int x = 0; x < Chunk.CHUNKS_SIZE; x++)
+            {
+                for (int y = 0; y < Chunk.CHUNKS_SIZE; y++)
+                {
+                    switch (Scene.getInstance().Orientation)
+                    {
                         case Orientation.SE:
-                            count_sprite += cores[ x, y ].Draw( sb, gameTime );
+                            count_sprite += cores[x, y].Draw(sb, gameTime);
                             break;
                         case Orientation.SO:
-                            count_sprite += cores[ ( Chunk_Size - 1 ) - x, y ].Draw( sb, gameTime );
+                            count_sprite += cores[(Chunk.CHUNKS_SIZE - 1) - x, y].Draw(sb, gameTime);
                             break;
                         case Orientation.NE:
-                            count_sprite += cores[ x, ( Chunk_Size - 1 ) - y ].Draw( sb, gameTime );
+                            count_sprite += cores[x, (Chunk.CHUNKS_SIZE - 1) - y].Draw(sb, gameTime);
                             break;
                         case Orientation.NO:
-                            count_sprite += cores[ ( Chunk_Size - 1 ) - x, ( Chunk_Size - 1 ) - y ].Draw( sb, gameTime );
+                            count_sprite += cores[(Chunk.CHUNKS_SIZE - 1) - x, (Chunk.CHUNKS_SIZE - 1) - y].Draw(sb, gameTime);
                             break;
                     }
                 }
@@ -62,7 +71,8 @@ namespace Phobos.Engine.View.Proxies.World {
             return count_sprite;
         }
 
-        public void Update( GameTime gameTime ) {
+        public void Update(GameTime gameTime)
+        {
         }
 
         /**
@@ -71,21 +81,25 @@ namespace Phobos.Engine.View.Proxies.World {
          * Ordre de calcul en fonction de l'orientation de la scene pour que le plus proche element de la camera soit selectionné
          * </summary>
          */
-        public void CalculCenterEntity() {
-            for( int x = 0 ; x < Chunk_Size ; x++ ) {
-                for( int y = 0 ; y < Chunk_Size ; y++ ) {
-                    switch( Scene.getInstance().Orientation ) {
+        public void CalculCenterEntity()
+        {
+            for (int x = 0; x < Chunk.CHUNKS_SIZE; x++)
+            {
+                for (int y = 0; y < Chunk.CHUNKS_SIZE; y++)
+                {
+                    switch (Scene.getInstance().Orientation)
+                    {
                         case Orientation.SE:
-                            cores[ x, y ].checkCenter();
+                            cores[x, y].checkCenter();
                             break;
                         case Orientation.SO:
-                            cores[ ( Chunk_Size - 1 ) - x, y ].checkCenter();
+                            cores[(Chunk.CHUNKS_SIZE - 1) - x, y].checkCenter();
                             break;
                         case Orientation.NE:
-                            cores[ x, ( Chunk_Size - 1 ) - y ].checkCenter();
+                            cores[x, (Chunk.CHUNKS_SIZE - 1) - y].checkCenter();
                             break;
                         case Orientation.NO:
-                            cores[ ( Chunk_Size - 1 ) - x, ( Chunk_Size - 1 ) - y ].checkCenter();
+                            cores[(Chunk.CHUNKS_SIZE - 1) - x, (Chunk.CHUNKS_SIZE - 1) - y].checkCenter();
                             break;
                     }
 
@@ -98,10 +112,13 @@ namespace Phobos.Engine.View.Proxies.World {
          * Calcul le cliff a afficher pour tous les tiles
          * </summary>
          */
-        public void calculCliffs() {
-            for( int x = 0 ; x < Chunk_Size ; x++ ) {
-                for( int y = 0 ; y < Chunk_Size ; y++ ) {
-                    cores[ x, y ].calculCliffs();
+        public void calculCliffs()
+        {
+            for (int x = 0; x < Chunk.CHUNKS_SIZE; x++)
+            {
+                for (int y = 0; y < Chunk.CHUNKS_SIZE; y++)
+                {
+                    cores[x, y].calculCliffs();
                 }
             }
         }

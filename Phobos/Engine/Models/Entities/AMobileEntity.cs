@@ -20,7 +20,7 @@ namespace Phobos.Engine.Models.Entities {
             impulses = new List<AImpulse>();
             physics = PhysicsProperties.BasicBody;
         }
-
+        
         #endregion
     }
 }

@@ -59,9 +59,12 @@ namespace Phobos.Engine.View.Proxies.World {
 
             count_sprite += base.Draw( spriteBatch, gameTime );
 
+            //draw owned entities
             foreach( DrawableEntity ent in entities ) {
                 count_sprite += ent.Draw( spriteBatch, gameTime );
             }
+
+            //return sprite number
             return count_sprite;
         }
 

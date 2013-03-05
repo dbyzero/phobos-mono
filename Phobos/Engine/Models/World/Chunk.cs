@@ -8,7 +8,7 @@ using System.Text;
 namespace Phobos.Engine.Models.World {
     class Chunk {
         #region Fields & Properties
-        public const int CHUNKS_SIZE = 8;
+        public const int CHUNKS_SIZE = 30;
         public Map refMap;
         public Core[,] cores;
         public Vector2 location;
