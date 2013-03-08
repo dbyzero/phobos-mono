@@ -24,11 +24,100 @@ void ApplyAmbiantColor(inout float4 color : COLOR0, in float2 texCoord : TEXCOOR
 		color_list[12] = float4(0.027, 0.49, 0.102,1) ;		//greenpants
 		color_list[13] = float4(1,0,0,1) ;					//red
 		color_list[14] = float4(1,1,1,0.3) ;				//ghost
-
-		//unset colors
-		for(int i=15;i<255;i++) {
+		color_list[15] = float4(1,1,1,0) ;					//nothing
+		
+		//unseted colors
+		for(int i=16;i<255;i++) {
 			color_list[i] = float4(1,1,1,1) ; //unset
 		}
+
+		/*float4 light_color ;
+
+		//convert color.b || color.a to 16bits colors
+		bool lightbits_color[16] ;
+
+		int working_color_8to15 = color.b * 255 ;
+		int working_color_0to7 = color.a * 255 ;
+		int red_4bits	= 0;
+		int green_4bits	= 0; 
+		int blue_4bits  = 0; 
+		int alpha_4bits = 0;
+
+		lightbits_color[15] = (working_color_8to15 > 127) ? 1 : 0 ;
+		if(working_color_8to15 > 127) working_color_8to15 -= 128 ;
+		lightbits_color[14] = (working_color_8to15 > 63) ? 1 : 0 ;
+		if(working_color_8to15 > 63) working_color_8to15 -= 64 ;
+		lightbits_color[13] = (working_color_8to15 > 31) ? 1 : 0 ;
+		if(working_color_8to15 > 31) working_color_8to15 -= 32 ;
+		lightbits_color[12] = (working_color_8to15 > 15) ? 1 : 0 ;
+		if(working_color_8to15 > 15) working_color_8to15 -= 16 ;
+		lightbits_color[11] = (working_color_8to15 > 7) ? 1 : 0 ;
+		if(working_color_8to15 > 7) working_color_8to15 -= 8 ;
+		lightbits_color[10] = (working_color_8to15 > 3) ? 1 : 0 ;
+		if(working_color_8to15 > 3) working_color_8to15 -= 4 ;
+		lightbits_color[9] = (working_color_8to15 > 1) ? 1 : 0 ;
+		if(working_color_8to15 > 1) working_color_8to15 -= 2 ;
+		lightbits_color[8] = (working_color_8to15 > 0) ? 1 : 0 ;
+
+		lightbits_color[7] = (working_color_0to7 > 127) ? 1 : 0 ;
+		if(working_color_0to7 > 127) working_color_0to7 -= 128 ;
+		lightbits_color[6] = (working_color_0to7 > 63) ? 1 : 0 ;
+		if(working_color_0to7 > 63) working_color_0to7 -= 64 ;
+		lightbits_color[5] = (working_color_0to7 > 31) ? 1 : 0 ;
+		if(working_color_0to7 > 31) working_color_0to7 -= 32 ;
+		lightbits_color[4] = (working_color_0to7 > 15) ? 1 : 0 ;
+		if(working_color_0to7 > 15) working_color_0to7 -= 16 ;
+		lightbits_color[3] = (working_color_0to7 > 7) ? 1 : 0 ;
+		if(working_color_0to7 > 7) working_color_0to7 -= 8 ;
+		lightbits_color[2] = (working_color_0to7 > 3) ? 1 : 0 ;
+		if(working_color_0to7 > 3) working_color_0to7 -= 4 ;
+		lightbits_color[1] = (working_color_0to7 > 1) ? 1 : 0 ;
+		if(working_color_0to7 > 1) working_color_0to7 -= 2 ;
+		lightbits_color[0] = (working_color_0to7 > 0) ? 1 : 0 ;
+		
+		//make 4bits red from half of origin blue
+		red_4bits += (working_color_8to15 > 127) ? 8 : 0 ;
+		if(working_color_8to15 > 127) working_color_8to15 -= 128 ;
+		red_4bits += (working_color_8to15 > 63) ? 4 : 0 ;
+		if(working_color_8to15 > 63) working_color_8to15 -= 64 ;
+		red_4bits += (working_color_8to15 > 31) ? 2 : 0 ;
+		if(working_color_8to15 > 31) working_color_8to15 -= 32 ;
+		red_4bits += (working_color_8to15 > 15) ? 1 : 0 ;
+		if(working_color_8to15 > 31) working_color_8to15 -= 16 ;
+
+		//make 4bits green from half of origin blue
+		green_4bits += (working_color_8to15 > 7) ? 8 : 0 ;
+		if(working_color_8to15 > 7) working_color_8to15 -= 8 ;
+		green_4bits += (working_color_8to15 > 3) ? 4 : 0 ;
+		if(working_color_8to15 > 3) working_color_8to15 -= 4 ;
+		green_4bits += (working_color_8to15 > 1) ? 2 : 0 ;
+		if(working_color_8to15 > 1) working_color_8to15 -= 2 ;
+		green_4bits += (working_color_8to15 > 0) ? 1 : 0 ;
+		
+		//make 4bits blue from half of origin alpha
+		blue_4bits += (working_color_0to7 > 127) ? 8 : 0 ;
+		if(working_color_0to7 > 127) working_color_0to7 -= 128 ;
+		blue_4bits += (working_color_0to7 > 63) ? 4 : 0 ;
+		if(working_color_0to7 > 63) working_color_0to7 -= 64 ;
+		blue_4bits += (working_color_0to7 > 31) ? 2 : 0 ;
+		if(working_color_0to7 > 31) working_color_0to7 -= 32 ;
+		blue_4bits += (working_color_0to7 > 15) ? 1 : 0 ;
+		if(working_color_0to7 > 31) working_color_0to7 -= 16 ;
+
+		//make 4bits alpha from half of origin alpha
+		alpha_4bits += (working_color_0to7 > 7) ? 8 : 0 ;
+		if(working_color_0to7 > 7) working_color_0to7 -= 8 ;
+		alpha_4bits += (working_color_0to7 > 3) ? 4 : 0 ;
+		if(working_color_0to7 > 3) working_color_0to7 -= 4 ;
+		alpha_4bits += (working_color_0to7 > 1) ? 2 : 0 ;
+		if(working_color_0to7 > 1) working_color_0to7 -= 2 ;
+		alpha_4bits += (working_color_0to7 > 0) ? 1 : 0 ;
+
+		light_color.r = 255 * red_4bits/15 ;
+		light_color.b = 255 * green_4bits/15 ;
+		light_color.g = 255 * blue_4bits/15 ;
+		light_color.a = 255 * alpha_4bits/15 ;*/
+
 	
 		/*
 		 * hijack color desciption :
@@ -46,23 +135,22 @@ void ApplyAmbiantColor(inout float4 color : COLOR0, in float2 texCoord : TEXCOOR
 		 */
 		if(pixel_color.r > 0.5 && pixel_color.g == 0 && pixel_color.b > 0.5) {
 			pixel_color.g = pixel_color.r ; //put back green
-			float offset = min(15,floor(hijack_color.r*255.0)) ;
-			pixel_color *= color_list[offset] ;
-			/*pixel_color.r = hijack_color.r ;
-			pixel_color.g = hijack_color.r ;
-			pixel_color.b = hijack_color.r ;*/
+			pixel_color *= color_list[floor(min(15,hijack_color.a*255.0))] ;
 		}
 	
 		/*
 		 * if no red / >50% green / >50% blue
 		 * Recoloration cyan trig !!!
-		 */
 		if(pixel_color.r == 0 && pixel_color.g > 0.5 && pixel_color.b > 0.5) {
 			pixel_color.r = pixel_color.g ; //put back red
 			float offset = min(4,floor(hijack_color.g*255.0)) ;
 			pixel_color *= color_list[offset] ;
 		}
-		color = pixel_color * AmbiantColor;
+		 */
+		
+		hijack_color.a = 1 ;
+		color = pixel_color * AmbiantColor * hijack_color ;
+		
 	} else {
 		color = pixel_color ;
 	}

@@ -102,8 +102,8 @@ namespace Phobos.Engine
             deviceManager.PreferredBackBufferHeight = 640;
 
             //Limitation des refresh a 60 par seconde
-            //deviceManager.SynchronizeWithVerticalRetrace = false; //uncomment to got real FPS
-            IsFixedTimeStep = true;
+            deviceManager.SynchronizeWithVerticalRetrace = false; //uncomment to got real FPS
+            //IsFixedTimeStep = true;
             TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 13);
 
             deviceManager.ApplyChanges();

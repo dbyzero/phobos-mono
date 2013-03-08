@@ -111,7 +111,12 @@ namespace Phobos.Engine.View {
 
                     CoreProxy core = new CoreProxy(new Vector3(chunk_x, chunk_y, (float)(chunk_x / 2f + chunk_y / 3f)), 32, 16,
                                new Vector2(16, 8), text,
-                                Color.White
+                               new Color(
+                                   1.0f - (float)(chunk_x / 2f + chunk_y / 3f) / 25,
+                                   1.0f - (float)(chunk_x / 2f + chunk_y / 3f) / 25,
+                                   1.0f - (float)(chunk_x / 2f + chunk_y / 3f) / 25,
+                                   255
+                               ) 
                     );
                     core[Orientation.BL] = new SpriteArea(new Rectangle(96, 32, 32, 16), SpriteEffects.None);
                     core[Orientation.BR] = new SpriteArea(new Rectangle(96, 32, 32, 16), SpriteEffects.FlipHorizontally);
@@ -121,6 +126,7 @@ namespace Phobos.Engine.View {
                     testChunk[chunk_x, chunk_y] = core ;
                     calculPositionsEntitiesHandler += core.calculateScreenRect;
 
+                    //animated sprite
                     if ((chunk_x == Chunk.CHUNKS_SIZE - 1) && (chunk_y == Chunk.CHUNKS_SIZE - 1))
                     {
                         AnimatedEntity animated_entity = new AnimatedEntity(
@@ -156,6 +162,7 @@ namespace Phobos.Engine.View {
                         calculPositionsEntitiesHandler += animated_entity.calculateScreenRect;
                     }
 
+                    //fontain
                     if ((chunk_x == 0) && (chunk_y == 0))
                     {
 
@@ -178,6 +185,8 @@ namespace Phobos.Engine.View {
                         core.addEntity(testContainable);
                         calculPositionsEntitiesHandler += testContainable.calculateScreenRect;
                     }
+
+                    //dwarfs
                     else if (((chunk_x % 4) == 0) && ((chunk_y % 5) == 0))
                     {
 
@@ -185,18 +194,40 @@ namespace Phobos.Engine.View {
                          * color is hijack, it contain refill color (magenta and cyan) + light and light intensity
                          * offset colors are listed in shader (0-4 : hair, 5-14 : clothes, 15-255 free)
                          * */
-                        Color hijack_color = new Color(rand.Next(5, 13), rand.Next(0, 4), 255, 255);
+                        Color hijack_color = new Color(
+                            255 - (int)(255 * (chunk_x / 2f + chunk_y / 3f) / 25),
+                            255 - (int)(255 * (chunk_x / 2f + chunk_y / 3f) / 25),
+                            255 - (int)(255 * (chunk_x / 2f + chunk_y / 3f) / 25),
+                            (int)rand.Next(5, 13)
+                        );
 
-                        DrawableEntity testGuys = new DrawableEntity(
+                        DrawableEntity testGuysBody = new DrawableEntity(
                           new Vector3(chunk_x, chunk_y, (float)(chunk_x / 2f + chunk_y / 3f)), 32, 32,
                           new Vector2(16, 27), text,
                           hijack_color, Orientation.S
                         );
 
-                        testGuys[Orientation.BL] = new SpriteArea(new Rectangle(128, 32, 32, 32), SpriteEffects.None);
-                        testGuys[Orientation.BR] = new SpriteArea(new Rectangle(128, 32, 32, 32), SpriteEffects.FlipHorizontally);
-                        core.addEntity(testGuys);
-                        calculPositionsEntitiesHandler += testGuys.calculateScreenRect;
+                        testGuysBody[Orientation.BL] = new SpriteArea(new Rectangle(128, 32, 32, 32), SpriteEffects.None);
+                        testGuysBody[Orientation.BR] = new SpriteArea(new Rectangle(128, 32, 32, 32), SpriteEffects.FlipHorizontally);
+                        core.addEntity(testGuysBody);
+                        calculPositionsEntitiesHandler += testGuysBody.calculateScreenRect;
+
+                        hijack_color = new Color(
+                            255 - (int)(255 * (chunk_x / 2f + chunk_y / 3f) / 25),
+                            255 - (int)(255 * (chunk_x / 2f + chunk_y / 3f) / 25),
+                            255 - (int)(255 * (chunk_x / 2f + chunk_y / 3f) / 25),
+                            (int)rand.Next(0, 4)
+                        );
+                        DrawableEntity testGuysHead = new DrawableEntity(
+                          new Vector3(chunk_x, chunk_y, (float)(chunk_x / 2f + chunk_y / 3f)), 32, 32,
+                          new Vector2(16, 27), text,
+                          hijack_color, Orientation.S
+                        );
+
+                        testGuysHead[Orientation.BL] = new SpriteArea(new Rectangle((chunk_y % 2 == 0) ? 128 : 160, 64, 32, 32), SpriteEffects.None);
+                        testGuysHead[Orientation.BR] = new SpriteArea(new Rectangle((chunk_y % 2 == 0) ? 128 : 160, 64, 32, 32), SpriteEffects.FlipHorizontally);
+                        core.addEntity(testGuysHead);
+                        calculPositionsEntitiesHandler += testGuysHead.calculateScreenRect;
                     }
                     chunk_x++;
                 }
