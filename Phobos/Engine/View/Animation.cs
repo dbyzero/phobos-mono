@@ -33,7 +33,7 @@ namespace Phobos.Engine.View {
                 getCurrentFrame( gameTime ).Zone,
                 ent.Color,
                 ent.Rotation,
-                Scene.getInstance().Camera.Position,
+                Scene.GetInstance().Camera.Position,
                 spriteEffect,
                 ent.Layer
                 );

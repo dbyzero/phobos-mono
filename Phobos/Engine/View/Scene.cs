@@ -9,8 +9,9 @@ using Phobos.Engine.View.Proxies.Entities;
 using Microsoft.Xna.Framework.Input;
 using Phobos.Engine.Models.World;
 using Phobos.Models.World.Generators;
+using Phobos.Engine.Models.Light;
 
-public delegate void CalculEntitiesHandler();
+public delegate void CalculsEntitiesHandler();
 
 namespace Phobos.Engine.View {
     /**
@@ -18,11 +19,11 @@ namespace Phobos.Engine.View {
      */
     class Scene : DrawableGameComponent {
         //delegate utiliser pour recalculer toute les positions des entities, appeler en zoom et rotation de camera
-        public CalculEntitiesHandler calculPositionsEntitiesHandler;
+        public CalculsEntitiesHandler CalculPositionsEntitiesHandler;
 
         //la scene static, utilisation du simgleton
         static Scene scene = null;
-        static public Scene getInstance() {
+        static public Scene GetInstance() {
             if( scene == null ) {
                 scene = new Scene();
             }
@@ -36,6 +37,9 @@ namespace Phobos.Engine.View {
         private MouseState prevMouseState;
         private Vector2 mouveMovement;
         private DrawableEntity centerEntity; //utiliser lors de la rotation de la camera
+
+        //FOR TEST PURPOSE
+        FixedLight test_light;
 
         #region mutator et gettor
         public Effect ShaderEffect { set; get; }
@@ -83,7 +87,7 @@ namespace Phobos.Engine.View {
             NoonColor = new Vector4(1.0f, 1.0f, 0.95f, 1.0f);
             NightColor = new Vector4(0.2557f, 0.29f, 0.42f, 1.0f);
             EveningColor = new Vector4(0.75f, 0.49f, 0.36f, 1.0f);
-            
+
             ConvergeColor = AmbiantColor = NoonColor;
 
             #region Test
@@ -109,14 +113,9 @@ namespace Phobos.Engine.View {
                 while (chunk_x < Chunk.CHUNKS_SIZE)
                 {
 
-                    CoreProxy core = new CoreProxy(new Vector3(chunk_x, chunk_y, (float)(chunk_x / 2f + chunk_y / 3f)), 32, 16,
+                    CoreProxy core = new CoreProxy(new Vector3(chunk_x, chunk_y, 7), 32, 16,
                                new Vector2(16, 8), text,
-                               new Color(
-                                   1.0f - (float)(chunk_x / 2f + chunk_y / 3f) / 25,
-                                   1.0f - (float)(chunk_x / 2f + chunk_y / 3f) / 25,
-                                   1.0f - (float)(chunk_x / 2f + chunk_y / 3f) / 25,
-                                   255
-                               ) 
+                               new Color(0,0,0,1)  
                     );
                     core[Orientation.BL] = new SpriteArea(new Rectangle(96, 32, 32, 16), SpriteEffects.None);
                     core[Orientation.BR] = new SpriteArea(new Rectangle(96, 32, 32, 16), SpriteEffects.FlipHorizontally);
@@ -124,15 +123,15 @@ namespace Phobos.Engine.View {
                     core[Orientation.TL] = new SpriteArea(new Rectangle(96, 32, 32, 16), SpriteEffects.FlipHorizontally);
 
                     testChunk[chunk_x, chunk_y] = core ;
-                    calculPositionsEntitiesHandler += core.calculateScreenRect;
+                    CalculPositionsEntitiesHandler += core.calculateScreenRect;
 
                     //animated sprite
                     if ((chunk_x == Chunk.CHUNKS_SIZE - 1) && (chunk_y == Chunk.CHUNKS_SIZE - 1))
                     {
                         AnimatedEntity animated_entity = new AnimatedEntity(
-                            new Vector3(chunk_x, chunk_y, (float)(chunk_x / 2f + chunk_y / 3f)),
+                            new Vector3(chunk_x, chunk_y, 7),
                             32, 32, new Vector2(16, 27),
-                            text, Color.White, Orientation.S);
+                            text, new Color(0,0,0,1) , Orientation.S);
 
                         animated_entity[Orientation.BR] = new Animation(text, SpriteEffects.FlipHorizontally);
                         animated_entity[Orientation.BR].addFrame(new Rectangle(32, 0, 32, 32), 500);
@@ -159,7 +158,7 @@ namespace Phobos.Engine.View {
                         animated_entity[Orientation.TL].addFrame(new Rectangle(160, 0, 32, 32), 500);
 
                         core.addEntity(animated_entity);
-                        calculPositionsEntitiesHandler += animated_entity.calculateScreenRect;
+                        CalculPositionsEntitiesHandler += animated_entity.calculateScreenRect;
                     }
 
                     //fontain
@@ -167,23 +166,23 @@ namespace Phobos.Engine.View {
                     {
 
                         DrawableEntity testFontain = new DrawableEntity(
-                            new Vector3(chunk_x, chunk_y, (float)(chunk_x / 2f + chunk_y / 3f)), 27, 34,
+                            new Vector3(chunk_x, chunk_y, 7), 27, 34,
                             new Vector2(13, 31), text2,
-                            Color.White, Orientation.S
+                            new Color(0,0,0,1) , Orientation.S
                         );
                         testFontain[Orientation.BL] = new SpriteArea(new Rectangle(344, 714, 27, 34), SpriteEffects.None);
 
                         core.addEntity(testFontain);
-                        calculPositionsEntitiesHandler += testFontain.calculateScreenRect;
+                        CalculPositionsEntitiesHandler += testFontain.calculateScreenRect;
 
                         DrawableEntity testContainable = new DrawableEntity(
-                            new Vector3(chunk_x, chunk_y, (float)(chunk_x / 2f + chunk_y / 3f + 2.2f)), 32, 32,
+                            new Vector3(chunk_x, chunk_y, (float)9f), 32, 32,
                             new Vector2(16, 24), text2,
-                            Color.White, Orientation.S
+                            new Color(0,0,0,1) , Orientation.S
                         );
                         testContainable[Orientation.BL] = new SpriteArea(new Rectangle(205, 136, 32, 32), SpriteEffects.None);
                         core.addEntity(testContainable);
-                        calculPositionsEntitiesHandler += testContainable.calculateScreenRect;
+                        CalculPositionsEntitiesHandler += testContainable.calculateScreenRect;
                     }
 
                     //dwarfs
@@ -195,14 +194,15 @@ namespace Phobos.Engine.View {
                          * offset colors are listed in shader (0-4 : hair, 5-14 : clothes, 15-255 free)
                          * */
                         Color hijack_color = new Color(
-                            255 - (int)(255 * (chunk_x / 2f + chunk_y / 3f) / 25),
-                            255 - (int)(255 * (chunk_x / 2f + chunk_y / 3f) / 25),
-                            255 - (int)(255 * (chunk_x / 2f + chunk_y / 3f) / 25),
+                            0,
+                            0,
+                            0,
                             (int)rand.Next(5, 13)
                         );
 
+                        //body
                         DrawableEntity testGuysBody = new DrawableEntity(
-                          new Vector3(chunk_x, chunk_y, (float)(chunk_x / 2f + chunk_y / 3f)), 32, 32,
+                          new Vector3(chunk_x, chunk_y, 7), 32, 32,
                           new Vector2(16, 27), text,
                           hijack_color, Orientation.S
                         );
@@ -210,24 +210,25 @@ namespace Phobos.Engine.View {
                         testGuysBody[Orientation.BL] = new SpriteArea(new Rectangle(128, 32, 32, 32), SpriteEffects.None);
                         testGuysBody[Orientation.BR] = new SpriteArea(new Rectangle(128, 32, 32, 32), SpriteEffects.FlipHorizontally);
                         core.addEntity(testGuysBody);
-                        calculPositionsEntitiesHandler += testGuysBody.calculateScreenRect;
+                        CalculPositionsEntitiesHandler += testGuysBody.calculateScreenRect;
 
                         hijack_color = new Color(
-                            255 - (int)(255 * (chunk_x / 2f + chunk_y / 3f) / 25),
-                            255 - (int)(255 * (chunk_x / 2f + chunk_y / 3f) / 25),
-                            255 - (int)(255 * (chunk_x / 2f + chunk_y / 3f) / 25),
+                            0,
+                            0,
+                            0,
                             (int)rand.Next(0, 4)
                         );
                         DrawableEntity testGuysHead = new DrawableEntity(
-                          new Vector3(chunk_x, chunk_y, (float)(chunk_x / 2f + chunk_y / 3f)), 32, 32,
-                          new Vector2(16, 27), text,
+                          new Vector3(chunk_x, chunk_y, 7), 32, 32,
+                          new Vector2(16, (chunk_y % 2 == 0) ? 27 : 30), text,
                           hijack_color, Orientation.S
                         );
 
+                        //head
                         testGuysHead[Orientation.BL] = new SpriteArea(new Rectangle((chunk_y % 2 == 0) ? 128 : 160, 64, 32, 32), SpriteEffects.None);
                         testGuysHead[Orientation.BR] = new SpriteArea(new Rectangle((chunk_y % 2 == 0) ? 128 : 160, 64, 32, 32), SpriteEffects.FlipHorizontally);
                         core.addEntity(testGuysHead);
-                        calculPositionsEntitiesHandler += testGuysHead.calculateScreenRect;
+                        CalculPositionsEntitiesHandler += testGuysHead.calculateScreenRect;
                     }
                     chunk_x++;
                 }
@@ -247,11 +248,11 @@ namespace Phobos.Engine.View {
                 {
                     CoreProxy core = new CoreProxy(new Vector3(i, j + Chunk.CHUNKS_SIZE, 0), 32, 16,
                                 new Vector2(16, 8), text,
-                                Color.White
+                                new Color(0,0,0,1) 
                     );
                     core[Orientation.BL] = new SpriteArea(new Rectangle(96, 64, 32, 16), SpriteEffects.None);
                     testChunk2[i, j] = core;
-                    calculPositionsEntitiesHandler += core.calculateScreenRect;
+                    CalculPositionsEntitiesHandler += core.calculateScreenRect;
                     i++;
                 }
                 j++;
@@ -269,11 +270,11 @@ namespace Phobos.Engine.View {
                 {
                     CoreProxy core = new CoreProxy(new Vector3(i + Chunk.CHUNKS_SIZE, j, 0), 32, 16,
                                 new Vector2(16, 8), text,
-                                Color.White
+                                new Color(0,0,0,1) 
                     );
                     core[Orientation.BL] = new SpriteArea(new Rectangle(96, 64, 32, 16), SpriteEffects.None);
                     testChunk3[i, j] = core;
-                    calculPositionsEntitiesHandler += core.calculateScreenRect;
+                    CalculPositionsEntitiesHandler += core.calculateScreenRect;
                     i++;
                 }
                 j++;
@@ -282,7 +283,7 @@ namespace Phobos.Engine.View {
             Chunks[1][0] = testChunk3;
 
             //calcul position and center
-            calculPositionsEntitiesHandler();
+            CalculPositionsEntitiesHandler();
             CalculCenterEntity();
 
             //eau 0,-1
@@ -295,11 +296,11 @@ namespace Phobos.Engine.View {
                 {
                     CoreProxy core = new CoreProxy(new Vector3(i, j - Chunk.CHUNKS_SIZE, 0), 32, 16,
                                 new Vector2(16, 8), text,
-                                Color.White
+                                new Color(0,0,0,1) 
                     );
                     core[Orientation.BL] = new SpriteArea(new Rectangle(96, 64, 32, 16), SpriteEffects.None);
                     testChunk4[i, j] = core ;
-                    calculPositionsEntitiesHandler += core.calculateScreenRect;
+                    CalculPositionsEntitiesHandler += core.calculateScreenRect;
                     i++;
                 }
                 j++;
@@ -316,11 +317,11 @@ namespace Phobos.Engine.View {
                 {
                     CoreProxy core = new CoreProxy(new Vector3(i - Chunk.CHUNKS_SIZE, j, 0), 32, 16,
                                 new Vector2(16, 8), text,
-                                Color.White
+                                new Color(0,0,0,1) 
                     );
                     core[Orientation.BL] = new SpriteArea(new Rectangle(96, 64, 32, 16), SpriteEffects.None);
                     testChunk5[i, j] =  core;
-                    calculPositionsEntitiesHandler += core.calculateScreenRect;
+                    CalculPositionsEntitiesHandler += core.calculateScreenRect;
                     i++;
                 }
                 j++;
@@ -339,7 +340,7 @@ namespace Phobos.Engine.View {
                 {
                     CoreProxy core = new CoreProxy(new Vector3(i - Chunk.CHUNKS_SIZE, j - Chunk.CHUNKS_SIZE, 0), 32, 16,
                                 new Vector2(16, 8), text,
-                                Color.White
+                                new Color(0,0,0,1) 
                     );
                     if (((i % 2) == 0) && ((j % 2) == 0))
                     {
@@ -347,18 +348,18 @@ namespace Phobos.Engine.View {
                         DrawableEntity water = new DrawableEntity(
                             new Vector3(i - Chunk.CHUNKS_SIZE, j - Chunk.CHUNKS_SIZE, 0), 34, 21,
                             new Vector2(17, 20), text2,
-                            Color.White, Orientation.S
+                            new Color(0,0,0,1) , Orientation.S
                         );
                         water[Orientation.BL] = new SpriteArea(new Rectangle(307, 726, 34, 21), SpriteEffects.None);
                         water[Orientation.BR] = new SpriteArea(new Rectangle(307, 726, 34, 21), SpriteEffects.FlipHorizontally);
                         water[Orientation.TL] = new SpriteArea(new Rectangle(307, 726, 34, 21), SpriteEffects.None);
                         water[Orientation.TR] = new SpriteArea(new Rectangle(307, 726, 34, 21), SpriteEffects.FlipHorizontally);
                         core.addEntity(water);
-                        calculPositionsEntitiesHandler += water.calculateScreenRect;
+                        CalculPositionsEntitiesHandler += water.calculateScreenRect;
                     }
                     core[Orientation.BL] = new SpriteArea(new Rectangle(96, 64, 32, 16), SpriteEffects.None);
                     testChunk6[i, j] = core;
-                    calculPositionsEntitiesHandler += core.calculateScreenRect;
+                    CalculPositionsEntitiesHandler += core.calculateScreenRect;
                     i++;
                 }
                 j++;
@@ -376,11 +377,11 @@ namespace Phobos.Engine.View {
                 {
                     CoreProxy core = new CoreProxy(new Vector3(i + Chunk.CHUNKS_SIZE, j - Chunk.CHUNKS_SIZE, 0), 32, 16,
                                 new Vector2(16, 8), text,
-                                Color.White
+                                new Color(0,0,0,1) 
                     );
                     core[Orientation.BL] = new SpriteArea(new Rectangle(96, 64, 32, 16), SpriteEffects.None);
                     testChunk7[i, j] = core;
-                    calculPositionsEntitiesHandler += core.calculateScreenRect;
+                    CalculPositionsEntitiesHandler += core.calculateScreenRect;
                     i++;
                 }
                 j++;
@@ -398,11 +399,11 @@ namespace Phobos.Engine.View {
                 {
                     CoreProxy core = new CoreProxy(new Vector3(i - Chunk.CHUNKS_SIZE, j + Chunk.CHUNKS_SIZE, 0), 32, 16,
                                 new Vector2(16, 8), text,
-                                Color.White
+                                new Color(0,0,0,1) 
                     );
                     core[Orientation.BL] = new SpriteArea(new Rectangle(96, 64, 32, 16), SpriteEffects.None);
                     testChunk8[i, j] =  core;
-                    calculPositionsEntitiesHandler += core.calculateScreenRect;
+                    CalculPositionsEntitiesHandler += core.calculateScreenRect;
                     i++;
                 }
                 j++;
@@ -420,11 +421,11 @@ namespace Phobos.Engine.View {
                 {
                     CoreProxy core = new CoreProxy(new Vector3(i + Chunk.CHUNKS_SIZE, j + Chunk.CHUNKS_SIZE, 0), 32, 16,
                                 new Vector2(16, 8), text,
-                                Color.White
+                                new Color(0,0,0,1) 
                     );
                     core[Orientation.BL] = new SpriteArea(new Rectangle(96, 64, 32, 16), SpriteEffects.None);
                     testChunk9[i, j] =  core;
-                    calculPositionsEntitiesHandler += core.calculateScreenRect;
+                    CalculPositionsEntitiesHandler += core.calculateScreenRect;
                     i++;
                 }
                 j++;
@@ -435,17 +436,29 @@ namespace Phobos.Engine.View {
             #endregion
 
             //calcul position and center
-            calculPositionsEntitiesHandler() ;
+            CalculPositionsEntitiesHandler() ;
             CalculCenterEntity();
+
+            //light
+            test_light = new FixedLight(14, new Vector3(15, 15, 7), new Color(0.5f,0.5f,0.5f,1f));
+            test_light.RegisterCoreInTheLight();
+
         }
 
         public override void Draw( GameTime gameTime ) {
             int count_sprite = 0;
 
             ShaderEffect.Parameters["AmbiantColor"].SetValue(AmbiantColor);
-            spriteBatch.Begin( SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, ShaderEffect );
+            spriteBatch.Begin( 
+                SpriteSortMode.Deferred, 
+                BlendState.AlphaBlend, 
+                SamplerState.PointWrap, 
+                DepthStencilState.Default, 
+                RasterizerState.CullNone, 
+                ShaderEffect 
+            );
             /** Browse layer throw camera depth **/
-            switch( Scene.getInstance().Orientation ) {
+            switch( Scene.GetInstance().Orientation ) {
                 //Calcul pour SE
                 case Orientation.SE:
                     foreach( var chunks_row in Chunks.Values ) {
@@ -503,19 +516,19 @@ namespace Phobos.Engine.View {
             }
 
             if( Keyboard.GetState().IsKeyDown( Keys.F1 ) ) {
-                Scene.getInstance().Camera.turnCamera( Orientation.SE );
+                Scene.GetInstance().Camera.turnCamera( Orientation.SE );
             }
 
             if( Keyboard.GetState().IsKeyDown( Keys.F2 ) ) {
-                Scene.getInstance().Camera.turnCamera( Orientation.SO );
+                Scene.GetInstance().Camera.turnCamera( Orientation.SO );
             }
 
             if( Keyboard.GetState().IsKeyDown( Keys.F3 ) ) {
-                Scene.getInstance().Camera.turnCamera( Orientation.NO );
+                Scene.GetInstance().Camera.turnCamera( Orientation.NO );
             }
 
             if( Keyboard.GetState().IsKeyDown( Keys.F4 ) ) {
-                Scene.getInstance().Camera.turnCamera( Orientation.NE );
+                Scene.GetInstance().Camera.turnCamera( Orientation.NE );
             }
 
             if( Mouse.GetState().ScrollWheelValue != prevMouseState.ScrollWheelValue ) {
@@ -555,7 +568,7 @@ namespace Phobos.Engine.View {
         public void CalculCenterEntity() {
 
             /** Browse layer throw camera depth **/
-            switch( Scene.getInstance().Orientation ) {
+            switch( Scene.GetInstance().Orientation ) {
                 //Calcul pour SE
                 case Orientation.SE:
                     foreach( var chunks_row in Chunks.Values ) {
@@ -617,7 +630,7 @@ namespace Phobos.Engine.View {
             return true;
         }
 
-        public CoreProxy getCore( int x, int y ) {
+        public CoreProxy GetCore( int x, int y ) {
 
             int chunk_x = x / Chunk.CHUNKS_SIZE;
             int chunk_y = y / Chunk.CHUNKS_SIZE;

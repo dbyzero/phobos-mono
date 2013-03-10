@@ -34,7 +34,7 @@ namespace Phobos.Engine.View
                     /* redim sprites if coeff change */
                     if (prevCoefficient != coefficient)
                     {
-                        Scene.getInstance().calculPositionsEntitiesHandler() ;
+                        Scene.GetInstance().CalculPositionsEntitiesHandler() ;
                     }
             }
         }
@@ -70,7 +70,7 @@ namespace Phobos.Engine.View
         public void move(Vector2 shift)
         {
             Position += shift;
-            Scene.getInstance().CalculCenterEntity(); ;
+            Scene.GetInstance().CalculCenterEntity(); ;
         }
 
         /**
@@ -79,7 +79,7 @@ namespace Phobos.Engine.View
          * </summary>
          */
         public Orientation getLookDirectionFromOrientation(Orientation orient) {
-            switch (Scene.getInstance().Orientation) {
+            switch (Scene.GetInstance().Orientation) {
                 case Orientation.SE:
                     switch (orient)
                     {
@@ -139,24 +139,24 @@ namespace Phobos.Engine.View
 
         public void turnCamera(Orientation orient)
         {
-            if (Scene.getInstance().Orientation != orient)
+            if (Scene.GetInstance().Orientation != orient)
             {
                 //turn scene
-                Scene.getInstance().Orientation = orient;
+                Scene.GetInstance().Orientation = orient;
 
                 //recalcule tiles position
-                Scene.getInstance().calculPositionsEntitiesHandler();
+                Scene.GetInstance().CalculPositionsEntitiesHandler();
 
                 //calcule the vector to keep the same center, la position est divisé par le coeff pour satisfaire la vierge marie des transformations.
                 Vector2 shift_vector;
-                shift_vector.X = Scene.getInstance().Camera.Width / 2 - (Scene.getInstance().CenterEntity.ScreenRect.X / Scene.getInstance().Camera.Coefficient - Scene.getInstance().Camera.Position.X);
-                shift_vector.Y = Scene.getInstance().Camera.Height / 2 - (Scene.getInstance().CenterEntity.ScreenRect.Y / Scene.getInstance().Camera.Coefficient - Scene.getInstance().Camera.Position.Y);
+                shift_vector.X = Scene.GetInstance().Camera.Width / 2 - (Scene.GetInstance().CenterEntity.ScreenRect.X / Scene.GetInstance().Camera.Coefficient - Scene.GetInstance().Camera.Position.X);
+                shift_vector.Y = Scene.GetInstance().Camera.Height / 2 - (Scene.GetInstance().CenterEntity.ScreenRect.Y / Scene.GetInstance().Camera.Coefficient - Scene.GetInstance().Camera.Position.Y);
 
                 //move the sceEEEeeene
-                Scene.getInstance().Camera.Position -= shift_vector;
+                Scene.GetInstance().Camera.Position -= shift_vector;
 
                 //recalcul new center (normally the same one)
-                Scene.getInstance().CalculCenterEntity();
+                Scene.GetInstance().CalculCenterEntity();
             }
             
         }

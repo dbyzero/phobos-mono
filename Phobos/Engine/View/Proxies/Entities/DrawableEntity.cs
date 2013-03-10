@@ -147,35 +147,35 @@ namespace Phobos.Engine.View.Proxies.Entities
          */
         public void calculateScreenRect()
         {
-            switch (Scene.getInstance().Orientation)
+            switch (Scene.GetInstance().Orientation)
             {
                 //Calcul pour SE
                 case Orientation.SE :
-                    screenRect.X = (int)((X * 16 - Y * 16 - centerSprite.X) * Scene.getInstance().Camera.Coefficient);
-                    screenRect.Y = (int)((X * 8 + Y * 8 - Z * 16 - centerSprite.Y) * Scene.getInstance().Camera.Coefficient);
-                    screenRect.Width = (int)(Width * Scene.getInstance().Camera.Coefficient);
-                    screenRect.Height = (int)(Height * Scene.getInstance().Camera.Coefficient);
+                    screenRect.X = (int)((X * 16 - Y * 16 - centerSprite.X) * Scene.GetInstance().Camera.Coefficient);
+                    screenRect.Y = (int)((X * 8 + Y * 8 - Z * 16 - centerSprite.Y) * Scene.GetInstance().Camera.Coefficient);
+                    screenRect.Width = (int)(Width * Scene.GetInstance().Camera.Coefficient);
+                    screenRect.Height = (int)(Height * Scene.GetInstance().Camera.Coefficient);
                     break;
                 //Calcul pour SO
                 case Orientation.SO:
-                    screenRect.X = (int)((X * 16 + Y * 16 - centerSprite.X) * Scene.getInstance().Camera.Coefficient);
-                    screenRect.Y = (int)((Y * 8 - X * 8 - Z * 16 - centerSprite.Y) * Scene.getInstance().Camera.Coefficient);
-                    screenRect.Width = (int)(Width * Scene.getInstance().Camera.Coefficient);
-                    screenRect.Height = (int)(Height * Scene.getInstance().Camera.Coefficient);
+                    screenRect.X = (int)((X * 16 + Y * 16 - centerSprite.X) * Scene.GetInstance().Camera.Coefficient);
+                    screenRect.Y = (int)((Y * 8 - X * 8 - Z * 16 - centerSprite.Y) * Scene.GetInstance().Camera.Coefficient);
+                    screenRect.Width = (int)(Width * Scene.GetInstance().Camera.Coefficient);
+                    screenRect.Height = (int)(Height * Scene.GetInstance().Camera.Coefficient);
                     break;
                 //Calcul pour NO
                 case Orientation.NO:
-                    screenRect.X = (int)((Y * 16 - X * 16 - centerSprite.X) * Scene.getInstance().Camera.Coefficient);
-                    screenRect.Y = (int)((-1 * Y * 8 - X * 8 - Z * 16 - centerSprite.Y) * Scene.getInstance().Camera.Coefficient);
-                    screenRect.Width = (int)(Width * Scene.getInstance().Camera.Coefficient);
-                    screenRect.Height = (int)(Height * Scene.getInstance().Camera.Coefficient);
+                    screenRect.X = (int)((Y * 16 - X * 16 - centerSprite.X) * Scene.GetInstance().Camera.Coefficient);
+                    screenRect.Y = (int)((-1 * Y * 8 - X * 8 - Z * 16 - centerSprite.Y) * Scene.GetInstance().Camera.Coefficient);
+                    screenRect.Width = (int)(Width * Scene.GetInstance().Camera.Coefficient);
+                    screenRect.Height = (int)(Height * Scene.GetInstance().Camera.Coefficient);
                     break;
                 //Calcul pour NE
                 case Orientation.NE:
-                    screenRect.X = (int)((-1 * X * 16 - Y * 16 - centerSprite.X) * Scene.getInstance().Camera.Coefficient);
-                    screenRect.Y = (int)((X * 8 - Y * 8 - Z * 16 - centerSprite.Y) * Scene.getInstance().Camera.Coefficient);
-                    screenRect.Width = (int)(Width * Scene.getInstance().Camera.Coefficient);
-                    screenRect.Height = (int)(Height * Scene.getInstance().Camera.Coefficient);
+                    screenRect.X = (int)((-1 * X * 16 - Y * 16 - centerSprite.X) * Scene.GetInstance().Camera.Coefficient);
+                    screenRect.Y = (int)((X * 8 - Y * 8 - Z * 16 - centerSprite.Y) * Scene.GetInstance().Camera.Coefficient);
+                    screenRect.Width = (int)(Width * Scene.GetInstance().Camera.Coefficient);
+                    screenRect.Height = (int)(Height * Scene.GetInstance().Camera.Coefficient);
                     break;
             }
         }
@@ -186,11 +186,12 @@ namespace Phobos.Engine.View.Proxies.Entities
          */
         public virtual int Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
+            //si aucun sprite set, on n'affiche 0 sprite, obvious !
             if (sprites.Count == 0) return 0;
 
             SpriteArea sprite_to_draw;
             //if cannot get the animation for the orientation, get the first one
-            if (!sprites.TryGetValue(Scene.getInstance().Camera.getLookDirectionFromOrientation(Orientation), out sprite_to_draw))
+            if (!sprites.TryGetValue(Scene.GetInstance().Camera.getLookDirectionFromOrientation(Orientation), out sprite_to_draw))
             {
                 sprite_to_draw = sprites.Values.First();
             }
@@ -201,7 +202,7 @@ namespace Phobos.Engine.View.Proxies.Entities
                 sprite_to_draw.Rectangle,
                 color,
                 rotation,
-                Scene.getInstance().Camera.Position,
+                Scene.GetInstance().Camera.Position,
                 sprite_to_draw.SpriteEffect,
                 layer
                 );
@@ -224,15 +225,15 @@ namespace Phobos.Engine.View.Proxies.Entities
          */
         public virtual void checkCenter()
         {
-            if (ScreenRect.X > (Scene.getInstance().Camera.Width / 2 + Scene.getInstance().Camera.Position.X - Width / 2) * Scene.getInstance().Camera.Coefficient)
+            if (ScreenRect.X > (Scene.GetInstance().Camera.Width / 2 + Scene.GetInstance().Camera.Position.X - Width / 2) * Scene.GetInstance().Camera.Coefficient)
             {
-                if (ScreenRect.X < (Scene.getInstance().Camera.Width / 2 + Scene.getInstance().Camera.Position.X + Width / 2) * Scene.getInstance().Camera.Coefficient)
+                if (ScreenRect.X < (Scene.GetInstance().Camera.Width / 2 + Scene.GetInstance().Camera.Position.X + Width / 2) * Scene.GetInstance().Camera.Coefficient)
                 {
-                    if (ScreenRect.Y > (Scene.getInstance().Camera.Height / 2 + Scene.getInstance().Camera.Position.Y - Height / 2) * Scene.getInstance().Camera.Coefficient)
+                    if (ScreenRect.Y > (Scene.GetInstance().Camera.Height / 2 + Scene.GetInstance().Camera.Position.Y - Height / 2) * Scene.GetInstance().Camera.Coefficient)
                     {
-                        if (ScreenRect.Y < (Scene.getInstance().Camera.Height / 2 + Scene.getInstance().Camera.Position.Y + Height / 2) * Scene.getInstance().Camera.Coefficient)
+                        if (ScreenRect.Y < (Scene.GetInstance().Camera.Height / 2 + Scene.GetInstance().Camera.Position.Y + Height / 2) * Scene.GetInstance().Camera.Coefficient)
                         {
-                            Scene.getInstance().CenterEntity = this;
+                            Scene.GetInstance().CenterEntity = this;
                         }
                     }
                 }

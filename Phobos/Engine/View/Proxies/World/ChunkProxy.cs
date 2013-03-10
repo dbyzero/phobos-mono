@@ -51,7 +51,7 @@ namespace Phobos.Engine.View.Proxies.World
             {
                 for (int y = 0; y < Chunk.CHUNKS_SIZE; y++)
                 {
-                    switch (Scene.getInstance().Orientation)
+                    switch (Scene.GetInstance().Orientation)
                     {
                         case Orientation.SE:
                             count_sprite += cores[x, y].Draw(sb, gameTime);
@@ -87,7 +87,7 @@ namespace Phobos.Engine.View.Proxies.World
             {
                 for (int y = 0; y < Chunk.CHUNKS_SIZE; y++)
                 {
-                    switch (Scene.getInstance().Orientation)
+                    switch (Scene.GetInstance().Orientation)
                     {
                         case Orientation.SE:
                             cores[x, y].checkCenter();

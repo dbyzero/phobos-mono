@@ -20,7 +20,7 @@ void ApplyAmbiantColor(inout float4 color : COLOR0, in float2 texCoord : TEXCOOR
 		color_list[8] = float4(0.294, 0.459, 0.6,1) ;		//bluejeans
 		color_list[9] = float4(0.714, 0.439, 0.114,1) ;		//leather1
 		color_list[10] = float4(0.714, 0.243, 0.114,1) ;	//leather2
-		color_list[11] = float4(1, 1, 1,1) ;	//white
+		color_list[11] = float4(1, 1, 1,1) ;				//white
 		color_list[12] = float4(0.027, 0.49, 0.102,1) ;		//greenpants
 		color_list[13] = float4(1,0,0,1) ;					//red
 		color_list[14] = float4(1,1,1,0.3) ;				//ghost
@@ -149,8 +149,18 @@ void ApplyAmbiantColor(inout float4 color : COLOR0, in float2 texCoord : TEXCOOR
 		 */
 		
 		hijack_color.a = 1 ;
-		color = pixel_color * AmbiantColor * hijack_color ;
-		
+
+	/*	color.r = (1 - (1 - hijack_color.r) * (1 - color.r * AmbiantColor.r)) ;
+		color.g = (1 - (1 - hijack_color.g) * (1 - color.g * AmbiantColor.g)) ;
+		color.b = (1 - (1 - hijack_color.b) * (1 - color.b * AmbiantColor.b)) ;
+		color.a = 1 ;*/
+
+		color.r = min((1+hijack_color.r) * pixel_color.r,pixel_color.r) ;
+		color.g = min((1+hijack_color.g) * pixel_color.g,pixel_color.g) ;
+		color.b = min((1+hijack_color.b) * pixel_color.b,pixel_color.b) ;
+	    color = color * AmbiantColor ;
+	    color.a = 1 ;
+				
 	} else {
 		color = pixel_color ;
 	}
@@ -160,8 +170,7 @@ void ApplyAmbiantColor(inout float4 color : COLOR0, in float2 texCoord : TEXCOOR
 
 technique hit
 {
-
-	pass InvertColor
+	pass ApplyColor
 	{
 		PixelShader = compile ps_2_0 ApplyAmbiantColor();
 	}

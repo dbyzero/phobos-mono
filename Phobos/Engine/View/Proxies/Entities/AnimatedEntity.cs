@@ -41,7 +41,7 @@ namespace Phobos.Engine.View.Proxies.Entities
         {
             Animation anim_to_draw ;
             //if cannot get the animation for the orientation, get the first one
-            if (!anims.TryGetValue(Scene.getInstance().Camera.getLookDirectionFromOrientation(Orientation), out anim_to_draw))
+            if (!anims.TryGetValue(Scene.GetInstance().Camera.getLookDirectionFromOrientation(Orientation), out anim_to_draw))
 	        {
                 anim_to_draw = anims.Values.First();
             }

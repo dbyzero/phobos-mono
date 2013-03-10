@@ -43,14 +43,14 @@ namespace Phobos.Engine.View.Proxies.World {
                     SpriteSheet,
                     new Rectangle(
                         ScreenRect.X,
-                        ScreenRect.Y + (int) ( ( i - 1 ) * 16 * Scene.getInstance().Camera.Coefficient ),
-                        (int) ( 32 * Scene.getInstance().Camera.Coefficient ),
-                        (int) ( 32 * Scene.getInstance().Camera.Coefficient )
+                        ScreenRect.Y + (int) ( ( i - 1 ) * 16 * Scene.GetInstance().Camera.Coefficient ),
+                        (int) ( 32 * Scene.GetInstance().Camera.Coefficient ),
+                        (int) ( 32 * Scene.GetInstance().Camera.Coefficient )
                     ),
                     new Rectangle( 192, 64, 32, 32 ),
                     Color,
                     0f,
-                    Scene.getInstance().Camera.Position,
+                    Scene.GetInstance().Camera.Position,
                     SpriteEffects.None,
                     0.000001f
                 );
@@ -61,6 +61,7 @@ namespace Phobos.Engine.View.Proxies.World {
 
             //draw owned entities
             foreach( DrawableEntity ent in entities ) {
+                ent.Color = new Color(Color.R,Color.G,Color.B,ent.Color.A);
                 count_sprite += ent.Draw( spriteBatch, gameTime );
             }
 
@@ -79,26 +80,26 @@ namespace Phobos.Engine.View.Proxies.World {
         }
 
         public void calculCliffs() {
-            if( Scene.getInstance().IsLoadedCore( (int) X, (int) Y - 1 ) ) {
-                CliffN = (int) Math.Ceiling( Z - Scene.getInstance().getCore( (int) X, (int) Y - 1 ).Z );
+            if( Scene.GetInstance().IsLoadedCore( (int) X, (int) Y - 1 ) ) {
+                CliffN = (int) Math.Ceiling( Z - Scene.GetInstance().GetCore( (int) X, (int) Y - 1 ).Z );
             } else {
                 CliffN = (int) Math.Ceiling( Z - 0 );
             }
 
-            if( Scene.getInstance().IsLoadedCore( (int) X, (int) Y + 1 ) ) {
-                CliffS = (int) Math.Ceiling( Z - Scene.getInstance().getCore( (int) X, (int) Y + 1 ).Z );
+            if( Scene.GetInstance().IsLoadedCore( (int) X, (int) Y + 1 ) ) {
+                CliffS = (int) Math.Ceiling( Z - Scene.GetInstance().GetCore( (int) X, (int) Y + 1 ).Z );
             } else {
                 CliffS = (int) Math.Ceiling( Z - 0 );
             }
 
-            if( Scene.getInstance().IsLoadedCore( (int) X + 1, (int) Y ) ) {
-                CliffE = (int) Math.Ceiling( Z - Scene.getInstance().getCore( (int) X + 1, (int) Y ).Z );
+            if( Scene.GetInstance().IsLoadedCore( (int) X + 1, (int) Y ) ) {
+                CliffE = (int) Math.Ceiling( Z - Scene.GetInstance().GetCore( (int) X + 1, (int) Y ).Z );
             } else {
                 CliffE = (int) Math.Ceiling( Z - 0 );
             }
 
-            if( Scene.getInstance().IsLoadedCore( (int) X - 1, (int) Y ) ) {
-                CliffO = (int) Math.Ceiling( Z - Scene.getInstance().getCore( (int) X - 1, (int) Y ).Z );
+            if( Scene.GetInstance().IsLoadedCore( (int) X - 1, (int) Y ) ) {
+                CliffO = (int) Math.Ceiling( Z - Scene.GetInstance().GetCore( (int) X - 1, (int) Y ).Z );
             } else {
                 CliffO = (int) Math.Ceiling( Z - 0 );
             }
