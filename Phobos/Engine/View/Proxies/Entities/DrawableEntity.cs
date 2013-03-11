@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Phobos.Engine.View;
+using Phobos.Engine.Models.Light;
 
 namespace Phobos.Engine.View.Proxies.Entities
 {
@@ -42,7 +43,7 @@ namespace Phobos.Engine.View.Proxies.Entities
             this.height = height;
             this.centerSprite = center;
             this.spriteSheet = texture;
-            this.color = color;
+            this.color = SumColorLight = color;
             this.orientation = orientation;
         }
         #endregion
@@ -134,9 +135,17 @@ namespace Phobos.Engine.View.Proxies.Entities
 
         public Color Color
         {
-            get{return color;}
-            set { color = value ;}
-        }  
+            get { return color; }
+            set {
+                color = value;
+            }
+        }
+
+        public Color SumColorLight
+        {
+            get;
+            set;
+        } 
         #endregion 
 
         /**
@@ -195,17 +204,21 @@ namespace Phobos.Engine.View.Proxies.Entities
             {
                 sprite_to_draw = sprites.Values.First();
             }
-            
+                        
             spriteBatch.Draw(
                 SpriteSheet,
                 ScreenRect,
                 sprite_to_draw.Rectangle,
-                color,
+                SumColorLight,
                 rotation,
                 Scene.GetInstance().Camera.Position,
                 sprite_to_draw.SpriteEffect,
                 layer
                 );
+
+            //RAZ Color
+            SumColorLight = Color;
+
             return 1;
         }
 
@@ -244,6 +257,17 @@ namespace Phobos.Engine.View.Proxies.Entities
         public override string ToString()
         {
             return WorldPosition.ToString();
+        }
+
+        //used by Lights delegate
+        public virtual void applyLight(Color color)
+        {
+            SumColorLight = new Color(
+                SumColorLight.R + color.R,
+                SumColorLight.G + color.G,
+                SumColorLight.B + color.B,
+                SumColorLight.A
+            );
         }
     }
 }

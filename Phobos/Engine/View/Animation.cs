@@ -31,7 +31,7 @@ namespace Phobos.Engine.View {
                 spriteSheet,
                 ent.ScreenRect,
                 getCurrentFrame( gameTime ).Zone,
-                ent.Color,
+                ent.SumColorLight,
                 ent.Rotation,
                 Scene.GetInstance().Camera.Position,
                 spriteEffect,

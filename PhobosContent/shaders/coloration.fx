@@ -148,17 +148,23 @@ void ApplyAmbiantColor(inout float4 color : COLOR0, in float2 texCoord : TEXCOOR
 		}
 		 */
 		
-		hijack_color.a = 1 ;
+		/*hijack_color.a = 1 ;*/
 
-	/*	color.r = (1 - (1 - hijack_color.r) * (1 - color.r * AmbiantColor.r)) ;
-		color.g = (1 - (1 - hijack_color.g) * (1 - color.g * AmbiantColor.g)) ;
-		color.b = (1 - (1 - hijack_color.b) * (1 - color.b * AmbiantColor.b)) ;
-		color.a = 1 ;*/
+		//true apply color
+		//color.r = (1 - (1 - hijack_color.r) * (1 - color.r * AmbiantColor.r)) ;
+		//color.g = (1 - (1 - hijack_color.g) * (1 - color.g * AmbiantColor.g)) ;
+		//color.b = (1 - (1 - hijack_color.b) * (1 - color.b * AmbiantColor.b)) ;
+		//color.a = 1 ;
 
-		color.r = min((1+hijack_color.r) * pixel_color.r,pixel_color.r) ;
-		color.g = min((1+hijack_color.g) * pixel_color.g,pixel_color.g) ;
-		color.b = min((1+hijack_color.b) * pixel_color.b,pixel_color.b) ;
-	    color = color * AmbiantColor ;
+		//old java color
+		/*color.r = max(hijack_color.r*pixel_color.r,AmbiantColor.r*pixel_color.r) ;
+		color.g = max(hijack_color.g*pixel_color.g,AmbiantColor.g*pixel_color.g) ;
+		color.b = max(hijack_color.b*pixel_color.b,AmbiantColor.b*pixel_color.b) ;*/
+	
+		color.r = min(pixel_color.r * 3,hijack_color.r + AmbiantColor.r*pixel_color.r) ;
+		color.g = min(pixel_color.g * 3,hijack_color.g + AmbiantColor.g*pixel_color.g) ;
+		color.b = min(pixel_color.b * 3,hijack_color.b + AmbiantColor.b*pixel_color.b) ;
+
 	    color.a = 1 ;
 				
 	} else {

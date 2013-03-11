@@ -48,7 +48,7 @@ namespace Phobos.Engine.View.Proxies.World {
                         (int) ( 32 * Scene.GetInstance().Camera.Coefficient )
                     ),
                     new Rectangle( 192, 64, 32, 32 ),
-                    Color,
+                    SumColorLight,
                     0f,
                     Scene.GetInstance().Camera.Position,
                     SpriteEffects.None,
@@ -61,8 +61,9 @@ namespace Phobos.Engine.View.Proxies.World {
 
             //draw owned entities
             foreach( DrawableEntity ent in entities ) {
-                ent.Color = new Color(Color.R,Color.G,Color.B,ent.Color.A);
+                ent.Color = new Color(SumColorLight.R, SumColorLight.G, SumColorLight.B, ent.SumColorLight.A);
                 count_sprite += ent.Draw( spriteBatch, gameTime );
+                ent.SumColorLight = ent.Color;
             }
 
             //return sprite number
@@ -102,6 +103,14 @@ namespace Phobos.Engine.View.Proxies.World {
                 CliffO = (int) Math.Ceiling( Z - Scene.GetInstance().GetCore( (int) X - 1, (int) Y ).Z );
             } else {
                 CliffO = (int) Math.Ceiling( Z - 0 );
+            }
+        }
+
+        public override void applyLight(Color color) {
+            base.applyLight(color);
+            foreach (DrawableEntity ent in entities)
+            {
+                ent.applyLight(color);
             }
         }
     }
