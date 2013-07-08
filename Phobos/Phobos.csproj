@@ -48,6 +48,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <PlatformTarget>x86</PlatformTarget>
     <XnaCompressContent>false</XnaCompressContent>
+    <DocumentationFile>documentation.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>pdbonly</DebugType>
@@ -60,6 +61,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <PlatformTarget>x86</PlatformTarget>
     <XnaCompressContent>true</XnaCompressContent>
+    <DocumentationFile>documentation.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
@@ -114,17 +116,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Engine\Controllers\Entities\NamedEntities.cs" />
+    <Compile Include="Engine\Controllers\Entities\EntitiesController.cs" />
     <Compile Include="Engine\Controllers\Light\LightController.cs" />
     <Compile Include="Engine\Controllers\Motion\Model\ACollisionBoundary.cs" />
     <Compile Include="Engine\Controllers\Motion\Model\AImpulse.cs" />
     <Compile Include="Engine\Controllers\Motion\Model\PhysicsProperties.cs" />
     <Compile Include="Engine\Controllers\Motion\MotionController.cs" />
     <Compile Include="Engine\Gui\ALayerManager.cs" />
-    <Compile Include="Engine\Configurations\Keyboard\AKeyboardLayoutExtractor.cs" />
-    <Compile Include="Engine\Configurations\Keyboard\KeyboardConfiguration.cs" />
-    <Compile Include="Engine\Configurations\Keyboard\WindowsKeyboardExtractor.cs" />
-    <Compile Include="Engine\Configurations\PhobosConfigurationManager.cs" />
+    <Compile Include="Configurations\Keyboard\AKeyboardLayoutExtractor.cs" />
+    <Compile Include="Configurations\Keyboard\KeyboardConfiguration.cs" />
+    <Compile Include="Configurations\Keyboard\WindowsKeyboardExtractor.cs" />
+    <Compile Include="Configurations\PhobosConfigurationManager.cs" />
     <Compile Include="Engine\GameStates\Game\MainState.cs" />
     <Compile Include="Engine\Gui\GUIGlobalManager.cs" />
     <Compile Include="Engine\Gui\PWidgets\APContainer.cs" />
@@ -149,7 +151,7 @@
     <Compile Include="Engine\GameStates\GameStateManager.cs" />
     <Compile Include="Engine\GameStates\Menu\MenuGameState.cs" />
     <Compile Include="Engine\GameStates\UiDebug\UIDebugState.cs" />
-    <Compile Include="Engine\GraphicalHelpers.cs" />
+    <Compile Include="Engine\Services\GraphicalHelpers.cs" />
     <Compile Include="Engine\Gui\GUIStrataManager.cs" />
     <Compile Include="Engine\Gui\GUIStrata.cs" />
     <Compile Include="Engine\Gui\PWidgets\APButton.cs" />

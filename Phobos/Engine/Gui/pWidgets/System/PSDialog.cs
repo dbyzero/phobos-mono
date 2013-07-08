@@ -1,11 +1,10 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using Phobos.Engine.Content;
+using Phobos.Engine.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Phobos.Engine.Services;
 using Microsoft.Xna.Framework.Content;
 
 namespace Phobos.Engine.Gui.PWidgets.System {

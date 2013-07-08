@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using Phobos.Engine.Content;
 using Phobos.Engine.Services;
 using Microsoft.Xna.Framework.Content;
 using System.Collections.Generic;

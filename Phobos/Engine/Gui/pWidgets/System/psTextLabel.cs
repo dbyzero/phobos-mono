@@ -5,7 +5,6 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Phobos.Engine;
-using Phobos.Engine.Content;
 using Microsoft.Xna.Framework.Content;
 using Phobos.Engine.Gui.PWidgets.Events;
 using Phobos.Engine.Services;

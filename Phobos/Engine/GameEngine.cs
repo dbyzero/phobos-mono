@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,7 +19,6 @@ using Phobos.Engine.Gui;
 using Phobos.Engine.Gui.PWidgets;
 using Phobos.Engine.Gui.PWidgets.System;
 using Phobos.Engine.Gui.PWidgets.Events;
-using Phobos.Engine.Content;
 using Phobos.Engine.Inputs.MouseInput;
 using Phobos.Engine.GameStates;
 using Phobos.Engine.GameStates.Game;

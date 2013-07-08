@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 
-namespace Phobos.Engine.Content {
+namespace Phobos.Engine.Services {
     class ContentHelper{
 
         public static void Initialize() {

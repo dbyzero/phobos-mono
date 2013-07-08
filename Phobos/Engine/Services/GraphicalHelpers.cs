@@ -9,7 +9,7 @@ namespace Phobos.Engine {
     class GraphicalHelpers {
 
         /// <summary>
-        /// Remplis une zone destionation avec un texture source en utilisant un certaint spriteBatch.
+        /// Remplis une zone destionation avec un texture source en utilisant un certain spriteBatch.
         /// </summary>
         /// <param name="texture"></param>
         /// <param name="source"></param>
