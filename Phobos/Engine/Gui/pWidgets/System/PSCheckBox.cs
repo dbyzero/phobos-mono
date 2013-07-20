@@ -51,7 +51,7 @@ namespace Phobos.Engine.Gui.PWidgets.System {
                 }
             }
 
-            GameEngine.spriteBatch.Draw( spriteButton, new Rectangle( AbsoluteLocation.X, AbsoluteLocation.Y, 18, 18 ), _source, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f );
+            GameEngine.Instance.SpriteBatch.Draw(spriteButton, new Rectangle(AbsoluteLocation.X, AbsoluteLocation.Y, 18, 18), _source, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f);
         }
         #endregion
         #endregion

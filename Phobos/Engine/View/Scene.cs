@@ -11,7 +11,7 @@ using Phobos.Engine.Models.World;
 using Phobos.Models.World.Generators;
 using Phobos.Engine.Models.Light;
 using Phobos.Engine.Controllers.Light;
-using Phobos.tests;
+using Phobos.Test;
 
 public delegate void CalculsEntitiesHandler();
 
@@ -23,7 +23,7 @@ namespace Phobos.Engine.View {
         //delegate utiliser pour recalculer toute les positions des entities, appeler en zoom et rotation de camera
         public CalculsEntitiesHandler CalculPositionsEntitiesHandler;
 
-        //la scene static, utilisation du simgleton
+        //la scene static, utilisation du singleton
         static Scene scene = null;
         static public Scene GetInstance() {
             if( scene == null ) {
@@ -32,9 +32,8 @@ namespace Phobos.Engine.View {
             return scene;
         }
 
-        
- 	    private Camera camera = new Camera(-200,-500);
- 	    private Orientation orientation = Orientation.SO;
+ 	    private Camera camera;
+ 	    private Orientation orientation;
         private SpriteBatch spriteBatch;
         private MouseState prevMouseState;
         private Vector2 mouveMovement;
@@ -78,31 +77,41 @@ namespace Phobos.Engine.View {
 
         public override void Initialize() {
             base.Initialize();
-
-            /*********************
-             **** DEBUT TEST *****
-             *********************/
-            TestFillSceneLight.Apply(this);
-            /*********************
-             **** FIN TEST *****
-             *********************/
-
             spriteBatch = new SpriteBatch( GameEngine.Instance.GraphicsDevice );
+
+            SunriseColor = Color.White.ToVector4();
+            NoonColor = Color.White.ToVector4();
+            NightColor = Color.White.ToVector4();
+            EveningColor = Color.White.ToVector4();
+            AmbiantColor = Color.White.ToVector4();
+
+            camera = new Camera();
+            orientation = Orientation.SO;
+            ShaderEffect = null ;
+                        
+            //calcul position and center
+            if (CalculPositionsEntitiesHandler != null)
+            {
+                CalculPositionsEntitiesHandler();
+            }
+
+            CalculCenterEntity();
+            configuration();
+        }
+
+        /// <summary>
+        /// Todo : make it by a conf file or something else
+        /// </summary>
+        private void configuration()
+        {
             ShaderEffect = GameEngine.Instance.Content.Load<Effect>(@"shaders\coloration");
-            
+
             SunriseColor = new Vector4(0.74f, 0.53f, 0.36f, 1.0f);
             NoonColor = new Vector4(1.0f, 1.0f, 0.95f, 1.0f);
             NightColor = new Vector4(0.2557f, 0.29f, 0.42f, 1.0f);
             EveningColor = new Vector4(0.75f, 0.49f, 0.36f, 1.0f);
 
             ConvergeColor = AmbiantColor = NightColor;
-            
-            //calcul position and center
-            if (CalculPositionsEntitiesHandler != null)
-            {
-                CalculPositionsEntitiesHandler();
-            }
-            CalculCenterEntity();
         }
 
         public override void Draw( GameTime gameTime ) {
@@ -110,7 +119,12 @@ namespace Phobos.Engine.View {
             LightController.ApplyLights();
 
             int count_sprite = 0;
-            ShaderEffect.Parameters["AmbiantColor"].SetValue(AmbiantColor);
+
+            if (ShaderEffect != null)
+            {
+                ShaderEffect.Parameters["AmbiantColor"].SetValue(AmbiantColor);
+            }
+
             spriteBatch.Begin( 
                 SpriteSortMode.Deferred, 
                 BlendState.AlphaBlend, 
@@ -161,8 +175,6 @@ namespace Phobos.Engine.View {
 
         public override void Update( GameTime gameTime ) {
             base.Update( gameTime );
-
-            TestFillSceneLight.Up(this) ;
 
             if( Mouse.GetState().LeftButton == ButtonState.Pressed ) {
                 mouveMovement = Vector2.Zero;
@@ -287,7 +299,7 @@ namespace Phobos.Engine.View {
                 return false;
             }
 
-            //if chunk exists core exisist too
+            //if chunk exists core exists too
             //int core_x = x % Chunk.Chunk_Size;
             //int core_y = y % Chunk.Chunk_Size;
 

@@ -32,42 +32,36 @@ namespace Phobos.Engine
     class GameEngine : Microsoft.Xna.Framework.Game
     {
 
-        #region Fields & Propreties
-        #region Fields
+        #region fields
+        private static GameEngine instance { get; set; }
 
-        GraphicsDeviceManager deviceManager;
-        DisplayModeCollection displayModes;
-
-        public static SpriteBatch spriteBatch;
-        
-        private static GameEngine singleton;
-
-        #endregion
+        private SpriteBatch spriteBatch;
+        private GraphicsDeviceManager deviceManager;
+        private DisplayModeCollection displayModes;
         #endregion
 
         #region Constructors / Instanciateur
         private GameEngine(){
             this.deviceManager = new GraphicsDeviceManager(this);
-            //PhobosConfigurationManager.Init("Phobos.ini");
-            //PhobosConfigurationManager.SetAutoSave(true);
-            ContentHelper.Initialize();
             Content.RootDirectory = "Content";
-
-            //TODO: déterminer si un dictionnaire est bien nécessaire pour éviter les chargement multiples d'une meme ressource.
         }
 
         public static GameEngine Instance {
             get {
-                if (singleton == null) {
-                    singleton = new GameEngine();
+                if (instance == null) {
+                    instance = new GameEngine();
                 }
-                return singleton;
+                return instance;
             }
         }
 
         #endregion
 
         #region Ascesseur
+        public SpriteBatch SpriteBatch
+        {
+            get { return spriteBatch; }
+        }
         public GraphicsDeviceManager DeviceManager
         {
             get { return deviceManager; }
@@ -123,6 +117,7 @@ namespace Phobos.Engine
             }*/
             #endregion
 
+            ContentHelper.Initialize();
             MouseHandler.Initialize();
             MouseHandler.HorizontalyShaked += delegate( MouseEvent e ) {
                 //Console.WriteLine( "Dont shake it too much or it will hurt !" );
@@ -198,6 +193,7 @@ namespace Phobos.Engine
             MyGameForm.FormBorderStyle = FormBorderStyle.None; //Retrait de la bordure
             MyGameForm.Location = new System.Drawing.Point(0, 0); // on place la fenêtre correctement à l'origine de l'écran.
         }
+
     }
     
 }

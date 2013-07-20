@@ -14,27 +14,37 @@ using Phobos.Engine.Controllers.Light;
 using Phobos.Engine.View;
 using Phobos.Engine;
 
-namespace Phobos.tests
+namespace Phobos.Test
 {
-    static class TestFillSceneLight
+    class TestFillSceneLight : ITest
     {
-        static public void Apply(Scene scene) 
+
+        public TestFillSceneLight()
+        {
+        }
+
+        private Texture2D text;
+        private Texture2D text2;
+
+        public void Initialize(Scene scene)
         {
             //Test Map creation
+            scene.Camera.move(new Vector2(-200, -500));
+
             BasicGenerator generator = new BasicGenerator();
             Map map = generator.BuildSimpleMap();
-            Texture2D text = GameEngine.Instance.Content.Load<Texture2D>(@"spriteSheets\temp_sprite");
-            Texture2D text2 = GameEngine.Instance.Content.Load<Texture2D>(@"spriteSheets\test_rpg");
+            text = GameEngine.Instance.Content.Load<Texture2D>(@"spriteSheets\temp_sprite");
+            text2 = GameEngine.Instance.Content.Load<Texture2D>(@"spriteSheets\test_rpg");
 
-            //Proxies creation
-            //for( int i = 0 ; i < map.Size ; i++ ) {
-            //    Chunks[i] = new SortedList<int,ChunkProxy>();
-            //    for( int j = 0 ; j < map.Size ; j++ ) {
-            //        Chunks[i].Add(j, map[i,j].BuildProxy());
-            //    }
-            //}
-            //End Test Map creation
+            initializeChunks(scene);
+            initializeLights(scene);
 
+        }
+
+        private void initializeChunks(Scene scene)
+        {
+
+            #region Chunk 0,0
             ChunkProxy testChunk = new ChunkProxy(0, 0);
             int chunk_y = 0;
             Random rand = new Random();
@@ -46,14 +56,14 @@ namespace Phobos.tests
 
                     CoreProxy core = new CoreProxy(new Vector3(chunk_x, chunk_y, 7), 32, 16,
                                 new Vector2(16, 8), text,
-                                new Color(0,0,0,1)  
+                                new Color(0, 0, 0, 1)
                     );
                     core[Orientation.BL] = new SpriteArea(new Rectangle(96, 32, 32, 16), SpriteEffects.None);
                     core[Orientation.BR] = new SpriteArea(new Rectangle(96, 32, 32, 16), SpriteEffects.FlipHorizontally);
                     core[Orientation.TR] = new SpriteArea(new Rectangle(96, 32, 32, 16), SpriteEffects.None);
                     core[Orientation.TL] = new SpriteArea(new Rectangle(96, 32, 32, 16), SpriteEffects.FlipHorizontally);
 
-                    testChunk[chunk_x, chunk_y] = core ;
+                    testChunk[chunk_x, chunk_y] = core;
                     scene.CalculPositionsEntitiesHandler += core.calculateScreenRect;
 
                     //animated sprite
@@ -62,7 +72,7 @@ namespace Phobos.tests
                         AnimatedEntity animated_entity = new AnimatedEntity(
                             new Vector3(chunk_x, chunk_y, 7),
                             32, 32, new Vector2(16, 27),
-                            text, new Color(0,0,0,1) , Orientation.S);
+                            text, new Color(0, 0, 0, 1), Orientation.S);
 
                         animated_entity[Orientation.BR] = new Animation(text, SpriteEffects.FlipHorizontally);
                         animated_entity[Orientation.BR].addFrame(new Rectangle(32, 0, 32, 32), 500);
@@ -99,7 +109,7 @@ namespace Phobos.tests
                         DrawableEntity testFontain = new DrawableEntity(
                             new Vector3(chunk_x, chunk_y, 7), 27, 34,
                             new Vector2(13, 31), text2,
-                            new Color(0,0,0,1) , Orientation.S
+                            new Color(0, 0, 0, 1), Orientation.S
                         );
                         testFontain[Orientation.BL] = new SpriteArea(new Rectangle(344, 714, 27, 34), SpriteEffects.None);
 
@@ -109,7 +119,7 @@ namespace Phobos.tests
                         DrawableEntity testContainable = new DrawableEntity(
                             new Vector3(chunk_x, chunk_y, (float)9f), 32, 32,
                             new Vector2(16, 24), text2,
-                            new Color(0,0,0,1) , Orientation.S
+                            new Color(0, 0, 0, 1), Orientation.S
                         );
                         testContainable[Orientation.BL] = new SpriteArea(new Rectangle(205, 136, 32, 32), SpriteEffects.None);
                         core.addEntity(testContainable);
@@ -166,8 +176,10 @@ namespace Phobos.tests
                 chunk_y++;
             }
             scene.Chunks[0] = new SortedList<int, ChunkProxy>();
-            scene.Chunks[0][0] = testChunk;
-            
+            scene.Chunks[0][0] = testChunk; 
+            #endregion
+            #region Chunk 0,1
+
             int j;
             //eau 0,1
             j = 0;
@@ -179,7 +191,7 @@ namespace Phobos.tests
                 {
                     CoreProxy core = new CoreProxy(new Vector3(i, j + Chunk.CHUNKS_SIZE, 0), 32, 16,
                                 new Vector2(16, 8), text,
-                                new Color(0,0,0,1) 
+                                new Color(0, 0, 0, 1)
                     );
                     core[Orientation.BL] = new SpriteArea(new Rectangle(96, 64, 32, 16), SpriteEffects.None);
                     testChunk2[i, j] = core;
@@ -188,9 +200,9 @@ namespace Phobos.tests
                 }
                 j++;
             }
-            scene.Chunks[0][1] = testChunk2;
-
-
+            scene.Chunks[0][1] = testChunk2; 
+            #endregion
+            #region Chunk 1,0
             //eau 1,0
             j = 0;
             ChunkProxy testChunk3 = new ChunkProxy(1, 0);
@@ -201,7 +213,7 @@ namespace Phobos.tests
                 {
                     CoreProxy core = new CoreProxy(new Vector3(i + Chunk.CHUNKS_SIZE, j, 0), 32, 16,
                                 new Vector2(16, 8), text,
-                                new Color(0,0,0,1) 
+                                new Color(0, 0, 0, 1)
                     );
                     core[Orientation.BL] = new SpriteArea(new Rectangle(96, 64, 32, 16), SpriteEffects.None);
                     testChunk3[i, j] = core;
@@ -216,7 +228,9 @@ namespace Phobos.tests
             //calcul position and center
             scene.CalculPositionsEntitiesHandler();
             scene.CalculCenterEntity();
-
+            
+            #endregion
+            #region Chunk 0,-1
             //eau 0,-1
             j = 0;
             ChunkProxy testChunk4 = new ChunkProxy(0, -1);
@@ -227,16 +241,18 @@ namespace Phobos.tests
                 {
                     CoreProxy core = new CoreProxy(new Vector3(i, j - Chunk.CHUNKS_SIZE, 0), 32, 16,
                                 new Vector2(16, 8), text,
-                                new Color(0,0,0,1) 
+                                new Color(0, 0, 0, 1)
                     );
                     core[Orientation.BL] = new SpriteArea(new Rectangle(96, 64, 32, 16), SpriteEffects.None);
-                    testChunk4[i, j] = core ;
+                    testChunk4[i, j] = core;
                     scene.CalculPositionsEntitiesHandler += core.calculateScreenRect;
                     i++;
                 }
                 j++;
             }
-            scene.Chunks[0][-1] = testChunk4;
+            scene.Chunks[0][-1] = testChunk4; 
+            #endregion
+            #region Chunk -1,0
 
             //eau -1, 0
             j = 0;
@@ -248,10 +264,10 @@ namespace Phobos.tests
                 {
                     CoreProxy core = new CoreProxy(new Vector3(i - Chunk.CHUNKS_SIZE, j, 0), 32, 16,
                                 new Vector2(16, 8), text,
-                                new Color(0,0,0,1) 
+                                new Color(0, 0, 0, 1)
                     );
                     core[Orientation.BL] = new SpriteArea(new Rectangle(96, 64, 32, 16), SpriteEffects.None);
-                    testChunk5[i, j] =  core;
+                    testChunk5[i, j] = core;
                     scene.CalculPositionsEntitiesHandler += core.calculateScreenRect;
                     i++;
                 }
@@ -260,7 +276,9 @@ namespace Phobos.tests
             scene.Chunks[-1] = new SortedList<int, ChunkProxy>();
             scene.Chunks[-1][0] = testChunk5;
 
-
+            
+            #endregion
+            #region Chunk -1,-1
             //eau -1, -1
             j = 0;
             ChunkProxy testChunk6 = new ChunkProxy(-1, -1);
@@ -271,7 +289,7 @@ namespace Phobos.tests
                 {
                     CoreProxy core = new CoreProxy(new Vector3(i - Chunk.CHUNKS_SIZE, j - Chunk.CHUNKS_SIZE, 0), 32, 16,
                                 new Vector2(16, 8), text,
-                                new Color(0,0,0,1) 
+                                new Color(0, 0, 0, 1)
                     );
                     if (((i % 2) == 0) && ((j % 2) == 0))
                     {
@@ -279,7 +297,7 @@ namespace Phobos.tests
                         DrawableEntity water = new DrawableEntity(
                             new Vector3(i - Chunk.CHUNKS_SIZE, j - Chunk.CHUNKS_SIZE, 0), 34, 21,
                             new Vector2(17, 20), text2,
-                            new Color(0,0,0,1) , Orientation.S
+                            new Color(0, 0, 0, 1), Orientation.S
                         );
                         water[Orientation.BL] = new SpriteArea(new Rectangle(307, 726, 34, 21), SpriteEffects.None);
                         water[Orientation.BR] = new SpriteArea(new Rectangle(307, 726, 34, 21), SpriteEffects.FlipHorizontally);
@@ -296,7 +314,9 @@ namespace Phobos.tests
                 j++;
             }
             scene.Chunks[-1][-1] = testChunk6;
-
+            
+            #endregion
+            #region Chunk 1,-1
 
             //eau 1,-1
             j = 0;
@@ -308,7 +328,7 @@ namespace Phobos.tests
                 {
                     CoreProxy core = new CoreProxy(new Vector3(i + Chunk.CHUNKS_SIZE, j - Chunk.CHUNKS_SIZE, 0), 32, 16,
                                 new Vector2(16, 8), text,
-                                new Color(0,0,0,1) 
+                                new Color(0, 0, 0, 1)
                     );
                     core[Orientation.BL] = new SpriteArea(new Rectangle(96, 64, 32, 16), SpriteEffects.None);
                     testChunk7[i, j] = core;
@@ -319,7 +339,9 @@ namespace Phobos.tests
             }
             scene.Chunks[1][-1] = testChunk7;
 
-
+            
+            #endregion
+            #region Chunk -1,1
             //eau -1, 1
             j = 0;
             ChunkProxy testChunk8 = new ChunkProxy(-1, 1);
@@ -330,10 +352,10 @@ namespace Phobos.tests
                 {
                     CoreProxy core = new CoreProxy(new Vector3(i - Chunk.CHUNKS_SIZE, j + Chunk.CHUNKS_SIZE, 0), 32, 16,
                                 new Vector2(16, 8), text,
-                                new Color(0,0,0,1) 
+                                new Color(0, 0, 0, 1)
                     );
                     core[Orientation.BL] = new SpriteArea(new Rectangle(96, 64, 32, 16), SpriteEffects.None);
-                    testChunk8[i, j] =  core;
+                    testChunk8[i, j] = core;
                     scene.CalculPositionsEntitiesHandler += core.calculateScreenRect;
                     i++;
                 }
@@ -341,7 +363,9 @@ namespace Phobos.tests
             }
             scene.Chunks[-1][1] = testChunk8;
 
-
+            
+            #endregion
+            #region Chunk 1,1
             //eau 1, 1
             j = 0;
             ChunkProxy testChunk9 = new ChunkProxy(1, 0);
@@ -352,19 +376,24 @@ namespace Phobos.tests
                 {
                     CoreProxy core = new CoreProxy(new Vector3(i + Chunk.CHUNKS_SIZE, j + Chunk.CHUNKS_SIZE, 0), 32, 16,
                                 new Vector2(16, 8), text,
-                                new Color(0,0,0,1) 
+                                new Color(0, 0, 0, 1)
                     );
                     core[Orientation.BL] = new SpriteArea(new Rectangle(96, 64, 32, 16), SpriteEffects.None);
-                    testChunk9[i, j] =  core;
+                    testChunk9[i, j] = core;
                     scene.CalculPositionsEntitiesHandler += core.calculateScreenRect;
                     i++;
                 }
                 j++;
             }
             scene.Chunks[1][1] = testChunk9;
+            
+            #endregion
 
             scene.Chunks[0][0].calculCliffs();
+        }
 
+        private void initializeLights(Scene scene) 
+        {
             //light
             FixedLight test_light4 = new FixedLight(14, new Vector3(20, 20, 30), Color.Red);
             scene.LightController.AddLight(test_light4);
@@ -372,10 +401,9 @@ namespace Phobos.tests
             scene.LightController.AddLight(test_light2);
             FixedLight test_light3 = new FixedLight(14, new Vector3(10, 20, 30), Color.Green);
             scene.LightController.AddLight(test_light3);
-            
         }
 
-        static public void Up(Scene scene)
+        public void Update(Scene scene)
         {
             if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
@@ -403,5 +431,8 @@ namespace Phobos.tests
             }
         }
 
+        public void Draw(Scene scene)
+        {
+        }
     }
 }

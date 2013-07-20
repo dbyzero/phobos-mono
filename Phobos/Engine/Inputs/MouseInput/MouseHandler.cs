@@ -166,19 +166,19 @@ namespace Phobos.Engine.Inputs.MouseInput {
         }
 
         public static void DrawCursor() {
-            GameEngine.spriteBatch.Begin();
+            GameEngine.Instance.SpriteBatch.Begin();
             switch( currentType ) {
                 case CursorType.SIMPLE:
-                    GameEngine.spriteBatch.Draw( cursorSprite, new Vector2( Mouse.GetState().X, Mouse.GetState().Y ), new Rectangle( 0, 0, 32, 32 ), Color.White );
+                    GameEngine.Instance.SpriteBatch.Draw( cursorSprite, new Vector2( Mouse.GetState().X, Mouse.GetState().Y ), new Rectangle( 0, 0, 32, 32 ), Color.White );
                     break;
                 case CursorType.WAITING:
-                    GameEngine.spriteBatch.Draw( cursorSprite, new Vector2( Mouse.GetState().X, Mouse.GetState().Y ), new Rectangle( 32, 0, 32, 32 ), Color.White );
+                    GameEngine.Instance.SpriteBatch.Draw( cursorSprite, new Vector2( Mouse.GetState().X, Mouse.GetState().Y ), new Rectangle( 32, 0, 32, 32 ), Color.White );
                     break;
                 case CursorType.ACTION:
-                    GameEngine.spriteBatch.Draw( cursorSprite, new Vector2( Mouse.GetState().X, Mouse.GetState().Y ), new Rectangle( 64, 0, 32, 32 ), Color.White );
+                    GameEngine.Instance.SpriteBatch.Draw( cursorSprite, new Vector2( Mouse.GetState().X, Mouse.GetState().Y ), new Rectangle( 64, 0, 32, 32 ), Color.White );
                     break;
             }
-            GameEngine.spriteBatch.End();
+            GameEngine.Instance.SpriteBatch.End();
         }
 
         #region Events handlers

@@ -52,13 +52,13 @@ namespace Phobos.Engine.GameStates.Menu {
         public override void Draw( GameTime gameTime ) {
             if( Status != GameStateStatus.Active ) return;
             base.Draw( gameTime );
-            GameEngine.spriteBatch.Begin();
+            GameEngine.Instance.SpriteBatch.Begin();
             menuBG.Draw( gameTime );
             gameButton.Draw( gameTime );
             optionButton.Draw( gameTime );
             uiDebugButton.Draw( gameTime );
             exitButton.Draw( gameTime );
-            GameEngine.spriteBatch.End();
+            GameEngine.Instance.SpriteBatch.End();
             base.Draw( gameTime );
 
         }

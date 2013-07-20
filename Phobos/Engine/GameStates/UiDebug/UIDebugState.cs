@@ -113,7 +113,7 @@ namespace Phobos.Engine.GameStates.UiDebug {
             if( Status != GameStateStatus.Active ) return;
 
 
-            GameEngine.spriteBatch.Begin();
+            GameEngine.Instance.SpriteBatch.Begin();
             foreach( APWidget widget in Components ) {
                 widget.Draw( gameTime );
             }
@@ -130,7 +130,7 @@ namespace Phobos.Engine.GameStates.UiDebug {
                 }
             }
             
-            GameEngine.spriteBatch.End();
+            GameEngine.Instance.SpriteBatch.End();
             base.Draw( gameTime );
 
         }

@@ -61,9 +61,9 @@ namespace Phobos.Engine.Gui.PWidgets.System {
         #region IDrawable
         public override void Draw( GameTime gameTime ) {
             if( parent.IsEnabled ) {
-                GameEngine.spriteBatch.DrawString( spriteFont, Text, new Vector2( AbsoluteLocation.X + textLocation.X, AbsoluteLocation.Y + textLocation.Y ), Color.White );
+                GameEngine.Instance.SpriteBatch.DrawString( spriteFont, Text, new Vector2( AbsoluteLocation.X + textLocation.X, AbsoluteLocation.Y + textLocation.Y ), Color.White );
             } else {
-                GameEngine.spriteBatch.DrawString( spriteFont, Text, new Vector2( AbsoluteLocation.X + textLocation.X, AbsoluteLocation.Y + textLocation.Y ), Color.Gray );
+                GameEngine.Instance.SpriteBatch.DrawString( spriteFont, Text, new Vector2( AbsoluteLocation.X + textLocation.X, AbsoluteLocation.Y + textLocation.Y ), Color.Gray );
             }
 
         }

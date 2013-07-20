@@ -12,6 +12,7 @@ using Phobos.Engine.Gui.PWidgets;
 using Phobos.Engine.View;
 using System.Diagnostics;
 using Phobos.Engine.Models.World;
+using Phobos.Test ;
 
 namespace Phobos.Engine.GameStates.Game
 {
@@ -23,17 +24,19 @@ namespace Phobos.Engine.GameStates.Game
         PSButton btnCameraSO;
         PSButton btnCameraSE;
         PSButton btnCameraNO;
-        PSButton brnCameraNE;
+        PSButton btnCameraNE;
         PSButton btnColorSunrise;
         PSButton btnColorNoon;
         PSButton btnColorNight;
         PSButton btnColorEvening;
         Scene scene;
+        public List<ITest> Tests;
 
         public MainState()
             : base()
         {
             Status = GameStateStatus.Active;
+            Tests = new List<ITest>();
         }
 
         public override void Initialize()
@@ -41,6 +44,14 @@ namespace Phobos.Engine.GameStates.Game
             base.Initialize();
             scene = Scene.GetInstance();
             scene.Initialize();
+
+            //AJOUT DES TESTS
+            Tests.Add(new TestFillSceneLight());
+
+            foreach (var test in Tests)
+            {
+                test.Initialize(scene);
+            }
         }
 
         protected override void LoadContent()
@@ -73,8 +84,8 @@ namespace Phobos.Engine.GameStates.Game
             {
                 Scene.GetInstance().Camera.turnCamera(Orientation.NO);
             };
-            brnCameraNE = new PSButton(64, 320, "Camera NE");
-            brnCameraNE.Action += delegate(APButton sender, ActionEvent e)
+            btnCameraNE = new PSButton(64, 320, "Camera NE");
+            btnCameraNE.Action += delegate(APButton sender, ActionEvent e)
             {
                 Scene.GetInstance().Camera.turnCamera(Orientation.NE);
             };
@@ -108,20 +119,24 @@ namespace Phobos.Engine.GameStates.Game
             if (Status != GameStateStatus.Active) return;
 
             scene.Draw(gameTime);
+            foreach (var test in Tests)
+            {
+                test.Draw(scene);
+            }
 
             #region UI
-            GameEngine.spriteBatch.Begin();
+            GameEngine.Instance.SpriteBatch.Begin();
             returnButton.Draw(gameTime);
             exitButton.Draw(gameTime);
             btnCameraSE.Draw(gameTime);
             btnCameraSO.Draw(gameTime);
-            brnCameraNE.Draw(gameTime);
+            btnCameraNE.Draw(gameTime);
             btnCameraNO.Draw(gameTime);
             btnColorNight.Draw(gameTime);
             btnColorEvening.Draw(gameTime);
             btnColorSunrise.Draw(gameTime);
             btnColorNoon.Draw(gameTime);
-            GameEngine.spriteBatch.End();
+            GameEngine.Instance.SpriteBatch.End();
             #endregion
 
             base.Draw(gameTime);
@@ -133,15 +148,22 @@ namespace Phobos.Engine.GameStates.Game
 
         public override void Update(GameTime gameTime)
         {
+            foreach (var test in Tests)
+            {
+                test.Update(scene);
+            }
+
             if (Status != GameStateStatus.Active) return;
 
             base.Update(gameTime);
             returnButton.Update(gameTime);
             exitButton.Update(gameTime);
             scene.Update(gameTime);
+
+
             btnCameraSE.Update(gameTime);
             btnCameraSO.Update(gameTime);
-            brnCameraNE.Update(gameTime);
+            btnCameraNE.Update(gameTime);
             btnCameraNO.Update(gameTime);
             btnColorNight.Update(gameTime);
             btnColorEvening.Update(gameTime);

@@ -1,0 +1,1416 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Phobos</name>
+    </assembly>
+    <members>
+        <member name="T:Nini.Util.OrderedList">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="OrderedList.xml" path="//Class[@name=&quot;OrderedList&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Util.OrderedList.Add(System.Object,System.Object)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="OrderedList.xml" path="//Method[@name=&quot;Add&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Util.OrderedList.Clear">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="OrderedList.xml" path="//Method[@name=&quot;Clear&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Util.OrderedList.Contains(System.Object)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="OrderedList.xml" path="//Method[@name=&quot;Contains&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Util.OrderedList.CopyTo(System.Array,System.Int32)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="OrderedList.xml" path="//Method[@name=&quot;CopyTo&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Util.OrderedList.CopyTo(System.Collections.DictionaryEntry[],System.Int32)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="OrderedList.xml" path="//Method[@name=&quot;CopyToStrong&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Util.OrderedList.Insert(System.Int32,System.Object,System.Object)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="OrderedList.xml" path="//Method[@name=&quot;Insert&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Util.OrderedList.Remove(System.Object)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="OrderedList.xml" path="//Method[@name=&quot;Remove&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Util.OrderedList.RemoveAt(System.Int32)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="OrderedList.xml" path="//Method[@name=&quot;RemoveAt&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Util.OrderedList.GetEnumerator">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="OrderedList.xml" path="//Method[@name=&quot;GetEnumerator&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Util.OrderedList.System#Collections#IDictionary#GetEnumerator">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="OrderedList.xml" path="//Method[@name=&quot;GetDictionaryEnumerator&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Util.OrderedList.System#Collections#IEnumerable#GetEnumerator">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="OrderedList.xml" path="//Method[@name=&quot;GetIEnumerator&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Util.OrderedList.Count">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="OrderedList.xml" path="//Property[@name=&quot;Count&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Util.OrderedList.IsFixedSize">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="OrderedList.xml" path="//Property[@name=&quot;IsFixedSize&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Util.OrderedList.IsReadOnly">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="OrderedList.xml" path="//Property[@name=&quot;IsReadOnly&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Util.OrderedList.IsSynchronized">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="OrderedList.xml" path="//Property[@name=&quot;IsSynchronized&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Util.OrderedList.Item(System.Int32)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="OrderedList.xml" path="//Property[@name=&quot;ItemIndex&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Util.OrderedList.Item(System.Object)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="OrderedList.xml" path="//Property[@name=&quot;ItemKey&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Util.OrderedList.Keys">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="OrderedList.xml" path="//Property[@name=&quot;Keys&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Util.OrderedList.Values">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="OrderedList.xml" path="//Property[@name=&quot;Values&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Util.OrderedList.SyncRoot">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="OrderedList.xml" path="//Property[@name=&quot;SyncRoot&quot;]/docs/*"/>
+        </member>
+        <member name="T:Nini.Ini.IniSection">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniSection.xml" path="//Class[@name=&quot;IniSection&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniSection.#ctor(System.String,System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniSection.xml" path="//Constructor[@name=&quot;ConstructorComment&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniSection.#ctor(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniSection.xml" path="//Constructor[@name=&quot;Constructor&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniSection.GetValue(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniSection.xml" path="//Method[@name=&quot;GetValue&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniSection.GetItem(System.Int32)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniSection.xml" path="//Method[@name=&quot;GetItem&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniSection.GetKeys">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniSection.xml" path="//Method[@name=&quot;GetKeys&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniSection.Contains(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniSection.xml" path="//Method[@name=&quot;Contains&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniSection.Set(System.String,System.String,System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniSection.xml" path="//Method[@name=&quot;SetKeyComment&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniSection.Set(System.String,System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniSection.xml" path="//Method[@name=&quot;SetKey&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniSection.Set(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniSection.xml" path="//Method[@name=&quot;SetComment&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniSection.Set">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniSection.xml" path="//Method[@name=&quot;SetNoComment&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniSection.Remove(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniSection.xml" path="//Method[@name=&quot;Remove&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Ini.IniSection.Name">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniSection.xml" path="//Property[@name=&quot;Name&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Ini.IniSection.Comment">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniSection.xml" path="//Property[@name=&quot;Comment&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Ini.IniSection.ItemCount">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniSection.xml" path="//Property[@name=&quot;ItemCount&quot;]/docs/*"/>
+        </member>
+        <member name="T:Nini.Ini.IniFileType">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniDocument.xml" path="//Enum[@name=&quot;IniFileType&quot;]/docs/*"/>
+        </member>
+        <member name="F:Nini.Ini.IniFileType.Standard">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniDocument.xml" path="//Enum[@name=&quot;IniFileType&quot;]/Value[@name=&quot;Standard&quot;]/docs/*"/>
+        </member>
+        <member name="F:Nini.Ini.IniFileType.PythonStyle">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniDocument.xml" path="//Enum[@name=&quot;IniFileType&quot;]/Value[@name=&quot;PythonStyle&quot;]/docs/*"/>
+        </member>
+        <member name="F:Nini.Ini.IniFileType.SambaStyle">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniDocument.xml" path="//Enum[@name=&quot;IniFileType&quot;]/Value[@name=&quot;SambaStyle&quot;]/docs/*"/>
+        </member>
+        <member name="F:Nini.Ini.IniFileType.MysqlStyle">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniDocument.xml" path="//Enum[@name=&quot;IniFileType&quot;]/Value[@name=&quot;MysqlStyle&quot;]/docs/*"/>
+        </member>
+        <member name="F:Nini.Ini.IniFileType.WindowsStyle">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniDocument.xml" path="//Enum[@name=&quot;IniFileType&quot;]/Value[@name=&quot;WindowsStyle&quot;]/docs/*"/>
+        </member>
+        <member name="T:Nini.Ini.IniDocument">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniDocument.xml" path="//Class[@name=&quot;IniDocument&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniDocument.#ctor(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniDocument.xml" path="//Constructor[@name=&quot;ConstructorPath&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniDocument.#ctor(System.String,Nini.Ini.IniFileType)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniDocument.xml" path="//Constructor[@name=&quot;ConstructorPathType&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniDocument.#ctor(System.IO.TextReader)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniDocument.xml" path="//Constructor[@name=&quot;ConstructorTextReader&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniDocument.#ctor(System.IO.TextReader,Nini.Ini.IniFileType)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniDocument.xml" path="//Constructor[@name=&quot;ConstructorTextReaderType&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniDocument.#ctor(System.IO.Stream)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniDocument.xml" path="//Constructor[@name=&quot;ConstructorStream&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniDocument.#ctor(System.IO.Stream,Nini.Ini.IniFileType)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniDocument.xml" path="//Constructor[@name=&quot;ConstructorStreamType&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniDocument.#ctor(Nini.Ini.IniReader)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniDocument.xml" path="//Constructor[@name=&quot;ConstructorIniReader&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniDocument.#ctor">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniDocument.xml" path="//Constructor[@name=&quot;Constructor&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniDocument.Load(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniDocument.xml" path="//Method[@name=&quot;LoadPath&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniDocument.Load(System.IO.TextReader)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniDocument.xml" path="//Method[@name=&quot;LoadTextReader&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniDocument.Load(System.IO.Stream)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniDocument.xml" path="//Method[@name=&quot;LoadStream&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniDocument.Load(Nini.Ini.IniReader)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniDocument.xml" path="//Method[@name=&quot;LoadIniReader&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniDocument.Save(System.IO.TextWriter)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniDocument.xml" path="//Method[@name=&quot;SaveTextWriter&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniDocument.Save(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniDocument.xml" path="//Method[@name=&quot;SavePath&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniDocument.Save(System.IO.Stream)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniDocument.xml" path="//Method[@name=&quot;SaveStream&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniDocument.LoadReader(Nini.Ini.IniReader)">
+            <summary>
+            Loads the file not saving comments.
+            </summary>
+        </member>
+        <member name="M:Nini.Ini.IniDocument.GetIniReader(System.IO.TextReader,Nini.Ini.IniFileType)">
+            <summary>
+            Returns a proper INI reader depending upon the type parameter.
+            </summary>
+        </member>
+        <member name="M:Nini.Ini.IniDocument.GetIniWriter(System.IO.TextWriter,Nini.Ini.IniFileType)">
+            <summary>
+            Returns a proper IniWriter depending upon the type parameter.
+            </summary>
+        </member>
+        <member name="P:Nini.Ini.IniDocument.FileType">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniDocument.xml" path="//Property[@name=&quot;FileType&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Ini.IniDocument.Sections">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniSection.xml" path="//Property[@name=&quot;Comment&quot;]/docs/*"/>
+        </member>
+        <member name="T:Nini.Config.ConfigEventHandler">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="ConfigEventArgs.xml" path="//Delegate[@name=&quot;ConfigEventHandler&quot;]/docs/*"/>
+        </member>
+        <member name="T:Nini.Config.ConfigEventArgs">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="ConfigEventArgs.xml" path="//Class[@name=&quot;ConfigEventArgs&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigEventArgs.#ctor(Nini.Config.IConfig)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="ConfigEventArgs.xml" path="//Constructor[@name=&quot;ConstructorIConfig&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Config.ConfigEventArgs.Config">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="ConfigEventArgs.xml" path="//Property[@name=&quot;Config&quot;]/docs/*"/>
+        </member>
+        <member name="T:Nini.Config.ConfigCollection">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="ConfigCollection.xml" path="//Class[@name=&quot;ConfigCollection&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigCollection.#ctor(Nini.Config.ConfigSourceBase)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="ConfigCollection.xml" path="//Constructor[@name=&quot;Constructor&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigCollection.Add(Nini.Config.IConfig)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="ConfigCollection.xml" path="//Method[@name=&quot;Add&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigCollection.System#Collections#IList#Add(System.Object)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="ConfigCollection.xml" path="//Method[@name=&quot;Add&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigCollection.Add(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="ConfigCollection.xml" path="//Method[@name=&quot;AddName&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigCollection.Remove(Nini.Config.IConfig)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="ConfigCollection.xml" path="//Method[@name=&quot;Remove&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigCollection.Remove(System.Object)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="ConfigCollection.xml" path="//Method[@name=&quot;Remove&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigCollection.RemoveAt(System.Int32)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="ConfigCollection.xml" path="//Method[@name=&quot;RemoveAt&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigCollection.Clear">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="ConfigCollection.xml" path="//Method[@name=&quot;Clear&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigCollection.GetEnumerator">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="ConfigCollection.xml" path="//Method[@name=&quot;GetEnumerator&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigCollection.CopyTo(System.Array,System.Int32)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="ConfigCollection.xml" path="//Method[@name=&quot;CopyTo&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigCollection.CopyTo(Nini.Config.IConfig[],System.Int32)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="ConfigCollection.xml" path="//Method[@name=&quot;CopyToStrong&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigCollection.Contains(System.Object)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="ConfigCollection.xml" path="//Method[@name=&quot;Contains&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigCollection.IndexOf(System.Object)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="ConfigCollection.xml" path="//Method[@name=&quot;IndexOf&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigCollection.Insert(System.Int32,System.Object)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="ConfigCollection.xml" path="//Method[@name=&quot;Insert&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigCollection.OnConfigAdded(Nini.Config.ConfigEventArgs)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="ConfigCollection.xml" path="//Method[@name=&quot;OnConfigAdded&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigCollection.OnConfigRemoved(Nini.Config.ConfigEventArgs)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="ConfigCollection.xml" path="//Method[@name=&quot;OnConfigRemoved&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Config.ConfigCollection.Count">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="ConfigCollection.xml" path="//Property[@name=&quot;Count&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Config.ConfigCollection.IsSynchronized">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="ConfigCollection.xml" path="//Property[@name=&quot;IsSynchronized&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Config.ConfigCollection.SyncRoot">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="ConfigCollection.xml" path="//Property[@name=&quot;SyncRoot&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Config.ConfigCollection.Item(System.Int32)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="ConfigCollection.xml" path="//Property[@name=&quot;ItemIndex&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Config.ConfigCollection.System#Collections#IList#Item(System.Int32)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="ConfigCollection.xml" path="//Property[@name=&quot;ItemIndex&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Config.ConfigCollection.Item(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="ConfigCollection.xml" path="//Property[@name=&quot;ItemName&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Config.ConfigCollection.IsFixedSize">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="ConfigCollection.xml" path="//Property[@name=&quot;IsFixedSize&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Config.ConfigCollection.IsReadOnly">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="ConfigCollection.xml" path="//Property[@name=&quot;IsReadOnly&quot;]/docs/*"/>
+        </member>
+        <member name="E:Nini.Config.ConfigCollection.ConfigAdded">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="ConfigCollection.xml" path="//Event[@name=&quot;ConfigAdded&quot;]/docs/*"/>
+        </member>
+        <member name="E:Nini.Config.ConfigCollection.ConfigRemoved">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="ConfigCollection.xml" path="//Event[@name=&quot;ConfigRemoved&quot;]/docs/*"/>
+        </member>
+        <member name="T:Phobos.Engine.Services.ContentBundle`1">
+            <summary>
+            Cette classe représente un 'package' d'un type de ressource.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="T:Nini.Ini.IniSectionCollection">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniSectionCollection.xml" path="//Class[@name=&quot;IniSectionCollection&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniSectionCollection.Add(Nini.Ini.IniSection)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniSectionCollection.xml" path="//Method[@name=&quot;Add&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniSectionCollection.Remove(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniSectionCollection.xml" path="//Method[@name=&quot;Remove&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniSectionCollection.CopyTo(System.Array,System.Int32)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniSectionCollection.xml" path="//Method[@name=&quot;CopyTo&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniSectionCollection.CopyTo(Nini.Ini.IniSection[],System.Int32)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniSectionCollection.xml" path="//Method[@name=&quot;CopyToStrong&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniSectionCollection.GetEnumerator">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniSectionCollection.xml" path="//Method[@name=&quot;GetEnumerator&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Ini.IniSectionCollection.Item(System.Int32)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniSectionCollection.xml" path="//Property[@name=&quot;ItemIndex&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Ini.IniSectionCollection.Item(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniSectionCollection.xml" path="//Property[@name=&quot;ItemName&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Ini.IniSectionCollection.Count">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniSectionCollection.xml" path="//Property[@name=&quot;Count&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Ini.IniSectionCollection.SyncRoot">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniSectionCollection.xml" path="//Property[@name=&quot;SyncRoot&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Ini.IniSectionCollection.IsSynchronized">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniSectionCollection.xml" path="//Property[@name=&quot;IsSynchronized&quot;]/docs/*"/>
+        </member>
+        <member name="T:Nini.Config.IniConfigSource">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniConfigSource.xml" path="//Class[@name=&quot;IniConfigSource&quot;]/docs/*"/>
+        </member>
+        <member name="T:Nini.Config.ConfigSourceBase">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfigSource.xml" path="//Interface[@name=&quot;IConfigSource&quot;]/docs/*"/>
+        </member>
+        <member name="T:Nini.Config.IConfigSource">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfigSource.xml" path="//Interface[@name=&quot;IConfigSource&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IConfigSource.Merge(Nini.Config.IConfigSource)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfigSource.xml" path="//Method[@name=&quot;Merge&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IConfigSource.Save">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfigSource.xml" path="//Method[@name=&quot;Save&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IConfigSource.Reload">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfigSource.xml" path="//Method[@name=&quot;Reload&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IConfigSource.AddConfig(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfigSource.xml" path="//Method[@name=&quot;AddConfig&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IConfigSource.GetExpanded(Nini.Config.IConfig,System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfigSource.xml" path="//Method[@name=&quot;GetExpanded&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IConfigSource.ExpandKeyValues">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfigSource.xml" path="//Method[@name=&quot;ExpandKeyValues&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IConfigSource.ReplaceKeyValues">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfigSource.xml" path="//Method[@name=&quot;ReplaceKeyValues&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Config.IConfigSource.Configs">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfigSource.xml" path="//Property[@name=&quot;Configs&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Config.IConfigSource.AutoSave">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfigSource.xml" path="//Property[@name=&quot;AutoSave&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Config.IConfigSource.Alias">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfigSource.xml" path="//Property[@name=&quot;Alias&quot;]/docs/*"/>
+        </member>
+        <member name="E:Nini.Config.IConfigSource.Reloaded">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfigSource.xml" path="//Event[@name=&quot;Reloaded&quot;]/docs/*"/>
+        </member>
+        <member name="E:Nini.Config.IConfigSource.Saved">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfigSource.xml" path="//Event[@name=&quot;Saved&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigSourceBase.#ctor">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="ConfigSourceBase.xml" path="//Constructor[@name=&quot;Constructor&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigSourceBase.Merge(Nini.Config.IConfigSource)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfigSource.xml" path="//Method[@name=&quot;Merge&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigSourceBase.AddConfig(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfigSource.xml" path="//Method[@name=&quot;AddConfig&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigSourceBase.GetExpanded(Nini.Config.IConfig,System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfigSource.xml" path="//Method[@name=&quot;GetExpanded&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigSourceBase.Save">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfigSource.xml" path="//Method[@name=&quot;Save&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigSourceBase.Reload">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfigSource.xml" path="//Method[@name=&quot;Reload&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigSourceBase.ExpandKeyValues">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfigSource.xml" path="//Method[@name=&quot;ExpandKeyValues&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigSourceBase.ReplaceKeyValues">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfigSource.xml" path="//Method[@name=&quot;ReplaceKeyValues&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigSourceBase.OnReloaded(System.EventArgs)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="ConfigSourceBase.xml" path="//Method[@name=&quot;OnReloaded&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigSourceBase.OnSaved(System.EventArgs)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="ConfigSourceBase.xml" path="//Method[@name=&quot;OnSaved&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigSourceBase.Expand(Nini.Config.IConfig,System.String,System.Boolean)">
+            <summary>
+            Expands key values from the given IConfig.
+            </summary>
+        </member>
+        <member name="M:Nini.Config.ConfigSourceBase.ExpandValue(Nini.Config.IConfig,System.String)">
+            <summary>
+            Returns the replacement value of a config.
+            </summary>
+        </member>
+        <member name="P:Nini.Config.ConfigSourceBase.Configs">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfigSource.xml" path="//Property[@name=&quot;Configs&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Config.ConfigSourceBase.AutoSave">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfigSource.xml" path="//Property[@name=&quot;AutoSave&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Config.ConfigSourceBase.Alias">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfigSource.xml" path="//Property[@name=&quot;Alias&quot;]/docs/*"/>
+        </member>
+        <member name="E:Nini.Config.ConfigSourceBase.Reloaded">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfigSource.xml" path="//Event[@name=&quot;Reloaded&quot;]/docs/*"/>
+        </member>
+        <member name="E:Nini.Config.ConfigSourceBase.Saved">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfigSource.xml" path="//Event[@name=&quot;Saved&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IniConfigSource.#ctor">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniConfigSource.xml" path="//Constructor[@name=&quot;Constructor&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IniConfigSource.#ctor(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniConfigSource.xml" path="//Constructor[@name=&quot;ConstructorPath&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IniConfigSource.#ctor(System.IO.TextReader)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniConfigSource.xml" path="//Constructor[@name=&quot;ConstructorTextReader&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IniConfigSource.#ctor(Nini.Ini.IniDocument)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniConfigSource.xml" path="//Constructor[@name=&quot;ConstructorIniDocument&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IniConfigSource.#ctor(System.IO.Stream)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniConfigSource.xml" path="//Constructor[@name=&quot;ConstructorStream&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IniConfigSource.Load(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniConfigSource.xml" path="//Method[@name=&quot;LoadPath&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IniConfigSource.Load(System.IO.TextReader)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniConfigSource.xml" path="//Method[@name=&quot;LoadTextReader&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IniConfigSource.Load(Nini.Ini.IniDocument)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniConfigSource.xml" path="//Method[@name=&quot;LoadIniDocument&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IniConfigSource.Load(System.IO.Stream)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniConfigSource.xml" path="//Method[@name=&quot;LoadStream&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IniConfigSource.Save">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniConfigSource.xml" path="//Method[@name=&quot;Save&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IniConfigSource.Save(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniConfigSource.xml" path="//Method[@name=&quot;SavePath&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IniConfigSource.Save(System.IO.TextWriter)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniConfigSource.xml" path="//Method[@name=&quot;SaveTextWriter&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IniConfigSource.Save(System.IO.Stream)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniConfigSource.xml" path="//Method[@name=&quot;SaveStream&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IniConfigSource.Reload">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfigSource.xml" path="//Method[@name=&quot;Reload&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IniConfigSource.ToString">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniConfigSource.xml" path="//Method[@name=&quot;ToString&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IniConfigSource.MergeConfigsIntoDocument">
+            <summary>
+            Merges all of the configs from the config collection into the 
+            IniDocument before it is saved.  
+            </summary>
+        </member>
+        <member name="M:Nini.Config.IniConfigSource.RemoveSections">
+            <summary>
+            Removes all INI sections that were removed as configs.
+            </summary>
+        </member>
+        <member name="M:Nini.Config.IniConfigSource.RemoveKeys(System.String)">
+            <summary>
+            Removes all INI keys that were removed as config keys.
+            </summary>
+        </member>
+        <member name="M:Nini.Config.IniConfigSource.Load">
+            <summary>
+            Loads the configuration file.
+            </summary>
+        </member>
+        <member name="M:Nini.Config.IniConfigSource.MergeDocumentIntoConfigs">
+            <summary>
+            Merges the IniDocument into the Configs when the document is 
+            reloaded.  
+            </summary>
+        </member>
+        <member name="M:Nini.Config.IniConfigSource.RemoveConfigs">
+            <summary>
+            Removes all configs that are not in the newly loaded INI doc.  
+            </summary>
+        </member>
+        <member name="M:Nini.Config.IniConfigSource.RemoveConfigKeys(Nini.Config.IConfig)">
+            <summary>
+            Removes all INI keys that were removed as config keys.
+            </summary>
+        </member>
+        <member name="M:Nini.Config.IniConfigSource.IsSavable">
+            <summary>
+            Returns true if this instance is savable.
+            </summary>
+        </member>
+        <member name="P:Nini.Config.IniConfigSource.CaseSensitive">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniConfigSource.xml" path="//Property[@name=&quot;CaseSensitive&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Config.IniConfigSource.SavePath">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniConfigSource.xml" path="//Property[@name=&quot;SavePath&quot;]/docs/*"/>
+        </member>
+        <member name="T:Nini.Config.IniConfig">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniConfig.xml" path="//Class[@name=&quot;IniConfig&quot;]/docs/*"/>
+        </member>
+        <member name="T:Nini.Config.ConfigBase">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Interface[@name=&quot;IConfig&quot;]/docs/*"/>
+        </member>
+        <member name="T:Nini.Config.IConfig">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Interface[@name=&quot;IConfig&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IConfig.Contains(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Method[@name=&quot;Contains&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IConfig.Get(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Method[@name=&quot;Get&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IConfig.Get(System.String,System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Method[@name=&quot;GetDefault&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IConfig.GetExpanded(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Method[@name=&quot;GetExpanded&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IConfig.GetString(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Method[@name=&quot;Get&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IConfig.GetString(System.String,System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Method[@name=&quot;GetDefault&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IConfig.GetInt(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Method[@name=&quot;GetInt&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IConfig.GetInt(System.String,System.Boolean)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Method[@name=&quot;GetIntAlias&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IConfig.GetInt(System.String,System.Int32)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Method[@name=&quot;GetIntDefault&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IConfig.GetInt(System.String,System.Int32,System.Boolean)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Method[@name=&quot;GetIntDefaultAlias&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IConfig.GetLong(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Method[@name=&quot;GetLong&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IConfig.GetLong(System.String,System.Int64)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Method[@name=&quot;GetLongDefault&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IConfig.GetBoolean(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Method[@name=&quot;GetBoolean&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IConfig.GetBoolean(System.String,System.Boolean)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Method[@name=&quot;GetBooleanDefault&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IConfig.GetFloat(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Method[@name=&quot;GetFloat&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IConfig.GetFloat(System.String,System.Single)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Method[@name=&quot;GetFloatDefault&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IConfig.GetDouble(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Method[@name=&quot;GetDouble&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IConfig.GetDouble(System.String,System.Double)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Method[@name=&quot;GetDoubleDefault&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IConfig.GetKeys">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Method[@name=&quot;GetKeys&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IConfig.GetValues">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Method[@name=&quot;GetValues&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IConfig.Set(System.String,System.Object)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Method[@name=&quot;Set&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IConfig.Remove(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Method[@name=&quot;Remove&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Config.IConfig.ConfigSource">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Property[@name=&quot;ConfigSource&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Config.IConfig.Name">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Property[@name=&quot;Name&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Config.IConfig.Alias">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Property[@name=&quot;Alias&quot;]/docs/*"/>
+        </member>
+        <member name="E:Nini.Config.IConfig.KeySet">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Event[@name=&quot;KeySet&quot;]/docs/*"/>
+        </member>
+        <member name="E:Nini.Config.IConfig.KeyRemoved">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Event[@name=&quot;KeyRemoved&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigBase.#ctor(System.String,Nini.Config.IConfigSource)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="ConfigBase.xml" path="//Constructor[@name=&quot;ConfigBase&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigBase.Contains(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Method[@name=&quot;Contains&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigBase.Get(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Method[@name=&quot;Get&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigBase.Get(System.String,System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Method[@name=&quot;GetDefault&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigBase.GetExpanded(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Method[@name=&quot;GetExpanded&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigBase.GetString(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Method[@name=&quot;Get&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigBase.GetString(System.String,System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Method[@name=&quot;GetDefault&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigBase.GetInt(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Method[@name=&quot;GetInt&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigBase.GetInt(System.String,System.Boolean)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Method[@name=&quot;GetIntAlias&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigBase.GetInt(System.String,System.Int32)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Method[@name=&quot;GetIntDefault&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigBase.GetInt(System.String,System.Int32,System.Boolean)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Method[@name=&quot;GetIntDefaultAlias&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigBase.GetLong(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Method[@name=&quot;GetLong&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigBase.GetLong(System.String,System.Int64)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Method[@name=&quot;GetLongDefault&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigBase.GetBoolean(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Method[@name=&quot;GetBoolean&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigBase.GetBoolean(System.String,System.Boolean)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Method[@name=&quot;GetBooleanDefault&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigBase.GetFloat(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Method[@name=&quot;GetFloat&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigBase.GetFloat(System.String,System.Single)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Method[@name=&quot;GetFloatDefault&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigBase.GetDouble(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Method[@name=&quot;GetDouble&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigBase.GetDouble(System.String,System.Double)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Method[@name=&quot;GetDoubleDefault&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigBase.GetKeys">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Method[@name=&quot;GetKeys&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigBase.GetValues">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Method[@name=&quot;GetValues&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigBase.Add(System.String,System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="ConfigBase.xml" path="//Method[@name=&quot;Add&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigBase.Set(System.String,System.Object)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Method[@name=&quot;Set&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigBase.Remove(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Method[@name=&quot;Remove&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigBase.OnKeySet(Nini.Config.ConfigKeyEventArgs)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="ConfigBase.xml" path="//Method[@name=&quot;OnKeySet&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigBase.OnKeyRemoved(Nini.Config.ConfigKeyEventArgs)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="ConfigBase.xml" path="//Method[@name=&quot;OnKeyRemoved&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigBase.Rename(System.String)">
+            <summary>
+            Renames the config to the new name. 
+            </summary>
+        </member>
+        <member name="M:Nini.Config.ConfigBase.GetIntAlias(System.String,System.String)">
+            <summary>
+            Returns the integer alias first from this IConfig then 
+            the parent if there is none.
+            </summary>
+        </member>
+        <member name="M:Nini.Config.ConfigBase.GetBooleanAlias(System.String)">
+            <summary>
+            Returns the boolean alias first from this IConfig then 
+            the parent if there is none.
+            </summary>
+        </member>
+        <member name="P:Nini.Config.ConfigBase.Name">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Property[@name=&quot;Name&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Config.ConfigBase.ConfigSource">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Property[@name=&quot;ConfigSource&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Config.ConfigBase.Alias">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Property[@name=&quot;Alias&quot;]/docs/*"/>
+        </member>
+        <member name="E:Nini.Config.ConfigBase.KeySet">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Event[@name=&quot;KeySet&quot;]/docs/*"/>
+        </member>
+        <member name="E:Nini.Config.ConfigBase.KeyRemoved">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IConfig.xml" path="//Event[@name=&quot;KeyRemoved&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IniConfig.#ctor(System.String,Nini.Config.IConfigSource)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniConfig.xml" path="//Constructor[@name=&quot;Constructor&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IniConfig.Get(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniConfig.xml" path="//Method[@name=&quot;Get&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IniConfig.Set(System.String,System.Object)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniConfig.xml" path="//Method[@name=&quot;Set&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IniConfig.Remove(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniConfig.xml" path="//Method[@name=&quot;Remove&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.IniConfig.CaseInsensitiveKeyName(System.String)">
+            <summary>
+            Returns the key name if the case insensitivity is turned on.  
+            </summary>
+        </member>
+        <member name="T:Nini.Ini.IniItem">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniItem.xml" path="//Class[@name=&quot;IniItem&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniItem.#ctor(System.String,System.String,Nini.Ini.IniType,System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniItem.xml" path="//Constructor[@name=&quot;Constructor&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Ini.IniItem.Type">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniItem.xml" path="//Property[@name=&quot;Type&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Ini.IniItem.Value">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniItem.xml" path="//Property[@name=&quot;Value&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Ini.IniItem.Name">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniItem.xml" path="//Property[@name=&quot;Name&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Ini.IniItem.Comment">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniItem.xml" path="//Property[@name=&quot;Comment&quot;]/docs/*"/>
+        </member>
+        <member name="T:Phobos.Configurations.Keyboard.AKeyboardLayoutExtractor">
+            <summary>
+            Cette interface défini les méthodes nécessaire à obtenir le format du clavié utilisé.
+            </summary>
+        </member>
+        <member name="M:Phobos.Configurations.Keyboard.AKeyboardLayoutExtractor.getCurrentSystemLayout">
+            <summary>
+            Cette méthode retourn le nom système du layout utilisé.
+            </summary>
+        </member>
+        <member name="T:Phobos.Engine.View.Scene">
+            <summary> Une scene, utilisation de singleton </summary>
+        </member>
+        <member name="M:Phobos.Engine.View.Scene.configuration">
+            <summary>
+            Todo : make it by a conf file or something else
+            </summary>
+        </member>
+        <member name="M:Phobos.Engine.Gui.PWidgets.APWidget.Translate(System.Int32,System.Int32)">
+            <summary>
+            Apply a basic translation to the widget.
+            </summary>
+            <remarks>
+            If the widget implements children, you have to override this method to call Translate on each child.
+            </remarks>
+            <param name="dx"><typeparamref name="int"/></param>
+            <param name="dy"><typeparamref name="int"/></param>
+        </member>
+        <member name="M:Phobos.Engine.Gui.PWidgets.System.PSButton.#cctor">
+            <summary>
+            Contient tous les chargements de textures.
+            </summary>
+        </member>
+        <member name="M:Phobos.Engine.View.Proxies.Entities.AEntityProxy.move(Microsoft.Xna.Framework.Vector3)">
+            <summary>Move entity in the world</summary>
+            
+        </member>
+        <member name="M:Phobos.Engine.GraphicalHelpers.fillRectangle(Microsoft.Xna.Framework.Graphics.Texture2D,Microsoft.Xna.Framework.Rectangle,Microsoft.Xna.Framework.Rectangle,Microsoft.Xna.Framework.Graphics.SpriteBatch)">
+            <summary>
+            Remplis une zone destionation avec un texture source en utilisant un certain spriteBatch.
+            </summary>
+            <param name="texture"></param>
+            <param name="source"></param>
+            <param name="destination"></param>
+            <param name="spriteBatch"></param>
+        </member>
+        <member name="T:Phobos.Engine.View.Frame">
+            <summary>Ne peut etre une classe car StillDuration evolut avec le temps</summary>
+        </member>
+        <member name="M:Phobos.Engine.GameEngine.Initialize">
+            <summary>
+            Allows the game to perform any initialization it needs to before starting to run.
+            This is where it can query for any required services and load any non-graphic
+            related content. Calling base.Initialize will enumerate through any components
+            and initialize them as well.
+            </summary>
+        </member>
+        <member name="M:Phobos.Engine.GameEngine.LoadContent">
+            <summary>
+            LoadContent will be called once per game and is the place to load
+            all of your content.
+            </summary>
+        </member>
+        <member name="M:Phobos.Engine.GameEngine.UnloadContent">
+            <summary>
+            UnloadContent will be called once per game and is the place to unload
+            all content.
+            </summary>
+        </member>
+        <member name="M:Phobos.Engine.GameEngine.Update(Microsoft.Xna.Framework.GameTime)">
+            <summary>
+            Allows the game to run logic such as updating the world,
+            checking for collisions, gathering input, and playing audio.
+            </summary>
+            <param name="gameTime">Provides a snapshot of timing values.</param>
+        </member>
+        <member name="M:Phobos.Engine.GameEngine.Draw(Microsoft.Xna.Framework.GameTime)">
+            <summary>
+            This is called when the game should draw itself.
+            </summary>
+            <param name="gameTime">Provides a snapshot of timing values.</param>
+        </member>
+        <member name="M:Phobos.Engine.GameEngine.SetWindowedFullScreen">
+            <summary>
+            Cette méthode permet de mettre le jeu en pleine écran tout en conservant l'état de fenêtre (alt tab plus rapides :P);
+            </summary>
+        </member>
+        <member name="T:Nini.Ini.IniException">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniException.xml" path="//Class[@name=&quot;IniException&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniException.#ctor">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniException.xml" path="//Constructor[@name=&quot;Constructor&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniException.#ctor(System.String,System.Exception)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniException.xml" path="//Constructor[@name=&quot;ConstructorException&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniException.#ctor(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniException.xml" path="//Constructor[@name=&quot;ConstructorMessage&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniException.#ctor(Nini.Ini.IniReader,System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniException.xml" path="//Constructor[@name=&quot;ConstructorTextReader&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniException.xml" path="//Constructor[@name=&quot;ConstructorSerialize&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniException.xml" path="//Method[@name=&quot;GetObjectData&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Ini.IniException.LinePosition">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniException.xml" path="//Property[@name=&quot;LinePosition&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Ini.IniException.LineNumber">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniException.xml" path="//Property[@name=&quot;LineNumber&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Ini.IniException.Message">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniException.xml" path="//Property[@name=&quot;Message&quot;]/docs/*"/>
+        </member>
+        <member name="M:Phobos.Engine.View.Proxies.Entities.DrawableEntity.calculateScreenRect">
+            <summary>
+            Calcul la position du Tile a l'écran en fonction de l'orientation. 
+            Note : la camera s'applique lors du rendu
+            </summary>
+        </member>
+        <member name="M:Phobos.Engine.View.Proxies.Entities.DrawableEntity.checkCenter">
+            <summary>
+            Verifie si le DrawEntity est au centre de l'écran, si oui le stock dans Scene.getInstance().CenterEntity
+            </summary>
+        </member>
+        <member name="P:Phobos.Engine.View.Proxies.Entities.DrawableEntity.Item(Phobos.Engine.View.Orientation)">
+            <summary>
+            L'orientation est TL TR BL BR, il est independant de la camera on parle en pur rendu ecran
+            </summary>
+        </member>
+        <member name="M:Phobos.Engine.Models.World.Core.BuildCore(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            This method is used to access to the core located at the location. This method should only be called after map generation 
+            so no concrete Core are created, they are only read from other source (save file or db).
+            
+            </summary>
+            <param name="mapLocation"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Phobos.Engine.Models.World.Core.BuildSimpleCore(Microsoft.Xna.Framework.Vector2,System.Single)">
+            <summary>
+            This test method just create a simple core with a single layer of dirt starting at height 0.
+            </summary>
+            <param name="location"></param>
+            <param name="height"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Phobos.Engine.Models.World.Chunk.#ctor(System.Int32)">
+            <summary>
+            The chunks constructor should not be called after the map generation, so use BuildChunk to access to the Chunks;
+            </summary>
+            <param name="size"></param>
+        </member>
+        <member name="M:Phobos.Engine.Models.World.Chunk.BuildChunk(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            This method create an instance of the Chunk using data from other source (save file or db).
+            </summary>
+            <param name="location"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Phobos.Engine.Models.World.Chunk.BuildFlatChunk(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            This method create a flat chunk for testing purpose. The first layer of childs core is set to 0 and DIRT.
+            </summary>
+            <param name="location"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Phobos.Engine.Controllers.Entities.EntitiesController">
+            <summary>
+            This Controller simply help to access to registred Entities.
+            </summary>
+        </member>
+        <member name="T:Nini.Ini.IniWriteState">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniWriter.xml" path="//Enum[@name=&quot;IniWriteState&quot;]/docs/*"/>
+        </member>
+        <member name="F:Nini.Ini.IniWriteState.Start">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniWriter.xml" path="//Enum[@name=&quot;IniWriteState&quot;]/Value[@name=&quot;Start&quot;]/docs/*"/>
+        </member>
+        <member name="F:Nini.Ini.IniWriteState.BeforeFirstSection">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniWriter.xml" path="//Enum[@name=&quot;IniWriteState&quot;]/Value[@name=&quot;BeforeFirstSection&quot;]/docs/*"/>
+        </member>
+        <member name="F:Nini.Ini.IniWriteState.Section">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniWriter.xml" path="//Enum[@name=&quot;IniWriteState&quot;]/Value[@name=&quot;Section&quot;]/docs/*"/>
+        </member>
+        <member name="F:Nini.Ini.IniWriteState.Closed">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniWriter.xml" path="//Enum[@name=&quot;IniWriteState&quot;]/Value[@name=&quot;Closed&quot;]/docs/*"/>
+        </member>
+        <member name="T:Nini.Ini.IniWriter">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniWriter.xml" path="//Class[@name=&quot;IniWriter&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniWriter.#ctor(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniWriter.xml" path="//Constructor[@name=&quot;ConstructorPath&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniWriter.#ctor(System.IO.TextWriter)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniWriter.xml" path="//Constructor[@name=&quot;ConstructorTextWriter&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniWriter.#ctor(System.IO.Stream)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniWriter.xml" path="//Constructor[@name=&quot;ConstructorStream&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniWriter.Close">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniWriter.xml" path="//Method[@name=&quot;Close&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniWriter.Flush">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniWriter.xml" path="//Method[@name=&quot;Flush&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniWriter.ToString">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniWriter.xml" path="//Method[@name=&quot;ToString&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniWriter.WriteSection(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniWriter.xml" path="//Method[@name=&quot;WriteSection&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniWriter.WriteSection(System.String,System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniWriter.xml" path="//Method[@name=&quot;WriteSectionComment&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniWriter.WriteKey(System.String,System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniWriter.xml" path="//Method[@name=&quot;WriteKey&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniWriter.WriteKey(System.String,System.String,System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniWriter.xml" path="//Method[@name=&quot;WriteKeyComment&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniWriter.WriteEmpty">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniWriter.xml" path="//Method[@name=&quot;WriteEmpty&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniWriter.WriteEmpty(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniWriter.xml" path="//Method[@name=&quot;WriteEmptyComment&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniWriter.Dispose">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniWriter.xml" path="//Method[@name=&quot;Dispose&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniWriter.Dispose(System.Boolean)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniWriter.xml" path="//Method[@name=&quot;DisposeBoolean&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniWriter.Finalize">
+            <summary>
+            Destructor.
+            </summary>
+        </member>
+        <member name="M:Nini.Ini.IniWriter.GetKeyValue(System.String)">
+            <summary>
+            Returns the value of a key.
+            </summary>
+        </member>
+        <member name="M:Nini.Ini.IniWriter.ValidateStateKey">
+            <summary>
+            Validates whether a key can be written.
+            </summary>
+        </member>
+        <member name="M:Nini.Ini.IniWriter.ValidateState">
+            <summary>
+            Validates the state to determine if the item can be written.
+            </summary>
+        </member>
+        <member name="M:Nini.Ini.IniWriter.Comment(System.String)">
+            <summary>
+            Returns a formatted comment.
+            </summary>
+        </member>
+        <member name="M:Nini.Ini.IniWriter.Write(System.String)">
+            <summary>
+            Writes data to the writer.
+            </summary>
+        </member>
+        <member name="M:Nini.Ini.IniWriter.WriteLine(System.String)">
+            <summary>
+            Writes a full line to the writer.
+            </summary>
+        </member>
+        <member name="M:Nini.Ini.IniWriter.MassageValue(System.String)">
+            <summary>
+            Fixes the incoming value to prevent illegal characters from 
+            hurting the integrity of the INI file.
+            </summary>
+        </member>
+        <member name="P:Nini.Ini.IniWriter.Indentation">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniWriter.xml" path="//Property[@name=&quot;Indentation&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Ini.IniWriter.UseValueQuotes">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniWriter.xml" path="//Property[@name=&quot;UseValueQuotes&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Ini.IniWriter.WriteState">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniWriter.xml" path="//Property[@name=&quot;WriteState&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Ini.IniWriter.CommentDelimiter">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniWriter.xml" path="//Property[@name=&quot;CommentDelimiter&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Ini.IniWriter.AssignDelimiter">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniWriter.xml" path="//Property[@name=&quot;AssignDelimiter&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Ini.IniWriter.BaseStream">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniWriter.xml" path="//Property[@name=&quot;BaseStream&quot;]/docs/*"/>
+        </member>
+        <member name="T:Nini.Ini.IniReadState">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniReader.xml" path="//Enum[@name=&quot;IniReadState&quot;]/docs/*"/>
+        </member>
+        <member name="F:Nini.Ini.IniReadState.Closed">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniReader.xml" path="//Enum[@name=&quot;IniReadState&quot;]/Value[@name=&quot;Closed&quot;]/docs/*"/>
+        </member>
+        <member name="F:Nini.Ini.IniReadState.EndOfFile">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniReader.xml" path="//Enum[@name=&quot;IniReadState&quot;]/Value[@name=&quot;EndOfFile&quot;]/docs/*"/>
+        </member>
+        <member name="F:Nini.Ini.IniReadState.Error">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniReader.xml" path="//Enum[@name=&quot;IniReadState&quot;]/Value[@name=&quot;Error&quot;]/docs/*"/>
+        </member>
+        <member name="F:Nini.Ini.IniReadState.Initial">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniReader.xml" path="//Enum[@name=&quot;IniReadState&quot;]/Value[@name=&quot;Initial&quot;]/docs/*"/>
+        </member>
+        <member name="F:Nini.Ini.IniReadState.Interactive">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniReader.xml" path="//Enum[@name=&quot;IniReadState&quot;]/Value[@name=&quot;Interactive&quot;]/docs/*"/>
+        </member>
+        <member name="T:Nini.Ini.IniType">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniReader.xml" path="//Enum[@name=&quot;IniType&quot;]/docs/*"/>
+        </member>
+        <member name="F:Nini.Ini.IniType.Section">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniReader.xml" path="//Enum[@name=&quot;IniType&quot;]/Value[@name=&quot;Section&quot;]/docs/*"/>
+        </member>
+        <member name="F:Nini.Ini.IniType.Key">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniReader.xml" path="//Enum[@name=&quot;IniType&quot;]/Value[@name=&quot;Key&quot;]/docs/*"/>
+        </member>
+        <member name="F:Nini.Ini.IniType.Empty">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniReader.xml" path="//Enum[@name=&quot;IniType&quot;]/Value[@name=&quot;Empty&quot;]/docs/*"/>
+        </member>
+        <member name="T:Nini.Ini.IniReader">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniReader.xml" path="//Class[@name=&quot;IniReader&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniReader.#ctor(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniReader.xml" path="//Constructor[@name=&quot;ConstructorPath&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniReader.#ctor(System.IO.TextReader)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniReader.xml" path="//Constructor[@name=&quot;ConstructorTextReader&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniReader.#ctor(System.IO.Stream)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniReader.xml" path="//Constructor[@name=&quot;ConstructorStream&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniReader.Read">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniReader.xml" path="//Method[@name=&quot;Read&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniReader.MoveToNextSection">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniReader.xml" path="//Method[@name=&quot;MoveToNextSection&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniReader.MoveToNextKey">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniReader.xml" path="//Method[@name=&quot;MoveToNextKey&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniReader.Close">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniReader.xml" path="//Method[@name=&quot;Close&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniReader.Dispose">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniReader.xml" path="//Method[@name=&quot;Dispose&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniReader.GetCommentDelimiters">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniReader.xml" path="//Method[@name=&quot;GetCommentDelimiters&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniReader.SetCommentDelimiters(System.Char[])">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniReader.xml" path="//Method[@name=&quot;SetCommentDelimiters&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniReader.GetAssignDelimiters">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniReader.xml" path="//Method[@name=&quot;GetAssignDelimiters&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniReader.SetAssignDelimiters(System.Char[])">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniReader.xml" path="//Method[@name=&quot;SetAssignDelimiters&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniReader.Dispose(System.Boolean)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniReader.xml" path="//Method[@name=&quot;DisposeBoolean&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Ini.IniReader.Finalize">
+            <summary>
+            Destructor.
+            </summary>
+        </member>
+        <member name="M:Nini.Ini.IniReader.Reset">
+            <summary>
+            Resets all of the current INI line data.
+            </summary>
+        </member>
+        <member name="M:Nini.Ini.IniReader.ReadNext">
+            <summary>
+            Reads the next INI line item.
+            </summary>
+        </member>
+        <member name="M:Nini.Ini.IniReader.ReadComment">
+            <summary>
+            Reads a comment. Must start after the comment delimiter.
+            </summary>
+        </member>
+        <member name="M:Nini.Ini.IniReader.RemoveTrailingWhitespace(System.Text.StringBuilder)">
+            <summary>
+            Removes trailing whitespace from a StringBuilder.
+            </summary>
+        </member>
+        <member name="M:Nini.Ini.IniReader.ReadKey">
+            <summary>
+            Reads a key.
+            </summary>
+        </member>
+        <member name="M:Nini.Ini.IniReader.ReadKeyValue">
+            <summary>
+            Reads the value of a key.
+            </summary>
+        </member>
+        <member name="M:Nini.Ini.IniReader.ReadSection">
+            <summary>
+            Reads an INI section.
+            </summary>
+        </member>
+        <member name="M:Nini.Ini.IniReader.SearchForComment">
+            <summary>
+            Looks for a comment.
+            </summary>
+        </member>
+        <member name="M:Nini.Ini.IniReader.ConsumeToEnd">
+            <summary>
+            Consumes all data until the end of a line. 
+            </summary>		
+        </member>
+        <member name="M:Nini.Ini.IniReader.ReadChar">
+            <summary>
+            Returns and consumes the next character from the stream.
+            </summary>
+        </member>
+        <member name="M:Nini.Ini.IniReader.PeekChar">
+            <summary>
+            Returns the next upcoming character from the stream.
+            </summary>
+        </member>
+        <member name="M:Nini.Ini.IniReader.IsComment(System.Int32)">
+            <summary>
+            Returns true if a comment character is found.
+            </summary>
+        </member>
+        <member name="M:Nini.Ini.IniReader.IsAssign(System.Int32)">
+            <summary>
+            Returns true if character is an assign character.
+            </summary>
+        </member>
+        <member name="M:Nini.Ini.IniReader.HasCharacter(System.Char[],System.Int32)">
+            <summary>
+            Returns true if the character is found in the given array.
+            </summary>
+        </member>
+        <member name="M:Nini.Ini.IniReader.IsWhitespace(System.Int32)">
+            <summary>
+            Returns true if a value is whitespace.
+            </summary>
+        </member>
+        <member name="M:Nini.Ini.IniReader.SkipWhitespace">
+            <summary>
+            Skips all whitespace.
+            </summary>
+        </member>
+        <member name="M:Nini.Ini.IniReader.EndOfLine(System.Int32)">
+            <summary>
+            Returns true if an end of line is found.  End of line
+            includes both an end of line or end of file.
+            </summary>
+        </member>
+        <member name="P:Nini.Ini.IniReader.Name">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniReader.xml" path="//Property[@name=&quot;Name&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Ini.IniReader.Value">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniReader.xml" path="//Property[@name=&quot;Value&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Ini.IniReader.Type">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniReader.xml" path="//Property[@name=&quot;Type&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Ini.IniReader.Comment">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniReader.xml" path="//Property[@name=&quot;Comment&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Ini.IniReader.LineNumber">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniReader.xml" path="//Property[@name=&quot;LineNumber&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Ini.IniReader.LinePosition">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniReader.xml" path="//Property[@name=&quot;LinePosition&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Ini.IniReader.IgnoreComments">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniReader.xml" path="//Property[@name=&quot;IgnoreComments&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Ini.IniReader.ReadState">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniReader.xml" path="//Property[@name=&quot;ReadState&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Ini.IniReader.LineContinuation">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniReader.xml" path="//Property[@name=&quot;LineContinuation&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Ini.IniReader.AcceptCommentAfterKey">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniReader.xml" path="//Property[@name=&quot;AcceptCommentAfterKey&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Ini.IniReader.AcceptNoAssignmentOperator">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniReader.xml" path="//Property[@name=&quot;AcceptNoAssignmentOperator&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Ini.IniReader.ConsumeAllKeyText">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniReader.xml" path="//Property[@name=&quot;ConsumeAllKeyText&quot;]/docs/*"/>
+        </member>
+        <member name="M:Phobos.Engine.View.Proxies.World.ChunkProxy.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.GameTime)">
+            <summary>Ordre d'affichage en fonction de l'orientation de la scene</summary>
+        </member>
+        <member name="M:Phobos.Engine.View.Proxies.World.ChunkProxy.CalculCenterEntity">
+            <summary>
+            Verifie si parmis tout ses tiles, certains sont au centre de la camera
+            Ordre de calcul en fonction de l'orientation de la scene pour que le plus proche element de la camera soit selectionné
+            </summary>
+        </member>
+        <member name="M:Phobos.Engine.View.Proxies.World.ChunkProxy.calculCliffs">
+            <summary>
+            Calcul le cliff a afficher pour tous les tiles
+            </summary>
+        </member>
+        <member name="M:Phobos.Engine.View.Camera.cameraFillScreen">
+            <summary>
+            Redimmentionne la camera pour remplir la fenetre
+            </summary>
+        </member>
+        <member name="M:Phobos.Engine.View.Camera.getLookDirectionFromOrientation(Phobos.Engine.View.Orientation)">
+            <summary>
+            Retourne la direction regandant une entité en fonction de son orientation et de celle du monde
+            </summary>
+        </member>
+        <member name="T:Phobos.Engine.Services.ServicesManager">
+            <summary>
+            This class provide a simple way to access to all of the registered services.
+            </summary>
+        </member>
+        <member name="T:Nini.Config.AliasText">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="AliasText.xml" path="//Class[@name=&quot;AliasText&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.AliasText.#ctor">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="AliasText.xml" path="//Constructor[@name=&quot;AliasText&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.AliasText.AddAlias(System.String,System.String,System.Int32)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="AliasText.xml" path="//Method[@name=&quot;AddAliasInt&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.AliasText.AddAlias(System.String,System.Boolean)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="AliasText.xml" path="//Method[@name=&quot;AddAliasBoolean&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.AliasText.AddAlias(System.String,System.Enum)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="AliasText.xml" path="//Method[@name=&quot;AddAliasEnum&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.AliasText.ContainsBoolean(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="AliasText.xml" path="//Method[@name=&quot;ContainsBoolean&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.AliasText.ContainsInt(System.String,System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="AliasText.xml" path="//Method[@name=&quot;ContainsInt&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.AliasText.GetBoolean(System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="AliasText.xml" path="//Method[@name=&quot;GetBoolean&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.AliasText.GetInt(System.String,System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="AliasText.xml" path="//Method[@name=&quot;GetInt&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.AliasText.DefaultAliasLoad">
+            <summary>
+            Loads the default alias values.
+            </summary>
+        </member>
+        <member name="M:Nini.Config.AliasText.SetAliasTypes(System.String,System.Enum)">
+            <summary>
+            Extracts and sets the alias types from an enumeration.
+            </summary>
+        </member>
+        <member name="M:Nini.Config.AliasText.InsensitiveHashtable">
+            <summary>
+            Returns a case insensitive hashtable.
+            </summary>
+        </member>
+        <member name="T:Nini.Util.OrderedListEnumerator">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="OrderedListEnumerator.xml" path="//Class[@name=&quot;OrderedListEnumerator&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Util.OrderedListEnumerator.#ctor(System.Collections.ArrayList)">
+            <summary>
+            Instantiates an ordered list enumerator with an ArrayList.
+            </summary>
+        </member>
+        <member name="M:Nini.Util.OrderedListEnumerator.MoveNext">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="OrderedListEnumerator.xml" path="//Method[@name=&quot;MoveNext&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Util.OrderedListEnumerator.Reset">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="OrderedListEnumerator.xml" path="//Method[@name=&quot;Reset&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Util.OrderedListEnumerator.System#Collections#IEnumerator#Current">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="OrderedListEnumerator.xml" path="//Property[@name=&quot;Current&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Util.OrderedListEnumerator.Current">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="OrderedListEnumerator.xml" path="//Property[@name=&quot;CurrentStrong&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Util.OrderedListEnumerator.Entry">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="OrderedListEnumerator.xml" path="//Property[@name=&quot;Entry&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Util.OrderedListEnumerator.Key">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="OrderedListEnumerator.xml" path="//Property[@name=&quot;Key&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Util.OrderedListEnumerator.Value">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="OrderedListEnumerator.xml" path="//Property[@name=&quot;Value&quot;]/docs/*"/>
+        </member>
+        <member name="M:Phobos.Engine.View.Animation.goToNextFrame">
+            <summary>
+            Saute de frame, si on arrive au bout du dictionnaire on recommence au debut
+            </summary>
+        </member>
+        <member name="M:Phobos.Engine.View.Animation.getCurrentFrame(Microsoft.Xna.Framework.GameTime)">
+            <summary>
+            Recupere la frame courante a l'instant T (peut passer a une frame suivante)
+            </summary>
+        </member>
+        <member name="T:Phobos.Engine.Services.MathHelper">
+             Make fast approximative method
+            
+        </member>
+        <member name="M:Phobos.Engine.Services.MathHelper.pow(System.Double,System.Double)">
+            
+            @param a >= 0
+            @param b 
+            @return power a^b
+        </member>
+        <member name="M:Phobos.Engine.Services.MathHelper.sinLow(System.Double)">
+            
+            @param x - between -PI and PI
+            @return sinus
+        </member>
+        <member name="M:Phobos.Engine.Services.MathHelper.warpToPi(System.Double)">
+            
+            @param x
+            @return angulus x put between -Pi and Pi 
+        </member>
+        <member name="M:Phobos.Engine.Services.MathHelper.sinHigh(System.Double)">
+            
+            @param x - between -PI and PI
+            @return sinus
+        </member>
+        <member name="M:Phobos.Engine.Services.MathHelper.cosLow(System.Double)">
+            
+            @param x - between -PI and PI
+            @return cosinus
+        </member>
+        <member name="M:Phobos.Engine.Services.MathHelper.cosHigh(System.Double)">
+            
+            @param x - between -PI and PI
+            @return cosinus
+        </member>
+        <member name="T:Nini.Config.ConfigKeyEventHandler">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="ConfigKeyEventArgs.xml" path="//Delegate[@name=&quot;ConfigKeyEventHandler&quot;]/docs/*"/>
+        </member>
+        <member name="T:Nini.Config.ConfigKeyEventArgs">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="ConfigEventArgs.xml" path="//Class[@name=&quot;ConfigEventArgs&quot;]/docs/*"/>
+        </member>
+        <member name="M:Nini.Config.ConfigKeyEventArgs.#ctor(System.String,System.String)">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="ConfigEventArgs.xml" path="//Constructor[@name=&quot;Constructor&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Config.ConfigKeyEventArgs.KeyName">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="ConfigEventArgs.xml" path="//Property[@name=&quot;KeyName&quot;]/docs/*"/>
+        </member>
+        <member name="P:Nini.Config.ConfigKeyEventArgs.KeyValue">
+            <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="ConfigEventArgs.xml" path="//Property[@name=&quot;KeyValue&quot;]/docs/*"/>
+        </member>
+    </members>
+</doc>

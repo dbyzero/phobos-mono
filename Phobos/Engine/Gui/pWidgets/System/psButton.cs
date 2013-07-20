@@ -51,15 +51,15 @@ namespace Phobos.Engine.Gui.PWidgets.System {
             if( IsVisible ) {
                 if( IsEnabled ) {
                     if( IsActionKeyPressed && IsMouseover ) {
-                        GameEngine.spriteBatch.Draw( spriteButton, AbsoluteLocation, new Rectangle( 0, 70, 128, 35 ), Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f );
+                        GameEngine.Instance.SpriteBatch.Draw( spriteButton, AbsoluteLocation, new Rectangle( 0, 70, 128, 35 ), Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f );
                     } else if( IsMouseover ) {
-                        GameEngine.spriteBatch.Draw( spriteButton, AbsoluteLocation, new Rectangle( 0, 35, 128, 35 ), Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f );
+                        GameEngine.Instance.SpriteBatch.Draw( spriteButton, AbsoluteLocation, new Rectangle( 0, 35, 128, 35 ), Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f );
                     } else {
-                        GameEngine.spriteBatch.Draw( spriteButton, AbsoluteLocation, new Rectangle( 0, 0, 128, 35 ), Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f );
+                        GameEngine.Instance.SpriteBatch.Draw( spriteButton, AbsoluteLocation, new Rectangle( 0, 0, 128, 35 ), Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f );
 
                     }
                 } else {
-                    GameEngine.spriteBatch.Draw( spriteButton, AbsoluteLocation, new Rectangle( 0, 105, 128, 35 ), Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f );
+                    GameEngine.Instance.SpriteBatch.Draw( spriteButton, AbsoluteLocation, new Rectangle( 0, 105, 128, 35 ), Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f );
                 }
     
                 label.Draw( gameTime );

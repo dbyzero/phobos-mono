@@ -49,10 +49,10 @@ namespace Phobos.Engine.Gui.PWidgets.System {
             drawLocation.Height += bottom.Height + top.Height -3;
             drawLocation.Width += right.Width + left.Width - 3;
 
-            GameEngine.spriteBatch.Draw( sprite, new Rectangle( drawLocation.X, drawLocation.Y, topLeft.Width, topLeft.Height ), topLeft, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f );
-            GameEngine.spriteBatch.Draw( sprite, new Rectangle( drawLocation.X + drawLocation.Width - topRight.Width, drawLocation.Y, topRight.Width, topRight.Height ), topRight, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f );
-            GameEngine.spriteBatch.Draw( sprite, new Rectangle( drawLocation.X, drawLocation.Y + drawLocation.Height - bottomLeft.Height, bottomLeft.Width, bottomLeft.Height ), bottomLeft, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f );
-            GameEngine.spriteBatch.Draw( sprite, new Rectangle( drawLocation.X + drawLocation.Width - bottomRight.Width, drawLocation.Y + drawLocation.Height - bottomRight.Height, bottomRight.Width, bottomRight.Height ), bottomRight, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f );
+            GameEngine.Instance.SpriteBatch.Draw( sprite, new Rectangle( drawLocation.X, drawLocation.Y, topLeft.Width, topLeft.Height ), topLeft, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f );
+            GameEngine.Instance.SpriteBatch.Draw(sprite, new Rectangle(drawLocation.X + drawLocation.Width - topRight.Width, drawLocation.Y, topRight.Width, topRight.Height), topRight, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f);
+            GameEngine.Instance.SpriteBatch.Draw(sprite, new Rectangle(drawLocation.X, drawLocation.Y + drawLocation.Height - bottomLeft.Height, bottomLeft.Width, bottomLeft.Height), bottomLeft, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f);
+            GameEngine.Instance.SpriteBatch.Draw(sprite, new Rectangle(drawLocation.X + drawLocation.Width - bottomRight.Width, drawLocation.Y + drawLocation.Height - bottomRight.Height, bottomRight.Width, bottomRight.Height), bottomRight, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f);
 
             Rectangle dest = drawLocation;
 
@@ -61,41 +61,41 @@ namespace Phobos.Engine.Gui.PWidgets.System {
             dest.Width = drawLocation.Width - topLeft.Width - topRight.Width;
             dest.Height = top.Height;
 
-            GraphicalHelpers.fillRectangle( sprite, top, dest, GameEngine.spriteBatch );
+            GraphicalHelpers.fillRectangle( sprite, top, dest, GameEngine.Instance.SpriteBatch );
 
             dest.X = drawLocation.X + topLeft.Width;
             dest.Y = drawLocation.Y + drawLocation.Height - bottomRight.Height;
             dest.Width = drawLocation.Width - bottomRight.Width - bottomLeft.Width;
             dest.Height = bottom.Height;
 
-            GraphicalHelpers.fillRectangle( sprite, bottom, dest, GameEngine.spriteBatch );
+            GraphicalHelpers.fillRectangle( sprite, bottom, dest, GameEngine.Instance.SpriteBatch );
 
             dest.X = drawLocation.X + drawLocation.Width - topRight.Width;
             dest.Y = drawLocation.Y + topRight.Height;
             dest.Width = right.Width;
             dest.Height = drawLocation.Height - topRight.Height - bottomRight.Height;
 
-            GraphicalHelpers.fillRectangle( sprite, right, dest, GameEngine.spriteBatch );
+            GraphicalHelpers.fillRectangle( sprite, right, dest, GameEngine.Instance.SpriteBatch );
 
             dest.X = drawLocation.X;
             dest.Y = drawLocation.Y + topLeft.Height;
             dest.Width = left.Width;
             dest.Height = drawLocation.Height - topLeft.Height - bottomLeft.Height;
 
-            GraphicalHelpers.fillRectangle( sprite, left, dest, GameEngine.spriteBatch );
+            GraphicalHelpers.fillRectangle( sprite, left, dest, GameEngine.Instance.SpriteBatch );
 
             dest.X = drawLocation.X + left.Width;
             dest.Y = drawLocation.Y + top.Height;
             dest.Width = drawLocation.Width - right.Width - left.Width;
             dest.Height = drawLocation.Height - bottom.Height - top.Height;
 
-            GraphicalHelpers.fillRectangle( sprite, texture, dest, GameEngine.spriteBatch );
+            GraphicalHelpers.fillRectangle( sprite, texture, dest, GameEngine.Instance.SpriteBatch );
             //Montre la drawlocation et l'absolutelocation.
             /*Texture2D rect = new Texture2D( ServicesManager.GetService<GraphicsDevice>(), 1, 1 );
             rect.SetData( new[] { Color.Blue } );
-            GameEngine.spriteBatch.Draw( rect, drawLocation, Color.Blue );
+            GameEngine.Instance.SpriteBatch.Draw( rect, drawLocation, Color.Blue );
             rect.SetData( new[] { Color.Red } );
-            GameEngine.spriteBatch.Draw( rect, AbsoluteLocation, Color.Red );*/
+            GameEngine.Instance.SpriteBatch.Draw( rect, AbsoluteLocation, Color.Red );*/
 
             foreach( APWidget child in children ) {
                 child.Draw( gameTime );
