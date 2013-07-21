@@ -30,13 +30,11 @@ namespace Phobos.Engine.GameStates.Game
         PSButton btnColorNight;
         PSButton btnColorEvening;
         Scene scene;
-        public List<ITest> Tests;
 
         public MainState()
             : base()
         {
             Status = GameStateStatus.Active;
-            Tests = new List<ITest>();
         }
 
         public override void Initialize()
@@ -44,14 +42,6 @@ namespace Phobos.Engine.GameStates.Game
             base.Initialize();
             scene = new Scene();
             scene.Initialize();
-
-            //AJOUT DES TESTS
-            Tests.Add(new TestFillSceneLight());
-
-            foreach (var test in Tests)
-            {
-                test.Initialize(scene);
-            }
         }
 
         protected override void LoadContent()
@@ -119,10 +109,6 @@ namespace Phobos.Engine.GameStates.Game
             if (Status != GameStateStatus.Active) return;
 
             scene.Draw(gameTime);
-            foreach (var test in Tests)
-            {
-                test.Draw(scene);
-            }
 
             #region UI
             GameEngine.Instance.SpriteBatch.Begin();
@@ -148,11 +134,6 @@ namespace Phobos.Engine.GameStates.Game
 
         public override void Update(GameTime gameTime)
         {
-            foreach (var test in Tests)
-            {
-                test.Update(scene);
-            }
-
             if (Status != GameStateStatus.Active) return;
 
             base.Update(gameTime);

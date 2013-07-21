@@ -118,7 +118,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cache\LightCache.cs" />
     <Compile Include="Engine\Controllers\Entities\EntitiesController.cs" />
+    <Compile Include="Test\TestRaycating.cs" />
+    <Compile Include="Tools\LightTools.cs" />
     <Compile Include="Engine\Controllers\Light\LightController.cs" />
     <Compile Include="Engine\Controllers\Motion\Model\ACollisionBoundary.cs" />
     <Compile Include="Engine\Controllers\Motion\Model\AImpulse.cs" />

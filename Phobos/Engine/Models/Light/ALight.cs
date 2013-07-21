@@ -6,6 +6,8 @@ using Microsoft.Xna.Framework ;
 using Phobos.Engine.View;
 using Phobos.Engine.View.Proxies.World;
 using Phobos.Engine.View.Proxies.Entities;
+using Phobos.Tools;
+using Phobos.Cache;
 
 namespace Phobos.Engine.Models.Light
 {
@@ -25,13 +27,13 @@ namespace Phobos.Engine.Models.Light
             set;
         }
 
-        private  List<DrawableEntity> listCoreInTheLight
+        public List<DrawableEntity> listCoreInTheLight
         {
             get;
-            set;
+            private set;
         }
 
-        public float Radius
+        public int Radius
         {
             get;
             set;
@@ -56,11 +58,14 @@ namespace Phobos.Engine.Models.Light
             Radius = radius;
             Color = color;
             Position = position;
+
+
         }
 
         #endregion
 
-        public void RegisterCoreInTheLight(Scene scene) {
+        public List<DrawableEntity> RegisterCoreInTheLight(Scene scene)
+        {
             listCoreInTheLight.Clear();
             for (float i = Position.X - Radius; i < Position.X + Radius;i++ )
             {
@@ -77,18 +82,46 @@ namespace Phobos.Engine.Models.Light
                     }
                 }
             }
+            return listCoreInTheLight;
         }
         
-        public void ApplyLight()
+        public void ApplyLight(Scene scene)
         {
             if (Active)
             {
+                Dictionary<Vector2, SortedList<float, Vector2>> collisionMatrix = LightCache.getCacheForARadius(Radius);
                 foreach (DrawableEntity ent in listCoreInTheLight)
                 {
-                    float distance_to_core = Vector2.Subtract(new Vector2(ent.X, ent.Y), new Vector2(Position.X, Position.Y)).Length();
-                    ent.applyLight(Color.Multiply(Color, 1f - distance_to_core/Radius));
+                    Vector2 relativePositionTarget = new Vector2(ent.X - Position.X, ent.Y - Position.Y);
+                    SortedList<float, Vector2> collisionTileMatrix ;
+                    collisionMatrix.TryGetValue(relativePositionTarget,out collisionTileMatrix) ;
+                    if (collisionTileMatrix != null)
+                    {
+                        bool show = true;
+                        foreach (KeyValuePair<float, Vector2> kvp in collisionTileMatrix)
+                        {
+                            if (relativePositionTarget.Length() < kvp.Value.Length()) break;
+                            if (scene.IsLoadedCore((int)Position.X - (int)kvp.Value.X, (int)Position.Y - (int)kvp.Value.Y))
+                            {
+                                if (scene.GetCore((int)Position.X - (int)kvp.Value.X, (int)Position.Y - (int)kvp.Value.Y).Z > Position.Z)
+                                {
+                                    show = false;
+                                }
+                            }
+                        }
+                        if (show)
+                        {
+                            float distance_to_core = Vector2.Subtract(new Vector2(ent.X, ent.Y), new Vector2(Position.X, Position.Y)).Length();
+                            ent.applyLight(Color.Multiply(Color, 1f - distance_to_core / Radius));
+                        }
+                    }
                 }
             }
+        }
+
+        public override string ToString()
+        {
+            return "Position:"+Position.ToString()+" Radius:"+Radius+" Color:"+Color;
         }
     }
 }

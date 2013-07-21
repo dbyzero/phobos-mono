@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Phobos.Models.World.Generators {
+namespace Phobos.Engine.Models.World.Generators {
     class BasicGenerator {
 
         public int Zoom;
