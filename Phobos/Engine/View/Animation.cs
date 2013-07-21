@@ -24,7 +24,7 @@ namespace Phobos.Engine.View {
             frameEnumerator = frames.GetEnumerator();
         }
 
-        public int Draw( SpriteBatch spriteBatch, GameTime gameTime, DrawableEntity ent ) {
+        public int Draw( SpriteBatch spriteBatch, GameTime gameTime, DrawableEntity ent, Scene scene ) {
             Frame frame = getCurrentFrame( gameTime );
 
             spriteBatch.Draw(
@@ -33,7 +33,7 @@ namespace Phobos.Engine.View {
                 getCurrentFrame( gameTime ).Zone,
                 ent.SumColorLight,
                 ent.Rotation,
-                Scene.GetInstance().Camera.Position,
+                scene.Camera.Position,
                 spriteEffect,
                 ent.Layer
                 );

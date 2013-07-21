@@ -11,7 +11,7 @@ namespace Phobos.Engine.Models.World {
     class Core {
         #region Fields & Properties
         public static float CORE_SIZE = 16f;
-        public Vector2 location;
+        public Vector2 location = new Vector2();
         public Chunk refChunk;
         public Dictionary<float, Layer> layerList;
         public List<AEntity> entities;

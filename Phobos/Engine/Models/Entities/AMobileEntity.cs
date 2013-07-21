@@ -17,6 +17,7 @@ namespace Phobos.Engine.Models.Entities {
         #region Constructors & Indexer
         public AMobileEntity( Vector3 location )
             : base( location ) {
+            velocity = new Vector3();
             impulses = new List<AImpulse>();
             physics = PhysicsProperties.BasicBody;
         }

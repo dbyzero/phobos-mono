@@ -11,6 +11,7 @@ namespace Phobos.Engine {
         /// <summary>
         /// Remplis une zone destionation avec un texture source en utilisant un certain spriteBatch.
         /// </summary>
+        /// <param name="sprite"></param>
         /// <param name="texture"></param>
         /// <param name="source"></param>
         /// <param name="destination"></param>

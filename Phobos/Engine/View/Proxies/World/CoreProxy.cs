@@ -34,7 +34,7 @@ namespace Phobos.Engine.View.Proxies.World {
             entities.Remove( ent );
         }
 
-        public override int Draw( SpriteBatch spriteBatch, GameTime gameTime ) {
+        public override int Draw( SpriteBatch spriteBatch, GameTime gameTime, Scene scene ) {
             int count_sprite = 0;
             //TODO ? : Do not show hidden part
             int cliffToDraw = Math.Max( Math.Max( CliffS, CliffO ), Math.Max( CliffE, CliffN ) );
@@ -43,26 +43,26 @@ namespace Phobos.Engine.View.Proxies.World {
                     SpriteSheet,
                     new Rectangle(
                         ScreenRect.X,
-                        ScreenRect.Y + (int) ( ( i - 1 ) * 16 * Scene.GetInstance().Camera.Coefficient ),
-                        (int) ( 32 * Scene.GetInstance().Camera.Coefficient ),
-                        (int) ( 32 * Scene.GetInstance().Camera.Coefficient )
+                        ScreenRect.Y + (int) ( ( i - 1 ) * 16 * scene.Camera.Coefficient ),
+                        (int) ( 32 * scene.Camera.Coefficient ),
+                        (int) ( 32 * scene.Camera.Coefficient )
                     ),
                     new Rectangle( 192, 64, 32, 32 ),
                     SumColorLight,
                     0f,
-                    Scene.GetInstance().Camera.Position,
+                    scene.Camera.Position,
                     SpriteEffects.None,
                     0.000001f
                 );
                 count_sprite++;
             }
 
-            count_sprite += base.Draw( spriteBatch, gameTime );
+            count_sprite += base.Draw( spriteBatch, gameTime, scene );
 
             //draw owned entities
             foreach( DrawableEntity ent in entities ) {
                 ent.Color = new Color(SumColorLight.R, SumColorLight.G, SumColorLight.B, ent.SumColorLight.A);
-                count_sprite += ent.Draw( spriteBatch, gameTime );
+                count_sprite += ent.Draw( spriteBatch, gameTime, scene );
                 ent.SumColorLight = ent.Color;
             }
 
@@ -70,37 +70,37 @@ namespace Phobos.Engine.View.Proxies.World {
             return count_sprite;
         }
 
-        public override void checkCenter() {
-            base.checkCenter();
+        public override void checkCenter(Scene scene) {
+            base.checkCenter(scene);
             foreach( DrawableEntity ent in entities ) {
-                ent.checkCenter();
+                ent.checkCenter(scene);
             }
         }
 
         public void linkCliffs() {
         }
 
-        public void calculCliffs() {
-            if( Scene.GetInstance().IsLoadedCore( (int) X, (int) Y - 1 ) ) {
-                CliffN = (int) Math.Ceiling( Z - Scene.GetInstance().GetCore( (int) X, (int) Y - 1 ).Z );
+        public void calculCliffs(Scene scene) {
+            if( scene.IsLoadedCore( (int) X, (int) Y - 1 ) ) {
+                CliffN = (int) Math.Ceiling( Z - scene.GetCore( (int) X, (int) Y - 1 ).Z );
             } else {
                 CliffN = (int) Math.Ceiling( Z - 0 );
             }
 
-            if( Scene.GetInstance().IsLoadedCore( (int) X, (int) Y + 1 ) ) {
-                CliffS = (int) Math.Ceiling( Z - Scene.GetInstance().GetCore( (int) X, (int) Y + 1 ).Z );
+            if( scene.IsLoadedCore( (int) X, (int) Y + 1 ) ) {
+                CliffS = (int) Math.Ceiling( Z - scene.GetCore( (int) X, (int) Y + 1 ).Z );
             } else {
                 CliffS = (int) Math.Ceiling( Z - 0 );
             }
 
-            if( Scene.GetInstance().IsLoadedCore( (int) X + 1, (int) Y ) ) {
-                CliffE = (int) Math.Ceiling( Z - Scene.GetInstance().GetCore( (int) X + 1, (int) Y ).Z );
+            if( scene.IsLoadedCore( (int) X + 1, (int) Y ) ) {
+                CliffE = (int) Math.Ceiling( Z - scene.GetCore( (int) X + 1, (int) Y ).Z );
             } else {
                 CliffE = (int) Math.Ceiling( Z - 0 );
             }
 
-            if( Scene.GetInstance().IsLoadedCore( (int) X - 1, (int) Y ) ) {
-                CliffO = (int) Math.Ceiling( Z - Scene.GetInstance().GetCore( (int) X - 1, (int) Y ).Z );
+            if( scene.IsLoadedCore( (int) X - 1, (int) Y ) ) {
+                CliffO = (int) Math.Ceiling( Z - scene.GetCore( (int) X - 1, (int) Y ).Z );
             } else {
                 CliffO = (int) Math.Ceiling( Z - 0 );
             }

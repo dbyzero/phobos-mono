@@ -800,6 +800,7 @@
             <summary>
             Remplis une zone destionation avec un texture source en utilisant un certain spriteBatch.
             </summary>
+            <param name="sprite"></param>
             <param name="texture"></param>
             <param name="source"></param>
             <param name="destination"></param>
@@ -876,13 +877,13 @@
         <member name="P:Nini.Ini.IniException.Message">
             <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniException.xml" path="//Property[@name=&quot;Message&quot;]/docs/*"/>
         </member>
-        <member name="M:Phobos.Engine.View.Proxies.Entities.DrawableEntity.calculateScreenRect">
+        <member name="M:Phobos.Engine.View.Proxies.Entities.DrawableEntity.calculateScreenRect(Phobos.Engine.View.Scene)">
             <summary>
             Calcul la position du Tile a l'écran en fonction de l'orientation. 
             Note : la camera s'applique lors du rendu
             </summary>
         </member>
-        <member name="M:Phobos.Engine.View.Proxies.Entities.DrawableEntity.checkCenter">
+        <member name="M:Phobos.Engine.View.Proxies.Entities.DrawableEntity.checkCenter(Phobos.Engine.View.Scene)">
             <summary>
             Verifie si le DrawEntity est au centre de l'écran, si oui le stock dans Scene.getInstance().CenterEntity
             </summary>
@@ -1252,16 +1253,16 @@
         <member name="P:Nini.Ini.IniReader.ConsumeAllKeyText">
             <!-- Impossible d'insérer tout ou partie du code XML inclus --><include file="IniReader.xml" path="//Property[@name=&quot;ConsumeAllKeyText&quot;]/docs/*"/>
         </member>
-        <member name="M:Phobos.Engine.View.Proxies.World.ChunkProxy.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.GameTime)">
+        <member name="M:Phobos.Engine.View.Proxies.World.ChunkProxy.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.GameTime,Phobos.Engine.View.Scene)">
             <summary>Ordre d'affichage en fonction de l'orientation de la scene</summary>
         </member>
-        <member name="M:Phobos.Engine.View.Proxies.World.ChunkProxy.CalculCenterEntity">
+        <member name="M:Phobos.Engine.View.Proxies.World.ChunkProxy.CalculCenterEntity(Phobos.Engine.View.Scene)">
             <summary>
             Verifie si parmis tout ses tiles, certains sont au centre de la camera
             Ordre de calcul en fonction de l'orientation de la scene pour que le plus proche element de la camera soit selectionné
             </summary>
         </member>
-        <member name="M:Phobos.Engine.View.Proxies.World.ChunkProxy.calculCliffs">
+        <member name="M:Phobos.Engine.View.Proxies.World.ChunkProxy.calculCliffs(Phobos.Engine.View.Scene)">
             <summary>
             Calcul le cliff a afficher pour tous les tiles
             </summary>

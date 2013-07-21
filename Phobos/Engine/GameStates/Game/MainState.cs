@@ -42,7 +42,7 @@ namespace Phobos.Engine.GameStates.Game
         public override void Initialize()
         {
             base.Initialize();
-            scene = Scene.GetInstance();
+            scene = new Scene();
             scene.Initialize();
 
             //AJOUT DES TESTS
@@ -72,42 +72,42 @@ namespace Phobos.Engine.GameStates.Game
             btnCameraSE = new PSButton(64, 200, "Camera SE");
             btnCameraSE.Action += delegate(APButton sender, ActionEvent e)
             {
-                Scene.GetInstance().Camera.turnCamera(Orientation.SE);
+                scene.Camera.turnCamera(Orientation.SE);
             };
             btnCameraSO = new PSButton(64, 240, "Camera SW");
             btnCameraSO.Action += delegate(APButton sender, ActionEvent e)
             {
-                Scene.GetInstance().Camera.turnCamera(Orientation.SO);
+                scene.Camera.turnCamera(Orientation.SO);
             };
             btnCameraNO = new PSButton(64, 280, "Camera NW");
             btnCameraNO.Action += delegate(APButton sender, ActionEvent e)
             {
-                Scene.GetInstance().Camera.turnCamera(Orientation.NO);
+                scene.Camera.turnCamera(Orientation.NO);
             };
             btnCameraNE = new PSButton(64, 320, "Camera NE");
             btnCameraNE.Action += delegate(APButton sender, ActionEvent e)
             {
-                Scene.GetInstance().Camera.turnCamera(Orientation.NE);
+                scene.Camera.turnCamera(Orientation.NE);
             };
             btnColorSunrise = new PSButton(64, 380, "Color Sunrise");
             btnColorSunrise.Action += delegate(APButton sender, ActionEvent e)
             {
-                Scene.GetInstance().ConvergeColor = Scene.GetInstance().SunriseColor;
+                scene.updateAmbiantColor("converge",scene.getAmbiantColor("sunrise"));
             };
             btnColorNoon = new PSButton(64, 420, "Color Noon");
             btnColorNoon.Action += delegate(APButton sender, ActionEvent e)
             {
-                Scene.GetInstance().ConvergeColor = Scene.GetInstance().NoonColor;
+                scene.updateAmbiantColor("converge", scene.getAmbiantColor("noon"));
             };
             btnColorEvening = new PSButton(64, 460, "Color Evening");
             btnColorEvening.Action += delegate(APButton sender, ActionEvent e)
             {
-                Scene.GetInstance().ConvergeColor = Scene.GetInstance().EveningColor;
+                scene.updateAmbiantColor("converge", scene.getAmbiantColor("evening"));
             };
             btnColorNight = new PSButton(64, 500, "Color Night");
             btnColorNight.Action += delegate(APButton sender, ActionEvent e)
             {
-                Scene.GetInstance().ConvergeColor = Scene.GetInstance().NightColor;
+                scene.updateAmbiantColor("converge", scene.getAmbiantColor("night"));
             };
             base.LoadContent();
         }

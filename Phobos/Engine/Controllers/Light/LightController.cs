@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Phobos.Engine.Models.Light ;
+using Phobos.Engine.Models.Light;
+using Phobos.Engine.View;
 
 namespace Phobos.Engine.Controllers.Light
 {
@@ -10,9 +11,9 @@ namespace Phobos.Engine.Controllers.Light
     {
         private List<ALight> lights = new List<ALight>();
 
-        public void AddLight(ALight light) {
+        public void AddLight(ALight light, Scene scene) {
             lights.Add(light);
-            light.RegisterCoreInTheLight();
+            light.RegisterCoreInTheLight(scene);
         }
 
         public void RemoveLight(ALight light)

@@ -13,24 +13,19 @@ using Phobos.Engine.Models.Light;
 using Phobos.Engine.Controllers.Light;
 using Phobos.Test;
 
-public delegate void CalculsEntitiesHandler();
 
 namespace Phobos.Engine.View {
     /**
      * <summary> Une scene, utilisation de singleton </summary>
      */
-    class Scene : DrawableGameComponent {
+
+
+    class Scene : DrawableGameComponent
+    {
+        public delegate void CalculsEntitiesHandler(Scene scene);
+
         //delegate utiliser pour recalculer toute les positions des entities, appeler en zoom et rotation de camera
         public CalculsEntitiesHandler CalculPositionsEntitiesHandler;
-
-        //la scene static, utilisation du singleton
-        static Scene scene = null;
-        static public Scene GetInstance() {
-            if( scene == null ) {
-                scene = new Scene();
-            }
-            return scene;
-        }
 
  	    private Camera camera;
  	    private Orientation orientation;
@@ -52,22 +47,17 @@ namespace Phobos.Engine.View {
             get { return camera; }
             set { camera = value; }
         }
-        public Vector4 AmbiantColor { set; get; } //actual ambiant color
- 	    public Vector4 ConvergeColor { set; get; } //color to converge to for ambiant color
- 	    public Vector4 SunriseColor { set; get; } //matin
-        public Vector4 NoonColor { set; get; } //midi
-        public Vector4 EveningColor { set; get; } //soir
- 	    public Vector4 NightColor { set; get; } //nuit
-
+        private Dictionary<string, Vector4> AmbiantColors { set; get; }  
         public SortedList<int, SortedList<int, ChunkProxy>> Chunks {
             set;
             get;
         }
         #endregion
 
-        private Scene()
+        public Scene()
             : base( GameEngine.Instance ) {
             Chunks = new SortedList<int, SortedList<int, ChunkProxy>>();
+            AmbiantColors = new Dictionary<string, Vector4>();
         }
 
         public DrawableEntity CenterEntity {
@@ -79,20 +69,14 @@ namespace Phobos.Engine.View {
             base.Initialize();
             spriteBatch = new SpriteBatch( GameEngine.Instance.GraphicsDevice );
 
-            SunriseColor = Color.White.ToVector4();
-            NoonColor = Color.White.ToVector4();
-            NightColor = Color.White.ToVector4();
-            EveningColor = Color.White.ToVector4();
-            AmbiantColor = Color.White.ToVector4();
-
-            camera = new Camera();
+            camera = new Camera(this);
             orientation = Orientation.SO;
             ShaderEffect = null ;
                         
             //calcul position and center
             if (CalculPositionsEntitiesHandler != null)
             {
-                CalculPositionsEntitiesHandler();
+                CalculPositionsEntitiesHandler(this);
             }
 
             CalculCenterEntity();
@@ -106,12 +90,30 @@ namespace Phobos.Engine.View {
         {
             ShaderEffect = GameEngine.Instance.Content.Load<Effect>(@"shaders\coloration");
 
-            SunriseColor = new Vector4(0.74f, 0.53f, 0.36f, 1.0f);
-            NoonColor = new Vector4(1.0f, 1.0f, 0.95f, 1.0f);
-            NightColor = new Vector4(0.2557f, 0.29f, 0.42f, 1.0f);
-            EveningColor = new Vector4(0.75f, 0.49f, 0.36f, 1.0f);
+            addAmbiantColor("sunrise", new Vector4(0.74f, 0.53f, 0.36f, 1.0f));
+            addAmbiantColor("noon", new Vector4(1.0f, 1.0f, 0.95f, 1.0f));
+            addAmbiantColor("night", new Vector4(0.2557f, 0.29f, 0.42f, 1.0f));
+            addAmbiantColor("evening", new Vector4(0.75f, 0.49f, 0.36f, 1.0f));
 
-            ConvergeColor = AmbiantColor = NightColor;
+            addAmbiantColor("current", getAmbiantColor("night")); //current color
+            addAmbiantColor("converge", getAmbiantColor("night")); //current color
+        }
+
+        public Vector4 getAmbiantColor(string key)
+        {
+            Vector4 color;
+            AmbiantColors.TryGetValue(key, out color);
+            return color;
+        }
+
+        public void addAmbiantColor(string key, Vector4 color)
+        {
+            AmbiantColors.Add(key, color);
+        }
+
+        public void updateAmbiantColor(string key, Vector4 color)
+        {
+            AmbiantColors[key] = color ;
         }
 
         public override void Draw( GameTime gameTime ) {
@@ -122,7 +124,7 @@ namespace Phobos.Engine.View {
 
             if (ShaderEffect != null)
             {
-                ShaderEffect.Parameters["AmbiantColor"].SetValue(AmbiantColor);
+                ShaderEffect.Parameters["AmbiantColor"].SetValue(getAmbiantColor("current"));
             }
 
             spriteBatch.Begin( 
@@ -134,12 +136,12 @@ namespace Phobos.Engine.View {
                 ShaderEffect 
             );
             /** Browse layer throw camera depth **/
-            switch( Scene.GetInstance().Orientation ) {
+            switch( Orientation ) {
                 //Calcul pour SE
                 case Orientation.SE:
                     foreach( var chunks_row in Chunks.Values ) {
                         foreach( var chunk in chunks_row.Values ) {
-                            count_sprite += chunk.Draw( spriteBatch, gameTime );
+                            count_sprite += chunk.Draw(spriteBatch, gameTime, this);
                         }
                     }
                     break;
@@ -147,7 +149,7 @@ namespace Phobos.Engine.View {
                 case Orientation.SO:
                     foreach( var chunks_row in Chunks.Values.Reverse() ) {
                         foreach( var chunk in chunks_row.Values ) {
-                            count_sprite += chunk.Draw( spriteBatch, gameTime );
+                            count_sprite += chunk.Draw(spriteBatch, gameTime, this);
                         }
                     }
                     break;
@@ -155,7 +157,7 @@ namespace Phobos.Engine.View {
                 case Orientation.NE:
                     foreach( var chunks_row in Chunks.Values ) {
                         foreach( var chunk in chunks_row.Values.Reverse() ) {
-                            count_sprite += chunk.Draw( spriteBatch, gameTime );
+                            count_sprite += chunk.Draw(spriteBatch, gameTime, this);
                         }
                     }
                     break;
@@ -163,7 +165,7 @@ namespace Phobos.Engine.View {
                 case Orientation.NO:
                     foreach( var chunks_row in Chunks.Values.Reverse() ) {
                         foreach( var chunk in chunks_row.Values.Reverse() ) {
-                            count_sprite += chunk.Draw( spriteBatch, gameTime );
+                            count_sprite += chunk.Draw(spriteBatch, gameTime, this);
                         }
                     }
                     break;
@@ -191,20 +193,30 @@ namespace Phobos.Engine.View {
                 Camera.move( mouveMovement );
             }
 
+
+            if (Mouse.GetState().LeftButton == ButtonState.Released)
+            {
+                CalculCenterEntity();
+            }
+
             if( Keyboard.GetState().IsKeyDown( Keys.F1 ) ) {
-                Scene.GetInstance().Camera.turnCamera( Orientation.SE );
+                Camera.turnCamera(Orientation.SE);
+                CalculCenterEntity();
             }
 
             if( Keyboard.GetState().IsKeyDown( Keys.F2 ) ) {
-                Scene.GetInstance().Camera.turnCamera( Orientation.SO );
+                Camera.turnCamera(Orientation.SO);
+                CalculCenterEntity();
             }
 
             if( Keyboard.GetState().IsKeyDown( Keys.F3 ) ) {
-                Scene.GetInstance().Camera.turnCamera( Orientation.NO );
+                Camera.turnCamera(Orientation.NO);
+                CalculCenterEntity();
             }
 
             if( Keyboard.GetState().IsKeyDown( Keys.F4 ) ) {
-                Scene.GetInstance().Camera.turnCamera( Orientation.NE );
+                Camera.turnCamera(Orientation.NE);
+                CalculCenterEntity();
             }
 
             if( Mouse.GetState().ScrollWheelValue != prevMouseState.ScrollWheelValue ) {
@@ -213,7 +225,12 @@ namespace Phobos.Engine.View {
                 int old_camera_height = this.Camera.Height;
 
                 //apply coeff
-                this.Camera.Coefficient += (int) ( ( Mouse.GetState().ScrollWheelValue - prevMouseState.ScrollWheelValue ) / 120 );
+                float oldCoeff = Camera.Coefficient;
+                Camera.Coefficient += (int)((Mouse.GetState().ScrollWheelValue - prevMouseState.ScrollWheelValue) / 120);
+                if (oldCoeff != Camera.Coefficient)
+                {
+                    CalculPositionsEntitiesHandler(this);
+                }
 
                 //new cam
                 int new_camera_width = this.Camera.Width;
@@ -232,24 +249,30 @@ namespace Phobos.Engine.View {
                     chunk.Update( gameTime );
                 }
             }
-
+            
             //Converge color to target
-            if (AmbiantColor != ConvergeColor)
+            convergeAmbiantColor();
+            
+        }
+
+        private void convergeAmbiantColor()
+        {
+            if (getAmbiantColor("ambiant") != getAmbiantColor("converge"))
             {
-                Vector4 shiftColor = Vector4.Multiply(AmbiantColor - ConvergeColor, 0.025f);
-                AmbiantColor -= shiftColor;
+                Vector4 shiftColor = Vector4.Multiply(getAmbiantColor("ambiant") - getAmbiantColor("converge"), 0.025f);
+                updateAmbiantColor("ambiant", getAmbiantColor("converge") - shiftColor);
             }
         }
 
         public void CalculCenterEntity() {
 
             /** Browse layer throw camera depth **/
-            switch( Scene.GetInstance().Orientation ) {
+            switch( Orientation ) {
                 //Calcul pour SE
                 case Orientation.SE:
                     foreach( var chunks_row in Chunks.Values ) {
                         foreach( var chunk in chunks_row.Values ) {
-                            chunk.CalculCenterEntity();
+                            chunk.CalculCenterEntity(this);
                         }
                     }
                     break;
@@ -257,7 +280,7 @@ namespace Phobos.Engine.View {
                 case Orientation.SO:
                     foreach( var chunks_row in Chunks.Values.Reverse() ) {
                         foreach( var chunk in chunks_row.Values ) {
-                            chunk.CalculCenterEntity();
+                            chunk.CalculCenterEntity(this);
                         }
                     }
                     break;
@@ -265,7 +288,7 @@ namespace Phobos.Engine.View {
                 case Orientation.NE:
                     foreach( var chunks_row in Chunks.Values ) {
                         foreach( var chunk in chunks_row.Values.Reverse() ) {
-                            chunk.CalculCenterEntity();
+                            chunk.CalculCenterEntity(this);
                         }
                     }
                     break;
@@ -273,7 +296,7 @@ namespace Phobos.Engine.View {
                 case Orientation.NO:
                     foreach( var chunks_row in Chunks.Values.Reverse() ) {
                         foreach( var chunk in chunks_row.Values.Reverse() ) {
-                            chunk.CalculCenterEntity();
+                            chunk.CalculCenterEntity(this);
                         }
                     }
                     break;

@@ -225,9 +225,6 @@ namespace Phobos.Test
             scene.Chunks[1] = new SortedList<int, ChunkProxy>();
             scene.Chunks[1][0] = testChunk3;
 
-            //calcul position and center
-            scene.CalculPositionsEntitiesHandler();
-            scene.CalculCenterEntity();
             
             #endregion
             #region Chunk 0,-1
@@ -389,18 +386,21 @@ namespace Phobos.Test
             
             #endregion
 
-            scene.Chunks[0][0].calculCliffs();
+            //calcul position and center
+            scene.CalculPositionsEntitiesHandler(scene);
+            scene.CalculCenterEntity();
+            scene.Chunks[0][0].calculCliffs(scene);
         }
 
         private void initializeLights(Scene scene) 
         {
             //light
             FixedLight test_light4 = new FixedLight(14, new Vector3(20, 20, 30), Color.Red);
-            scene.LightController.AddLight(test_light4);
+            scene.LightController.AddLight(test_light4, scene);
             FixedLight test_light2 = new FixedLight(14, new Vector3(20, 10, 30), Color.Blue);
-            scene.LightController.AddLight(test_light2);
+            scene.LightController.AddLight(test_light2, scene);
             FixedLight test_light3 = new FixedLight(14, new Vector3(10, 20, 30), Color.Green);
-            scene.LightController.AddLight(test_light3);
+            scene.LightController.AddLight(test_light3, scene);
         }
 
         public void Update(Scene scene)
@@ -409,25 +409,25 @@ namespace Phobos.Test
             {
                 ALight light = scene.LightController.GetALight();
                 light.Position += new Vector3(-1,-1,0);
-                light.RegisterCoreInTheLight();
+                light.RegisterCoreInTheLight(scene);
             }
             if (Keyboard.GetState().IsKeyDown(Keys.D))
             {
                 ALight light = scene.LightController.GetALight();
                 light.Position += new Vector3(1, 1, 0);
-                light.RegisterCoreInTheLight();
+                light.RegisterCoreInTheLight(scene);
             }
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
                 ALight light = scene.LightController.GetALight();
                 light.Position += new Vector3(1, -1, 0);
-                light.RegisterCoreInTheLight();
+                light.RegisterCoreInTheLight(scene);
             }
             if (Keyboard.GetState().IsKeyDown(Keys.S))
             {
                 ALight light = scene.LightController.GetALight();
                 light.Position += new Vector3(-1, 1, 0);
-                light.RegisterCoreInTheLight();
+                light.RegisterCoreInTheLight(scene);
             }
         }
 

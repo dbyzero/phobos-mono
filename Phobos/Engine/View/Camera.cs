@@ -14,6 +14,7 @@ namespace Phobos.Engine.View
         private int minZoom = 1;
         private int maxZoom = 10;
         private float coefficient;
+        private Scene scene;
 
         #region ascessor & mutator
         public Vector2 Position { get; set; }
@@ -30,23 +31,18 @@ namespace Phobos.Engine.View
                     /* calcul new camera resolution */
                     Width = (int)(GameEngine.Instance.DeviceManager.PreferredBackBufferWidth / coefficient);
                     Height = (int)(GameEngine.Instance.DeviceManager.PreferredBackBufferHeight / coefficient);
-
-                    /* redim sprites if coeff change */
-                    if (prevCoefficient != coefficient)
-                    {
-                        Scene.GetInstance().CalculPositionsEntitiesHandler() ;
-                    }
             }
         }
         #endregion
 
-        public Camera(int coeff = 1)
+        public Camera(Scene scene, int coeff = 1)
         {
             cameraFillScreen();
+            this.scene = scene ;
             coefficient = coeff;
         }
 
-        public Camera(float X, float Y, int coeff = 1) : this(coeff)
+        public Camera(float X, float Y, Scene scene, int coeff = 1) : this(scene, coeff)
         {
             Position = new Vector2(X, Y);
         }
@@ -70,7 +66,6 @@ namespace Phobos.Engine.View
         public void move(Vector2 shift)
         {
             Position += shift;
-            Scene.GetInstance().CalculCenterEntity(); ;
         }
 
         /**
@@ -79,7 +74,7 @@ namespace Phobos.Engine.View
          * </summary>
          */
         public Orientation getLookDirectionFromOrientation(Orientation orient) {
-            switch (Scene.GetInstance().Orientation) {
+            switch (scene.Orientation) {
                 case Orientation.SE:
                     switch (orient)
                     {
@@ -139,27 +134,22 @@ namespace Phobos.Engine.View
 
         public void turnCamera(Orientation orient)
         {
-            if (Scene.GetInstance().Orientation != orient)
+            if (scene.Orientation != orient)
             {
                 //turn scene
-                Scene.GetInstance().Orientation = orient;
+                scene.Orientation = orient;
 
                 //recalcule tiles position
-                Scene.GetInstance().CalculPositionsEntitiesHandler();
+                scene.CalculPositionsEntitiesHandler(scene);
 
                 //calcule the vector to keep the same center, la position est divisé par le coeff pour satisfaire la vierge marie des transformations.
                 Vector2 shift_vector;
-                shift_vector.X = Scene.GetInstance().Camera.Width / 2 - (Scene.GetInstance().CenterEntity.ScreenRect.X / Scene.GetInstance().Camera.Coefficient - Scene.GetInstance().Camera.Position.X);
-                shift_vector.Y = Scene.GetInstance().Camera.Height / 2 - (Scene.GetInstance().CenterEntity.ScreenRect.Y / Scene.GetInstance().Camera.Coefficient - Scene.GetInstance().Camera.Position.Y);
+                shift_vector.X = Width / 2 - (scene.CenterEntity.ScreenRect.X / Coefficient - Position.X);
+                shift_vector.Y = Height / 2 - (scene.CenterEntity.ScreenRect.Y / Coefficient - Position.Y);
 
                 //move the sceEEEeeene
-                Scene.GetInstance().Camera.Position -= shift_vector;
-
-                //recalcul new center (normally the same one)
-                Scene.GetInstance().CalculCenterEntity();
+                Position -= shift_vector;
             }
-            
         }
-
     }
 }

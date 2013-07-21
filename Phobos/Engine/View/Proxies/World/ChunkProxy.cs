@@ -44,30 +44,31 @@ namespace Phobos.Engine.View.Proxies.World
         /**
          * <summary>Ordre d'affichage en fonction de l'orientation de la scene</summary>
          */
-        public int Draw(SpriteBatch sb, GameTime gameTime)
+        public int Draw(SpriteBatch sb, GameTime gameTime, Scene scene)
         {
             int count_sprite = 0;
             for (int x = 0; x < Chunk.CHUNKS_SIZE; x++)
             {
                 for (int y = 0; y < Chunk.CHUNKS_SIZE; y++)
                 {
-                    switch (Scene.GetInstance().Orientation)
+                    switch (scene.Orientation)
                     {
                         case Orientation.SE:
-                            count_sprite += cores[x, y].Draw(sb, gameTime);
+                            count_sprite += cores[x, y].Draw(sb, gameTime, scene);
                             break;
                         case Orientation.SO:
-                            count_sprite += cores[(Chunk.CHUNKS_SIZE - 1) - x, y].Draw(sb, gameTime);
+                            count_sprite += cores[(Chunk.CHUNKS_SIZE - 1) - x, y].Draw(sb, gameTime, scene);
                             break;
                         case Orientation.NE:
-                            count_sprite += cores[x, (Chunk.CHUNKS_SIZE - 1) - y].Draw(sb, gameTime);
+                            count_sprite += cores[x, (Chunk.CHUNKS_SIZE - 1) - y].Draw(sb, gameTime, scene);
                             break;
                         case Orientation.NO:
-                            count_sprite += cores[(Chunk.CHUNKS_SIZE - 1) - x, (Chunk.CHUNKS_SIZE - 1) - y].Draw(sb, gameTime);
+                            count_sprite += cores[(Chunk.CHUNKS_SIZE - 1) - x, (Chunk.CHUNKS_SIZE - 1) - y].Draw(sb, gameTime, scene);
                             break;
                     }
                 }
             }
+
             return count_sprite;
         }
 
@@ -81,25 +82,25 @@ namespace Phobos.Engine.View.Proxies.World
          * Ordre de calcul en fonction de l'orientation de la scene pour que le plus proche element de la camera soit selectionné
          * </summary>
          */
-        public void CalculCenterEntity()
+        public void CalculCenterEntity(Scene scene)
         {
             for (int x = 0; x < Chunk.CHUNKS_SIZE; x++)
             {
                 for (int y = 0; y < Chunk.CHUNKS_SIZE; y++)
                 {
-                    switch (Scene.GetInstance().Orientation)
+                    switch (scene.Orientation)
                     {
                         case Orientation.SE:
-                            cores[x, y].checkCenter();
+                            cores[x, y].checkCenter(scene);
                             break;
                         case Orientation.SO:
-                            cores[(Chunk.CHUNKS_SIZE - 1) - x, y].checkCenter();
+                            cores[(Chunk.CHUNKS_SIZE - 1) - x, y].checkCenter(scene);
                             break;
                         case Orientation.NE:
-                            cores[x, (Chunk.CHUNKS_SIZE - 1) - y].checkCenter();
+                            cores[x, (Chunk.CHUNKS_SIZE - 1) - y].checkCenter(scene);
                             break;
                         case Orientation.NO:
-                            cores[(Chunk.CHUNKS_SIZE - 1) - x, (Chunk.CHUNKS_SIZE - 1) - y].checkCenter();
+                            cores[(Chunk.CHUNKS_SIZE - 1) - x, (Chunk.CHUNKS_SIZE - 1) - y].checkCenter(scene);
                             break;
                     }
 
@@ -112,13 +113,13 @@ namespace Phobos.Engine.View.Proxies.World
          * Calcul le cliff a afficher pour tous les tiles
          * </summary>
          */
-        public void calculCliffs()
+        public void calculCliffs(Scene scene)
         {
             for (int x = 0; x < Chunk.CHUNKS_SIZE; x++)
             {
                 for (int y = 0; y < Chunk.CHUNKS_SIZE; y++)
                 {
-                    cores[x, y].calculCliffs();
+                    cores[x, y].calculCliffs(scene);
                 }
             }
         }

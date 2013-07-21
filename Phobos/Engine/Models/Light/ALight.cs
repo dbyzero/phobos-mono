@@ -60,15 +60,15 @@ namespace Phobos.Engine.Models.Light
 
         #endregion
 
-        public void RegisterCoreInTheLight() {
+        public void RegisterCoreInTheLight(Scene scene) {
             listCoreInTheLight.Clear();
             for (float i = Position.X - Radius; i < Position.X + Radius;i++ )
             {
                 for (float j = Position.Y - Radius; j < Position.Y + Radius; j++)
                 {
-                    if (Scene.GetInstance().IsLoadedCore((int)Math.Ceiling(i), (int)Math.Ceiling(j)))
+                    if (scene.IsLoadedCore((int)Math.Ceiling(i), (int)Math.Ceiling(j)))
                     {
-                        CoreProxy core = Scene.GetInstance().GetCore((int)Math.Ceiling(i), (int)Math.Ceiling(j));
+                        CoreProxy core = scene.GetCore((int)Math.Ceiling(i), (int)Math.Ceiling(j));
                         float distance_to_core = Vector2.Subtract(new Vector2(core.X, core.Y), new Vector2(Position.X, Position.Y)).Length();
                         if (distance_to_core <= Radius)
                         {
