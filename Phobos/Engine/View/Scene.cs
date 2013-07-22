@@ -406,10 +406,17 @@ namespace Phobos.Engine.View {
         #region private methods
         private void convergeAmbiantColor()
         {
-            if (getAmbiantColor("ambiant") != getAmbiantColor("converge"))
+            if (getAmbiantColor("current") != getAmbiantColor("converge"))
             {
-                Vector4 shiftColor = Vector4.Multiply(getAmbiantColor("ambiant") - getAmbiantColor("converge"), 0.025f);
-                updateAmbiantColor("ambiant", getAmbiantColor("converge") - shiftColor);
+                Vector4 shiftColor = Vector4.Multiply(getAmbiantColor("current") - getAmbiantColor("converge"), 0.025f);
+                if (shiftColor.Length() > 0.0001)
+                {
+                    updateAmbiantColor("current", getAmbiantColor("current") - shiftColor);
+                }
+                else
+                    updateAmbiantColor("current", getAmbiantColor("converge"));
+                {
+                }
             }
         }
 
@@ -424,9 +431,11 @@ namespace Phobos.Engine.View {
             addAmbiantColor("noon", new Vector4(1.0f, 1.0f, 0.95f, 1.0f));
             addAmbiantColor("night", new Vector4(0.2557f, 0.29f, 0.42f, 1.0f));
             addAmbiantColor("evening", new Vector4(0.75f, 0.49f, 0.36f, 1.0f));
+            addAmbiantColor("dark", new Vector4(0.0f, 0.0f, 0.0f, 1.0f));
+            addAmbiantColor("light", new Vector4(1.0f, 1.0f, 1.0f, 1.0f));
 
-            addAmbiantColor("current", getAmbiantColor("night")); //current color
-            addAmbiantColor("converge", getAmbiantColor("night")); //current color
+            addAmbiantColor("current", getAmbiantColor("dark")); //current color
+            addAmbiantColor("converge", getAmbiantColor("light")); //current color
         } 
         #endregion
 

@@ -92,7 +92,25 @@ namespace Phobos.Engine.Models.Light
                 Dictionary<Vector2, SortedList<float, Vector2>> collisionMatrix = LightCache.getCacheForARadius(Radius);
                 foreach (DrawableEntity ent in listCoreInTheLight)
                 {
-                    Vector2 relativePositionTarget = new Vector2(ent.X - Position.X, ent.Y - Position.Y);
+                    if (ent.Z > Position.Z)
+                    {
+                        //hide below blocks when it is taller
+                        switch(scene.Orientation) {
+                            case Orientation.SO :
+                                if (ent.Y - ent.X > Position.Y - Position.X) continue;
+                                break;
+                            case Orientation.NE:
+                                if (ent.Y - ent.X < Position.Y - Position.X) continue;
+                                break;
+                            case Orientation.SE:
+                                if (ent.Y + ent.X > Position.Y + Position.X) continue;
+                                break;
+                            case Orientation.NO:
+                                if (ent.Y + ent.X < Position.Y + Position.X) continue;
+                                break;
+                        }
+                    }
+                    Vector2 relativePositionTarget = new Vector2(Position.X - ent.X, Position.Y - ent.Y);
                     SortedList<float, Vector2> collisionTileMatrix ;
                     collisionMatrix.TryGetValue(relativePositionTarget,out collisionTileMatrix) ;
                     if (collisionTileMatrix != null)
@@ -111,8 +129,7 @@ namespace Phobos.Engine.Models.Light
                         }
                         if (show)
                         {
-                            float distance_to_core = Vector2.Subtract(new Vector2(ent.X, ent.Y), new Vector2(Position.X, Position.Y)).Length();
-                            ent.applyLight(Color.Multiply(Color, 1f - distance_to_core / Radius));
+                            addLightToAnEntity(ent);
                         }
                     }
                 }
@@ -123,5 +140,11 @@ namespace Phobos.Engine.Models.Light
         {
             return "Position:"+Position.ToString()+" Radius:"+Radius+" Color:"+Color;
         }
+
+        private void addLightToAnEntity (DrawableEntity ent) {
+            float distance_to_core = Vector2.Subtract(new Vector2(ent.X, ent.Y), new Vector2(Position.X, Position.Y)).Length();
+            ent.applyLight(Color.Multiply(Color, 1f - distance_to_core / Radius));
+        }
+
     }
 }

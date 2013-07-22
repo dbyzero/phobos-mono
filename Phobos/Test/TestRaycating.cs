@@ -200,8 +200,8 @@ namespace Phobos.Test
             FixedLight test_light5 = new FixedLight(10, new Vector3(25, 25, 30), Color.Yellow);
             FixedLight test_light6 = new FixedLight(10, new Vector3(15, 15, 30), Color.Blue);
             scene.AddLight(test_light4);
-            scene.AddLight(test_light5);
-            scene.AddLight(test_light6);
+            //scene.AddLight(test_light5);
+            //scene.AddLight(test_light6);
         }
 
         public void Update(Scene scene)
