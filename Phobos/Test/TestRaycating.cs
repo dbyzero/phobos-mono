@@ -196,9 +196,9 @@ namespace Phobos.Test
         private void initializeLights(Scene scene) 
         {
             //light
-            FixedLight test_light4 = new FixedLight(20, new Vector3(20, 20, 0), Color.Green);
-            FixedLight test_light5 = new FixedLight(10, new Vector3(25, 25, 30), Color.Yellow);
-            FixedLight test_light6 = new FixedLight(10, new Vector3(15, 15, 30), Color.Blue);
+            FixedLight test_light4 = new FixedLight(14, new Vector3(14, 14, 0), new Color(200,122,50));
+            FixedLight test_light5 = new FixedLight(10, new Vector3(10, 21, 0), Color.Yellow);
+            FixedLight test_light6 = new FixedLight(10, new Vector3(21, 10, 0), Color.Blue);
             scene.AddLight(test_light4);
             //scene.AddLight(test_light5);
             //scene.AddLight(test_light6);

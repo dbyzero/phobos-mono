@@ -435,7 +435,7 @@ namespace Phobos.Engine.View {
             addAmbiantColor("light", new Vector4(1.0f, 1.0f, 1.0f, 1.0f));
 
             addAmbiantColor("current", getAmbiantColor("dark")); //current color
-            addAmbiantColor("converge", getAmbiantColor("light")); //current color
+            addAmbiantColor("converge", getAmbiantColor("night")); //current color
         } 
         #endregion
 
